@@ -1,0 +1,49 @@
+.btn-go--login {
+  color: #ffffff;
+  background-color: #ef7308;
+  border: 2px solid #ef7308;
+
+  &:hover {
+    color: #ef7308;
+    background-color: #ffffff;
+  }
+}
+
+.btn-go {
+  width: 100%;
+  min-height: 58px;
+  margin-bottom: 14px;
+  padding: 14px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid $green;
+  border-radius: 40px;
+
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+
+  &--primary {
+    color: $white;
+    background: $green;
+  }
+
+  &--secondary {
+    color: $green;
+    background: transparent;
+  }
+}
+
+.mobile-navbar {
+  &__button {
+    width: 44px;
+    height: 44px;
+    color: $green;
+    background: $light-green;
+    border: 0;
+    border-radius: 50%;
+  }
+}
