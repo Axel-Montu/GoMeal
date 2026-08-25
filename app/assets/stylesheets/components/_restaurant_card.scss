@@ -1,0 +1,42 @@
+.restaurant-card {
+  padding: 20px;
+  background: $white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(23, 63, 37, 0.1);
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+
+    h3 {
+      margin: 0 0 5px;
+      color: $green;
+    }
+
+    p {
+      margin: 0;
+      color: #747b77;
+    }
+  }
+
+  &__rating {
+    color: $orange;
+    font-weight: 700;
+  }
+
+  &__stats {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+
+    span {
+      flex: 1;
+      padding: 10px 5px;
+      text-align: center;
+      background: $light-green;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+  }
+}
