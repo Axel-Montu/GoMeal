@@ -1,0 +1,37 @@
+.components-page {
+  min-height: 100vh;
+  padding: 30px 20px 80px;
+  color: $text;
+  background: $background;
+
+  > h1 {
+    margin-bottom: 40px;
+    color: $green;
+    text-align: center;
+    font-size: 28px;
+  }
+}
+
+.components-section {
+  max-width: 390px;
+  margin: 0 auto 45px;
+
+  h2 {
+    margin-bottom: 18px;
+    font-size: 19px;
+  }
+}
+
+.form-input-go {
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
