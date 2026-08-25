@@ -1,0 +1,2 @@
+class GoMealMatchesController < ApplicationController
+end
