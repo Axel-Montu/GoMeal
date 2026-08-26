@@ -28,11 +28,19 @@ export default class extends Controller {
       }
     })
     .then((response) => {
-      if (action == "reject") {
-      window.location.href = "/"
+      if (!response.ok) throw new Error(
+        "Request rejected"
+      )
+
+      if (action === "reject") {
+        window.location.href = "/"
       } else {
-        window.location.href = "/go_meal_matches/:id"
+        window.location.href = `/go_meal_matches/${matchId}`
       }
     })
+    .catch((e) => {
+      console.error(e)
+    })
   }
+
 }
