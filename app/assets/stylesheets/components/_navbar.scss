@@ -21,7 +21,7 @@
 
   background: $white;
   border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(23, 63, 37, 0.08);
+  box-shadow: $box-shadow;
 
   &__button {
     width: 44px;
@@ -33,7 +33,7 @@
     justify-content: center;
 
     color: $green;
-    background: #edf5ef;
+    background: $light-green;
     border: none;
     border-radius: 50%;
     text-decoration: none;

@@ -1,11 +1,11 @@
 .btn-go--login {
-  color: #ffffff;
-  background-color: #ef7308;
-  border: 2px solid #ef7308;
+  color: $white;
+  background-color: $primary;
+  border: 2px solid $primary;
 
   &:hover {
-    color: #ef7308;
-    background-color: #ffffff;
+    color:$primary;
+    background-color: $white;
   }
 }
 
