@@ -1,0 +1,59 @@
+<div class="components-page">
+  <h1>Go Meal — Composants</h1>
+
+  <section class="components-section">
+    <h2>Boutons</h2>
+
+    <%= render "shared/button",
+               text: "Commencer",
+               path: "#",
+               variant: "primary" %>
+
+    <%= render "shared/button",
+               text: "Se connecter",
+               path: "#",
+               variant: "secondary" %>
+
+    <%= render "shared/button",
+               text: "Voir les suggestions",
+               path: "#",
+               variant: "login" %>
+  </section>
+
+  <section class="components-section">
+    <h2>Navbar</h2>
+
+    <%= render "shared/mobile_navbar", back_path: "#" %>
+  </section>
+
+  <section class="components-section">
+    <h2>Champ de formulaire</h2>
+
+    <%= render "shared/form_input",
+               id: "available-time",
+               label: "Temps disponible",
+               options: ["30 minutes", "45 minutes", "60 minutes"] %>
+  </section>
+
+  <section class="components-section">
+    <h2>Badges</h2>
+
+    <div class="badges">
+      <% ["Italien", "Halal", "Végétarien", "6 min"].each do |badge| %>
+        <%= render "shared/badge", text: badge %>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="components-section">
+    <h2>Carte restaurant</h2>
+
+    <%= render "shared/restaurant_card",
+               name: "L’Atelier Vert",
+               category: "Cuisine italienne",
+               rating: "4,6",
+               travel_time: "6 min",
+               meal_time: "25 min",
+               total_time: "31 min" %>
+  </section>
+</div>
