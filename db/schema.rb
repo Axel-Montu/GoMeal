@@ -26,10 +26,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_130757) do
     t.index ["user_id"], name: "index_go_meal_matches_on_user_id"
   end
 
+  create_table "price_ranges", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "currency"
+    t.integer "end_price"
+    t.bigint "restaurant_id", null: false
+    t.integer "start_price"
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_price_ranges_on_restaurant_id"
+  end
+
   create_table "restaurants", force: :cascade do |t|
     t.string "address"
     t.datetime "created_at", null: false
+    t.text "editorial_summary"
+    t.float "google_rating"
+    t.integer "latitude"
+    t.integer "longitude"
     t.string "name"
+    t.string "types", default: [], array: true
     t.datetime "updated_at", null: false
   end
 
@@ -49,4 +64,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_130757) do
 
   add_foreign_key "go_meal_matches", "restaurants"
   add_foreign_key "go_meal_matches", "users"
+  add_foreign_key "price_ranges", "restaurants"
 end
