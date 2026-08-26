@@ -1,0 +1,9 @@
+<div data-controller="swiper" class="swiper" style="width: 300px; height: 450px;">
+<div class = "swiper-wrapper">
+  <% @go_meal_matches.each do |match| %>
+<div class="swiper-slide">
+  <%= match.restaurant.name %>
+</div>
+  <% end %>
+</div>
+</div>
