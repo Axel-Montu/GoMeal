@@ -14,7 +14,6 @@ class GoMealMatchesController < ApplicationController
     @route = route_info(@match.restaurant)
 
   end
-
   def like
     @match = current_user.go_meal_matches.find(params[:id])
 
