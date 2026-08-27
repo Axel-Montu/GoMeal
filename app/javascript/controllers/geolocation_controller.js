@@ -20,7 +20,7 @@ export default class extends Controller {
     console.log("lat:", pos.coords.latitude, "long:", pos.coords.longitude)
     const { latitude: lat, longitude: long } = pos.coords;
 
-    
+
 
 
   //   fetch(this.urlValue, {
