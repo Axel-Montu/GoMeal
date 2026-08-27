@@ -1,0 +1,22 @@
+<div class="components-page">
+  <section class="components-section">
+    <h1>Match Found!</h1>
+
+    <%= render "shared/restaurant_card",
+               name: @match.restaurant.name,
+               category: (@match.restaurant.types.first.presence || "Restaurant"),
+               rating: (@match.restaurant.google_rating || "—"),
+               travel_time: "—",
+               meal_time: "—",
+               total_time: "—" %>
+
+    <p><%= @match.restaurant.address %></p>
+
+    <div data-controller="geolocation">
+      <a href="#"
+         data-action="click->geolocation#search"
+         data-geolocation-coords-value=""
+         class="btn-go btn-go--primary">Y aller</a>
+    </div>
+  </section>
+</div>
