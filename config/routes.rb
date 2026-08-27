@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-  get "preferences/edit"
   get "components/index"
   devise_for :users
   root to: "pages#home"
-  resources :go_meal_matches, only: [:index, :show] do
+  resources :go_meal_matches, only: [:index, :show, :create] do
     member do
       patch :like
       patch :reject
