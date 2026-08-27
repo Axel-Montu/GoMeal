@@ -8,25 +8,96 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+require 'net/http'
+require 'json'
 
 puts "Let's gooooo..."
 
 GoMealMatch.destroy_all
 User.destroy_all
 Restaurant.destroy_all
+PriceRange.destroy_all
 
+uri = URI('https://places.googleapis.com/v1/places:searchNearby')
+http = Net::HTTP.new(uri.host, uri.port)
+http.use_ssl = true
 
-Restaurant.create!(name: "Chez Justine", address: "96 Rue Oberkampf, 75011 Paris")
-Restaurant.create!(name: "Le Servan", address: "32 Rue Saint-Maur, 75011 Paris")
-Restaurant.create!(name: "Clamato", address: "80 Rue de Charonne, 75011 Paris")
-Restaurant.create!(name: "Septime", address: "81 Rue de Charonne, 75011 Paris")
-Restaurant.create!(name: "Le Chateaubriand", address: "129 Avenue Parmentier, 75011 Paris")
-Restaurant.create!(name: "Bistrot Paul Bert", address: "18 Rue Paul Bert, 75011 Paris")
-Restaurant.create!(name: "Le Bistrot du Peintre", address: "116 Avenue Ledru-Rollin, 75011 Paris")
-Restaurant.create!(name: "Astier", address: "44 Rue Jean-Pierre Timbaud, 75011 Paris")
-Restaurant.create!(name: "Aux Deux Amis", address: "45 Rue Oberkampf, 75011 Paris")
-Restaurant.create!(name: "Le Villaret", address: "13 Rue Ternaux, 75011 Paris")
-print "#{Restaurant.count}/10\n"
+request = Net::HTTP::Post.new(uri)
+request['X-Goog-Api-Key'] = ENV['GOOGLE_PLACES_API_KEY']
+request['X-Goog-FieldMask'] = 'places.displayName.text,places.formattedAddress,places.location.latitude,places.location.longitude,places.types,places.rating,places.editorialSummary.text,places.priceRange'
+request['Content-Type'] = 'application/json'
+request.body = '{
+"includedTypes": ["french_restaurant",
+"indian_restaurant",
+"pizza_restaurant",
+"fast_food_restaurant",
+"turkish_restaurant",
+"hamburger_restaurant",
+"halal_restaurant",
+"mediterranean_restaurant",
+"korean_restaurant",
+"japanese_restaurant"],
+  "maxResultCount": 20,
+  "locationRestriction": {
+    "circle": {
+      "center": {
+        "latitude": 48.8642973,
+        "longitude": 2.3814914},
+      "radius": 500.0
+    }
+  }
+}'
+
+response = http.request(request)
+data = JSON.parse(response.body)
+
+puts response.code    # => "200"
+
+if response.code == "200"
+  puts "API successfully fetched!"
+end
+
+puts "Let's create some restaurants"
+
+data["places"].each do |place|
+  name = place["displayName"]["text"]
+  address = place["formattedAddress"]
+  latitude = place["location"]["latitude"]
+  longitude = place["location"]["longitude"]
+  types = place["types"]
+  rating = place["rating"]
+
+  if place["editorialSummary"]
+    editorial_summary = place["editorialSummary"]["text"]
+  end
+
+  new_restaurant = Restaurant.new(
+    name: name,
+    address: address,
+    latitude: latitude,
+    longitude: longitude,
+    types: types,
+    google_rating: rating,
+    editorial_summary: editorial_summary
+    )
+
+  new_restaurant.save!
+
+  if place["priceRange"]["startPrice"]["currencyCode"] == place["priceRange"]["endPrice"]["currencyCode"]
+    currency = place["priceRange"]["startPrice"]["currencyCode"]
+    start_price = place["priceRange"]["startPrice"]["units"]
+    end_price = place["priceRange"]["endPrice"]["units"]
+  end
+
+  PriceRange.create!(
+    restaurant_id: new_restaurant.id,
+    currency: currency,
+    start_price: start_price,
+    end_price: end_price,
+  )
+  end
+
+print "#{Restaurant.count}/20\n"
 
 puts "Seeding done : #{Restaurant.count} restaurants created."
 
