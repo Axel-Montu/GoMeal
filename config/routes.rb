@@ -3,7 +3,16 @@ Rails.application.routes.draw do
   get "components/index"
   devise_for :users
   root to: "pages#home"
+<<<<<<< HEAD
+  resources :go_meal_matches, only: [:index] do
+    member do
+      patch :like
+      patch :reject
+    end
+  end
+=======
   resources :go_meal_matches, only: [:index]
+>>>>>>> 137708ee9ed949da54b9568fa6dcf13b3204ca6c
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -11,7 +20,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "components", to: "components#index"
-  get "swiper_test", to: "pages#swiper_test"
+  
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
