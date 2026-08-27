@@ -1,0 +1,21 @@
+<h1>My preferences</h1>
+
+<%= simple_form_for @user, url: preferences_path do |f| %>
+
+  <%= f.input :average_lunch_time_minutes,
+              collection: [
+                ["Express — 30 min", 30],
+                ["Normal — 1 h", 60],
+                ["J'ai le temps — 1 h 30+", 90]
+              ],
+              label: "Combien de temps as-tu pour déjeuner ?",
+              include_blank: false %>
+
+  <%= f.input :preferred_start_address,
+              label: "Preferred start address" %>
+
+  <%= f.button :submit, "Save preferences", class: "btn btn-primary" %>
+
+<% end %>
+
+
