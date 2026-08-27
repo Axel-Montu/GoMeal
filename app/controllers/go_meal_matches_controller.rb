@@ -8,6 +8,7 @@ class GoMealMatchesController < ApplicationController
   def show
     @match = GoMealMatch.find(params[:id])
     authorize @match
+    @back_path = go_meal_matches_path
   end
 
   def like

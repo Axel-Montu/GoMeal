@@ -24,8 +24,9 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body><%= render "shared/navbar" %>
-<%= render "shared/flashes" %>
+  <body>
+    <%= render "shared/mobile_navbar", back_path: (@back_path || root_path) %>
+    <%= render "shared/flashes" %>
 
     <%= yield %>
   </body>
