@@ -5,6 +5,9 @@ class GoMealMatchesController < ApplicationController
     policy_scope(@go_meal_matches)
   end
 
+# route[:distance_meters]
+# route[:duration_minutes]
+
   def show
     @match = GoMealMatch.find(params[:id])
     authorize @match
