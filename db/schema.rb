@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_154705) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_27_121036) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,9 +29,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_154705) do
   create_table "price_ranges", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "currency"
-    t.integer "end_price"
+    t.string "end_price"
     t.bigint "restaurant_id", null: false
-    t.integer "start_price"
+    t.string "start_price"
     t.datetime "updated_at", null: false
     t.index ["restaurant_id"], name: "index_price_ranges_on_restaurant_id"
   end
@@ -41,8 +41,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_154705) do
     t.datetime "created_at", null: false
     t.text "editorial_summary"
     t.float "google_rating"
-    t.integer "latitude"
-    t.integer "longitude"
+    t.float "latitude"
+    t.float "longitude"
     t.string "name"
     t.string "types", default: [], array: true
     t.datetime "updated_at", null: false
