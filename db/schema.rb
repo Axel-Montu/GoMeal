@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_27_121036) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_27_133335) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,10 +18,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_27_121036) do
     t.datetime "created_at", null: false
     t.integer "go_meal_score"
     t.bigint "restaurant_id", null: false
-    t.integer "status"
+    t.integer "status", default: 0
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.boolean "visited"
+    t.boolean "visited", default: false
     t.index ["restaurant_id"], name: "index_go_meal_matches_on_restaurant_id"
     t.index ["user_id"], name: "index_go_meal_matches_on_user_id"
   end

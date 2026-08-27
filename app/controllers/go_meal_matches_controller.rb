@@ -10,7 +10,6 @@ class GoMealMatchesController < ApplicationController
     authorize @match
     @back_path = go_meal_matches_path
   end
-
   def like
     @match = current_user.go_meal_matches.find(params[:id])
 

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "preferences/edit"
   get "components/index"
   devise_for :users
   root to: "pages#home"
