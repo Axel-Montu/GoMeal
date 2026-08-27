@@ -5,7 +5,7 @@
     <%= render "shared/restaurant_card",
                name: @match.restaurant.name,
                address: @match.restaurant.address,
-               category: (@match.restaurant.types.first.presence || "Restaurant"),
+               category: (@match.restaurant.types.first || "Restaurant").tr("_", " ").capitalize,
                rating: (@match.restaurant.google_rating || "—"),
                travel_time: "—",
                meal_time: "—",
