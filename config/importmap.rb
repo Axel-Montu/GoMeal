@@ -9,3 +9,4 @@ pin "bootstrap", to: "bootstrap.min.js", preload: true
 pin "@popperjs/core", to: "popper.js", preload: true
 pin "swiper", to: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.mjs"
 
+pin "maplibre-gl", to: "https://cdn.jsdelivr.net/npm/maplibre-gl@6.6.0/+esm"
