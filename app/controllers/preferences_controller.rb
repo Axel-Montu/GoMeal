@@ -8,11 +8,11 @@ class PreferencesController < ApplicationController
     @user = current_user
     authorize @user
 
-    if @user.update(preferences_params)
-      redirect_to root_path, notice: "Preferences updated."
-    else
-      render :edit, status: :unprocessable_entity
-    end
+  if @user.update(preferences_params)
+    redirect_to go_meal_matches_path, notice: "Preferences updated."
+  else
+    render :edit, status: :unprocessable_entity
+  end
   end
 
   private
