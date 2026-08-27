@@ -28,8 +28,8 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= render "shared/navbar" unless controller_name == "pages" && action_name == "home" %>
+  <body class="page-<%= controller_name.dasherize %>-<%= action_name.dasherize %>">
+    <%= render "shared/mobile_navbar" unless controller_name == "pages" && action_name == "home" %>
 
     <%= render "shared/flashes" %>
 
