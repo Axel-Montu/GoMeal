@@ -3,15 +3,21 @@ class GoMealMatchesController < ApplicationController
     @user = current_user
     @go_meal_matches = current_user.go_meal_matches.includes(:restaurant)
     policy_scope(@go_meal_matches)
-  end
 
-# route[:distance_meters]
-# route[:duration_minutes]
+    @routes = {}
+
+    @go_meal_matches.each do |match|
+      @routes[match.id] = route_info(match.restaurant)
+    end
+  end
 
   def show
     @match = GoMealMatch.find(params[:id])
     authorize @match
     @back_path = go_meal_matches_path
+
+    @route = route_info(@match.restaurant)
+
   end
 
   def like
@@ -27,4 +33,22 @@ class GoMealMatchesController < ApplicationController
 
     authorize @match
   end
+
+  private
+
+  def route_info(restaurant)
+    user_result = Geocoder.search(current_user.preferred_start_address).first
+    user_coordinates = [user_result.longitude, user_result.latitude]
+
+    restaurant_coordinates = [
+      restaurant.longitude,
+      restaurant.latitude
+    ]
+
+    OsrmService.new(
+      user_coordinates,
+      restaurant_coordinates
+    ).call
+  end
+
 end

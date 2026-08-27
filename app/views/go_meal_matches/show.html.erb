@@ -3,12 +3,12 @@
     <h1>Match Found!</h1>
 
     <%= render "shared/restaurant_card",
-               name: @match.restaurant.name,
-               category: (@match.restaurant.types.first.presence || "Restaurant"),
-               rating: (@match.restaurant.google_rating || "—"),
-               travel_time: "—",
-               meal_time: "—",
-               total_time: "—" %>
+              name: @match.restaurant.name,
+              category: (@match.restaurant.types.first.presence || "Restaurant"),
+              rating: (@match.restaurant.google_rating || "—"),
+              travel_time: "#{@route[:duration_minutes]} min",
+              meal_time: "—",
+              total_time: "—" %>
 
     <p><%= @match.restaurant.address %></p>
 
