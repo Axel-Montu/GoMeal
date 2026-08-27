@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "preferences/edit"
   get "components/index"
   devise_for :users
   root to: "pages#home"
@@ -24,4 +25,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  resource :preferences, only: [:edit, :update]
 end
