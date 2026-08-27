@@ -1,0 +1,25 @@
+$form-input-border: #d9dfdb;
+$form-input-radius: 14px;
+$form-input-min-height: 54px;
+$form-input-padding: 12px 16px;
+
+%form-input-base {
+  width: 100%;
+  min-height: $form-input-min-height;
+  padding: $form-input-padding;
+
+  background: $white;
+  border: 1px solid $form-input-border;
+  border-radius: $form-input-radius;
+}
+
+select,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="number"] {
+  @extend %form-input-base;
+}
