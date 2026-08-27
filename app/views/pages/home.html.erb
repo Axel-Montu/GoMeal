@@ -1,2 +1,31 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<main class="home-page">
+  <section class="home-page__content">
+
+    <%= image_tag "logo-gomeal-horizontal.png",
+                  alt: "GoMeal",
+                  class: "home-page__logo" %>
+
+    <p class="home-page__description">
+      <span>Trouvez le bon restaurant,</span>
+      <span>au bon moment,</span>
+      <span>selon vos envies et votre temps.</span>
+    </p>
+
+  </section>
+
+  <%= image_tag "city-line.png",
+                alt: "",
+                class: "home-page__illustration" %>
+
+  <div class="home-page__actions">
+    <%= render "shared/button",
+               text: "Créer un compte",
+               path: new_user_registration_path,
+               variant: "primary" %>
+
+    <%= render "shared/button",
+               text: "Se connecter",
+               path: new_user_session_path,
+               variant: "secondary" %>
+  </div>
+</main>
