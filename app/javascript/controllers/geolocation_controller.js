@@ -22,7 +22,10 @@ export default class extends Controller {
 
 
 
+  // this can be used to send geoloc to another page
+  // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
+  
   //   fetch(this.urlValue, {
   //       method: "POST",
   //       headers: {
