@@ -33,7 +33,7 @@ export default class extends Controller {
       )
 
       if (action === "reject") {
-        window.location.href = "/"
+        window.location.href = "pages#home"
       } else {
         window.location.href = `/go_meal_matches/${matchId}`
       }
