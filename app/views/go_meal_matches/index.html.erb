@@ -1,9 +1,44 @@
-<div data-controller="swiper" class="swiper" style="width: 95vw; height: 90vh;">
-<div class = "swiper-wrapper">
-  <% @go_meal_matches.each do |match| %>
-<div class="swiper-slide" data-match-id="<%= match.id %>">
-  <%= match.restaurant.name %>
-</div>
-  <% end %>
-</div>
+<div class="swipe-deck-wrapper">
+  <div data-controller="swiper" class="swiper swipe-deck">
+    <div class="swiper-wrapper">
+      <% @go_meal_matches.each do |match| %>
+        <% restaurant = match.restaurant %>
+        <div class="swiper-slide swipe-card" data-match-id="<%= match.id %>">
+          <div class="swipe-card__header">
+            <h2 class="swipe-card__name"><%= restaurant.name %></h2>
+            <% if restaurant.google_rating.present? %>
+              <span class="swipe-card__rating">
+                <i class="fa-solid fa-star"></i>
+                <%= restaurant.google_rating %>
+              </span>
+            <% end %>
+          </div>
+
+          <div class="swipe-card__tags">
+            <% if restaurant.types.first.present? %>
+              <span class="swipe-card__tag">
+                <%= restaurant.types.first.tr("_", " ").capitalize %>
+              </span>
+            <% end %>
+            <% if restaurant.price_range&.start_price.present? %>
+              <span class="swipe-card__tag">
+                <%= restaurant.price_range.start_price %>–<%= restaurant.price_range.end_price %> <%= restaurant.price_range.currency %>
+              </span>
+            <% end %>
+          </div>
+
+          <p class="swipe-card__address">
+            <i class="fa-solid fa-location-dot"></i>
+            <%= restaurant.address %>
+          </p>
+
+          <% if restaurant.editorial_summary.present? %>
+            <p class="swipe-card__summary">
+              <%= truncate(restaurant.editorial_summary, length: 220) %>
+            </p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
