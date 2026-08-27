@@ -1,0 +1,57 @@
+.preferences-edit-page {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding:
+    calc(24px + env(safe-area-inset-top))
+    24px
+    calc(28px + env(safe-area-inset-bottom));
+
+  font-family: "Baloo 2", sans-serif;
+  color: $text;
+  background: $background;
+
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  &__title {
+    margin: 8px 0 0;
+    color: $secondary;
+    font-size: 26px;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__form .form-input-go {
+    margin: 0;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: $text;
+      font-weight: 700;
+    }
+  }
+
+  &__form input[type="submit"] {
+    margin-top: 12px;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 520px;
+    min-height: auto;
+    margin: 60px auto;
+    padding: 40px 32px;
+    border-radius: 24px;
+    box-shadow: $box-shadow;
+  }
+}
