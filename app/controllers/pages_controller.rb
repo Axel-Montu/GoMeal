@@ -4,6 +4,6 @@ class PagesController < ApplicationController
   def home
   end
 
-  def swiper_test
+  def map_test
   end
 end
