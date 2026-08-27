@@ -1,6 +1,21 @@
+// Couleurs spécifiques à la navbar (non réutilisées ailleurs)
+$navbar-button-bg: #edf5ef;
+
+// Tailles
+$navbar-brand-logo-width: 40px;
+$navbar-mobile-min-height: 70px;
+$navbar-mobile-padding: 12px 16px;
+$navbar-mobile-radius: 16px;
+$navbar-mobile-shadow: 0 6px 20px rgba(23, 63, 37, 0.08);
+
+$navbar-button-size: 44px;
+$navbar-button-font-size: 24px;
+
+$navbar-logo-font-size: 23px;
+
 .navbar-lewagon {
   justify-content: space-between;
-  background: white;
+  background: $white;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -8,24 +23,24 @@
 }
 
 .navbar-lewagon .navbar-brand img {
-  width: 40px;
+  width: $navbar-brand-logo-width;
 }
 
 .mobile-navbar {
-  min-height: 70px;
-  padding: 12px 16px;
+  min-height: $navbar-mobile-min-height;
+  padding: $navbar-mobile-padding;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   background: $white;
-  border-radius: 16px;
-  box-shadow: $box-shadow;
+  border-radius: $navbar-mobile-radius;
+  box-shadow: $navbar-mobile-shadow;
 
   &__button {
-    width: 44px;
-    height: 44px;
+    width: $navbar-button-size;
+    height: $navbar-button-size;
     flex-shrink: 0;
 
     display: flex;
@@ -33,18 +48,18 @@
     justify-content: center;
 
     color: $green;
-    background: $light-green;
+    background: $navbar-button-bg;
     border: none;
     border-radius: 50%;
     text-decoration: none;
-    font-size: 24px;
+    font-size: $navbar-button-font-size;
     line-height: 1;
   }
 
   &__logo {
     margin: 0;
     color: $green;
-    font-size: 23px;
+    font-size: $navbar-logo-font-size;
     font-weight: 800;
 
     span {
@@ -53,8 +68,8 @@
   }
 
   &__spacer {
-    width: 44px;
-    height: 44px;
+    width: $navbar-button-size;
+    height: $navbar-button-size;
     flex-shrink: 0;
   }
 }

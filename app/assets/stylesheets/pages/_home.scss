@@ -1,1 +1,131 @@
-// Specific CSS for your home-page
+.home-page {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding:
+    calc(40px + env(safe-area-inset-top))
+    24px
+    calc(28px + env(safe-area-inset-bottom));
+
+  font-family: "Baloo 2", sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  overflow: hidden;
+  background: #fffaf0;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+  }
+
+  &__illustration {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 64px 0 0;
+    filter: brightness(0.6) contrast(1.6) saturate(1.8);
+    pointer-events: none;
+    user-select: none;
+    transition: filter 0.25s ease, transform 0.25s ease;
+  }
+
+  &__logo {
+    display: block;
+    width: 280px;
+    max-width: 95%;
+    height: auto;
+    transition: transform 0.2s ease;
+  }
+
+  &__description {
+    margin: 44px 0 0;
+
+    color: #2c2928;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.5;
+    transition: color 0.2s ease;
+
+    span {
+      display: block;
+    }
+  }
+
+  &__actions {
+    width: 100%;
+    margin-top: 64px;
+    padding-top: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  // Tablette (à partir de 600px)
+  @media (min-width: 600px) {
+    max-width: 480px;
+
+    &__logo {
+      width: 320px;
+    }
+
+    &__description {
+      font-size: 24px;
+    }
+  }
+
+  // Desktop (à partir de 1024px)
+  @media (min-width: 1024px) {
+    max-width: 520px;
+    min-height: auto;
+    margin: 60px auto;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px -20px rgba(44, 41, 40, 0.25);
+
+    &__logo {
+      width: 360px;
+
+      &:hover {
+        transform: scale(1.03) rotate(-1deg);
+      }
+    }
+
+    &__description {
+      font-size: 26px;
+
+      &:hover {
+        color: #ef7308;
+      }
+    }
+
+    &__illustration {
+      pointer-events: auto; // nécessaire pour que le hover fonctionne
+
+      &:hover {
+        filter: brightness(0.75) contrast(1.7) saturate(2);
+        transform: scale(1.015);
+      }
+    }
+
+    &__actions {
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+// Fond de la page en desktop pour que la "carte" mobile ressorte bien
+body:has(.home-page) {
+  @media (min-width: 1024px) {
+    background: #f0ebe0;
+  }
+}

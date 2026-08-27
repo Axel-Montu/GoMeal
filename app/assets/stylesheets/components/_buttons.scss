@@ -1,3 +1,18 @@
+// Variables de couleurs
+$orange: #ef7308;
+
+// Variables de tailles — bouton primaire (pleine largeur)
+$btn-primary-min-height: 58px;
+$btn-primary-padding: 14px 24px;
+$btn-primary-font-size: 18px;
+$btn-primary-border-width: 2px;
+
+// Variables de tailles — bouton secondaire (compact)
+$btn-secondary-min-height: 44px;
+$btn-secondary-padding: 10px 20px;
+$btn-secondary-font-size: 15px;
+$btn-secondary-border-width: 1.5px;
+
 .btn-go--login {
   color: $white;
   background-color: $primary;
@@ -11,39 +26,66 @@
 
 .btn-go {
   width: 100%;
-  min-height: 58px;
+  min-height: $btn-primary-min-height;
   margin-bottom: 14px;
-  padding: 14px 24px;
+  padding: $btn-primary-padding;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border: 2px solid $green;
+  border: $btn-primary-border-width solid $green;
   border-radius: 40px;
 
-  font-size: 18px;
+  font-size: $btn-primary-font-size;
   font-weight: 700;
   text-decoration: none;
+
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 3px solid $green;
+    outline-offset: 2px;
+  }
 
   &--primary {
     color: $white;
     background: $green;
+    border-color: $green;
+
+    &:hover {
+      color: $white;
+      background: $orange;
+      border-color: $orange;
+      box-shadow: 0 10px 22px -8px rgba(239, 115, 8, 0.4);
+    }
   }
 
   &--secondary {
+    width: auto;
+    min-height: $btn-secondary-min-height;
+    padding: $btn-secondary-padding;
+    margin: 0 auto;
+
+    font-size: $btn-secondary-font-size;
+    border-width: $btn-secondary-border-width;
+
     color: $green;
     background: transparent;
-  }
-}
+    border-color: $green;
 
-.mobile-navbar {
-  &__button {
-    width: 44px;
-    height: 44px;
-    color: $green;
-    background: $light-green;
-    border: 0;
-    border-radius: 50%;
+    &:hover {
+      color: #ffffff;
+      background: $orange;
+      border-color: $orange;
+    }
   }
 }
