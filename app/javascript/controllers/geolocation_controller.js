@@ -18,15 +18,18 @@ export default class extends Controller {
 
   success(pos) {
     console.log("lat:", pos.coords.latitude, "long:", pos.coords.longitude)
-    // const { latitude: lat, longitude: long } = pos.coords;
+    const { latitude: lat, longitude: long } = pos.coords;
 
-    // fetch(this.urlValue, {
-    //     method: "POST",
-    //     headers: {
-    //       "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-    //       "Content-Type": "application/json"
-    // },
-    // body: JSON.stringify({ lat, long })
+    
+
+
+  //   fetch(this.urlValue, {
+  //       method: "POST",
+  //       headers: {
+  //         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+  //         "Content-Type": "application/json"
+  //   },
+  //   body: JSON.stringify({ lat, long })
   // })
   // .then((response) => {
   //   if (!response.ok) throw new Error(
@@ -35,7 +38,7 @@ export default class extends Controller {
   //   return response.json()
   // })
   // .then((data) => {
-  //   // console.log(data)
+
   // })
   // .catch((e) => {
   //   console.error(e)
