@@ -4,11 +4,6 @@ class GoMealMatchesController < ApplicationController
     @go_meal_matches = current_user.go_meal_matches.includes(:restaurant)
     policy_scope(@go_meal_matches)
 
-    @routes = {}
-
-    @go_meal_matches.each do |match|
-      @routes[match.id] = route_info(match.restaurant)
-    end
   end
 
   def show
