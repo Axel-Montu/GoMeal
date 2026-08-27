@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
+  get "preferences/edit"
   get "components/index"
   devise_for :users
   root to: "pages#home"
+  resources :go_meal_matches, only: [:index, :show] do
+    member do
+      patch :like
+      patch :reject
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -9,6 +16,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "components", to: "components#index"
+  get "map_test", to: "pages#map_test"
+  post "map_test", to: "pages#map_test"
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
@@ -16,4 +25,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  resource :preferences, only: [:edit, :update]
 end

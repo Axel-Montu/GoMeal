@@ -46,6 +46,7 @@ gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.1"
 gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
+gem "pundit"
 
 group :development, :test do
   gem "dotenv-rails"
@@ -60,6 +61,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Testing framework used from US #29 onwards
+  gem "rspec-rails"
 end
 
 group :development do

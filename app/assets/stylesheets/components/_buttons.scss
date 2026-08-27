@@ -14,13 +14,13 @@ $btn-secondary-font-size: 15px;
 $btn-secondary-border-width: 1.5px;
 
 .btn-go--login {
-  color: #ffffff;
-  background-color: $orange;
-  border: 2px solid $orange;
+  color: $white;
+  background-color: $primary;
+  border: 2px solid $primary;
 
   &:hover {
-    color: $orange;
-    background-color: #ffffff;
+    color:$primary;
+    background-color: $white;
   }
 }
 
