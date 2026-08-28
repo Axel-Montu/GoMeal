@@ -7,12 +7,19 @@ class PreferencesController < ApplicationController
   def update
     @user = current_user
     authorize @user
-
-  if @user.update(preferences_params)
-    redirect_to go_meal_matches_path, notice: "Preferences updated."
-  else
-    render :edit, status: :unprocessable_entity
-  end
+    GoMealMatch.destroy_all
+    if @user.update(preferences_params)
+      Restaurant.all.each do |restaurant|
+        score = rand(0..100)
+        @match = GoMealMatch.new(go_meal_score: score)
+        @match.user = current_user
+        @match.restaurant = restaurant
+        @match.save
+      end
+      redirect_to go_meal_matches_path, notice: "Preferences updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private

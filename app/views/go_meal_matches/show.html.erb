@@ -4,13 +4,13 @@
 
     <%= render "shared/restaurant_card",
                name: @match.restaurant.name,
-               category: (@match.restaurant.types.first.presence || "Restaurant"),
+               address: @match.restaurant.address,
+               category: (@match.restaurant.types.first || "Restaurant").tr("_", " ").capitalize,
                rating: (@match.restaurant.google_rating || "—"),
                travel_time: "—",
                meal_time: "—",
                total_time: "—" %>
 
-    <p><%= @match.restaurant.address %></p>
 
     <div data-controller="geolocation">
       <a href="#"

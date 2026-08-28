@@ -39,3 +39,6 @@
 # Ignore Mac and Linux file system files
 *.swp
 .DS_Store
+
+# The example file IS committed: it carries names, never values.
+!.env.example

@@ -1,21 +1,26 @@
-<h1>My preferences</h1>
+<main class="preferences-edit-page">
+  <h1 class="preferences-edit-page__title">Mes préférences</h1>
 
-<%= simple_form_for @user, url: preferences_path do |f| %>
+  <%= simple_form_for @user,
+                      url: preferences_path,
+                      html: { class: "preferences-edit-page__form" } do |f| %>
 
-  <%= f.input :average_lunch_time_minutes,
-              collection: [
-                ["Express — 30 min", 30],
-                ["Normal — 1 h", 60],
-                ["J'ai le temps — 1 h 30+", 90]
-              ],
-              label: "Combien de temps as-tu pour déjeuner ?",
-              include_blank: false %>
+    <%= f.input :average_lunch_time_minutes,
+                collection: [
+                  ["Express — 30 min", 30],
+                  ["Normal — 1 h", 60],
+                  ["J'ai le temps — 1 h 30+", 90]
+                ],
+                label: "Combien de temps as-tu pour déjeuner ?",
+                include_blank: false,
+                wrapper_html: { class: "form-input-go" } %>
 
-  <%= f.input :preferred_start_address,
-              label: "Preferred start address" %>
+    <%= f.input :preferred_start_address,
+                label: "Adresse de départ",
+                wrapper_html: { class: "form-input-go" } %>
 
-  <%= f.button :submit, "Save preferences", class: "btn btn-primary" %>
+    <%= f.submit "Enregistrer mes préférences",
+                 class: "btn-go btn-go--primary" %>
 
-<% end %>
-
-
+  <% end %>
+</main>
