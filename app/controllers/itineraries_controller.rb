@@ -27,7 +27,10 @@ class ItinerariesController < ApplicationController
 
     # 4. Nothing to draw without it, and nothing to draw with another
     #    match's position either
-    return if @start_point.present? && @start_point["match_id"] == @match.id
+    if @start_point.present? && @start_point["match_id"] == @match.id
+      @route = walking_route
+      return
+    end
 
     redirect_to go_meal_match_path(@match),
                 alert: "We need your position to show you the way."
@@ -47,5 +50,13 @@ class ItinerariesController < ApplicationController
     else
       authorize @match, policy_class: ItineraryPolicy
     end
+  end
+
+  def walking_route
+    # 5. Longitude first, both times — the order OpenRouteService expects
+    start_point = [@start_point["longitude"].to_f, @start_point["latitude"].to_f]
+    finish_point = [@match.restaurant.longitude, @match.restaurant.latitude]
+
+    WalkingRoute.new(start_point, finish_point).call
   end
 end

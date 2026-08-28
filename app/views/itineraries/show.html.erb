@@ -1,8 +1,10 @@
 <div class="itinerary">
   <div class="map"
-       data-controller="map"
-       data-map-center-value="[<%= @match.restaurant.longitude %>, <%= @match.restaurant.latitude %>]"
-       data-map-zoom-value="15"></div>
+    data-controller="map"
+    data-map-center-value="[<%= @match.restaurant.longitude %>, <%= @match.restaurant.latitude %>]"
+    data-map-zoom-value="15"
+    data-map-route-value="<%= @route ? @route[:geometry].to_json : "null" %>">
+  </div>
 
   <div class="itinerary__panel">
     <%= render "shared/restaurant_card",
