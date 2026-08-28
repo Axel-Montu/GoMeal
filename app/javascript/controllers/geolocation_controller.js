@@ -20,9 +20,12 @@ export default class extends Controller {
     console.log("lat:", pos.coords.latitude, "long:", pos.coords.longitude)
     const { latitude: lat, longitude: long } = pos.coords;
 
-    
 
 
+  // this can be used to send geoloc to another page
+  // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+  
   //   fetch(this.urlValue, {
   //       method: "POST",
   //       headers: {
