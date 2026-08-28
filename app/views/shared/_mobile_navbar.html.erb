@@ -1,6 +1,21 @@
 <nav class="mobile-navbar">
-  <%= link_to edit_preferences_path, class: "mobile-navbar__button" do %>
-    <i class="fa-solid fa-arrow-left"></i>
+  <% case %>
+  <% when controller_name == "preferences" %>
+    <%= link_to root_path, class: "mobile-navbar__button" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% when controller_name == "go_meal_matches" && action_name == "index" %>
+    <%= link_to edit_preferences_path, class: "mobile-navbar__button" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% when controller_name == "go_meal_matches" && action_name == "show" %>
+    <%= link_to go_meal_matches_path, class: "mobile-navbar__button" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% when controller_name == "go_meal_matches" && action_name == "show" %>
+    <%= link_to go_meal_matches_path, class: "mobile-navbar__button" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
   <% end %>
 
   <p class="mobile-navbar__logo">
