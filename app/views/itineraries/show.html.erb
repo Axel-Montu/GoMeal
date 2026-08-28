@@ -1,7 +1,10 @@
-<div class="components-page">
-  <section class="components-section">
-    <h1>Match Found!</h1>
+<div class="itinerary">
+  <div class="map"
+       data-controller="map"
+       data-map-center-value="[<%= @match.restaurant.longitude %>, <%= @match.restaurant.latitude %>]"
+       data-map-zoom-value="15"></div>
 
+  <div class="itinerary__panel">
     <%= render "shared/restaurant_card",
                name: @match.restaurant.name,
                address: @match.restaurant.address,
@@ -11,12 +14,11 @@
                meal_time: "—",
                total_time: "—" %>
 
-
-    <div data-controller="geolocation"
-         data-geolocation-url-value="<%= go_meal_match_itinerary_path(@match) %>">
-      <a href="#"
-         data-action="click->geolocation#search"
-         class="btn-go btn-go--primary">Y aller</a>
-    </div>
+    <%= render "shared/button",
+               text: "Retour",
+               path: go_meal_match_path(@match),
+               variant: "secondary" %>
+  </div>
+</div>
   </section>
 </div>
