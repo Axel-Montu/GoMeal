@@ -1,0 +1,24 @@
+<div class="itinerary">
+  <div class="map"
+       data-controller="map"
+       data-map-center-value="[<%= @match.restaurant.longitude %>, <%= @match.restaurant.latitude %>]"
+       data-map-zoom-value="15"></div>
+
+  <div class="itinerary__panel">
+    <%= render "shared/restaurant_card",
+               name: @match.restaurant.name,
+               address: @match.restaurant.address,
+               category: (@match.restaurant.types.first || "Restaurant").tr("_", " ").capitalize,
+               rating: (@match.restaurant.google_rating || "—"),
+               travel_time: "—",
+               meal_time: "—",
+               total_time: "—" %>
+
+    <%= render "shared/button",
+               text: "Retour",
+               path: go_meal_match_path(@match),
+               variant: "secondary" %>
+  </div>
+</div>
+  </section>
+</div>
