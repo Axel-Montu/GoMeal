@@ -17,8 +17,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "components", to: "components#index"
-  get "map_test", to: "pages#map_test"
-  post "map_test", to: "pages#map_test"
+  
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
