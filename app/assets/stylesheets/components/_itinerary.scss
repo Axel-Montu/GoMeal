@@ -2,7 +2,14 @@
 .itinerary {
   position: relative;
   min-height: 100vh;
+  overflow: hidden;
   background: $background;
+}
+// On this screen the map fills everything: the panel is laid over it,
+// not under it. Elsewhere .map keeps its 60vh.
+.itinerary .map {
+  position: absolute;
+  inset: 0;  border-radius: 0;
 }
 
 .itinerary__panel {

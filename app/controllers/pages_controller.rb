@@ -3,7 +3,4 @@ class PagesController < ApplicationController
 
   def home
   end
-
-  def map_test
-  end
 end

@@ -7,20 +7,36 @@
   </div>
 
   <div class="itinerary__panel">
-    <%= render "shared/restaurant_card",
-               name: @match.restaurant.name,
-               address: @match.restaurant.address,
-               category: (@match.restaurant.types.first || "Restaurant").tr("_", " ").capitalize,
-               rating: (@match.restaurant.google_rating || "—"),
-               travel_time: "—",
-               meal_time: "—",
-               total_time: "—" %>
+        <article class="restaurant-card">
+      <div class="restaurant-card__content">
+        <div class="restaurant-card__header">
+          <div>
+            <h3><%= @match.restaurant.name %></h3>
+            <p><%= @match.restaurant.address %></p>
+          </div>
+
+          <span class="restaurant-card__rating">
+            ★ <%= @match.restaurant.google_rating || "—" %>
+          </span>
+        </div>
+
+        <% if @route %>
+          <div class="restaurant-card__stats">
+            <span>🚶 <%= walking_time(@route[:duration]) %></span>
+            <span>📍 <%= walking_distance(@route[:distance]) %></span>
+            <span>⏱️ <%= arrival_time(@route[:duration]) %></span>
+          </div>
+        <% else %>
+          <p class="itinerary__no-route">
+            Nous n'avons pas trouvé de chemin à pied jusqu'à ce restaurant.
+          </p>
+        <% end %>
+      </div>
+    </article>
 
     <%= render "shared/button",
                text: "Retour",
                path: go_meal_match_path(@match),
                variant: "secondary" %>
   </div>
-</div>
-  </section>
 </div>
