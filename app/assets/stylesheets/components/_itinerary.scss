@@ -1,0 +1,13 @@
+// The map fills the screen, the panel sits on top of it — see the wireframe.
+.itinerary {
+  position: relative;
+  min-height: 100vh;
+  background: $background;
+}
+
+.itinerary__panel {
+  position: absolute;
+  right: 12px;
+  bottom: 16px;
+  left: 12px;
+}
