@@ -1,0 +1,11 @@
+<% button_class = "btn-go btn-go--#{variant}" %>
+
+<% if local_assigns[:type] == "submit" %>
+  <%= button_tag text,
+                 type: "submit",
+                 class: button_class %>
+<% else %>
+  <%= link_to text,
+              path,
+              class: button_class %>
+<% end %>

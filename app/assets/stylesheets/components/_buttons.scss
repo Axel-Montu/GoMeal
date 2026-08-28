@@ -1,49 +1,47 @@
-// Variables de couleurs
-$orange: #ef7308;
-
-// Variables de tailles — bouton primaire (pleine largeur)
+// Bouton principal
 $btn-primary-min-height: 58px;
 $btn-primary-padding: 14px 24px;
 $btn-primary-font-size: 18px;
 $btn-primary-border-width: 2px;
 
-// Variables de tailles — bouton secondaire (compact)
+// Bouton secondaire
 $btn-secondary-min-height: 44px;
 $btn-secondary-padding: 10px 20px;
 $btn-secondary-font-size: 15px;
 $btn-secondary-border-width: 1.5px;
 
-.btn-go--login {
-  color: $white;
-  background-color: $primary;
-  border: 2px solid $primary;
-
-  &:hover {
-    color:$primary;
-    background-color: $white;
-  }
-}
-
 .btn-go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
   min-height: $btn-primary-min-height;
   margin-bottom: 14px;
   padding: $btn-primary-padding;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   border: $btn-primary-border-width solid $green;
   border-radius: 40px;
 
+  font-family: $font-family-sans-serif;
   font-size: $btn-primary-font-size;
   font-weight: 700;
+  line-height: 1;
+  text-align: center;
   text-decoration: none;
 
-  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  appearance: none;
+  cursor: pointer;
+
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 
   &:hover {
+    text-decoration: none;
     transform: translateY(-2px);
   }
 
@@ -52,40 +50,59 @@ $btn-secondary-border-width: 1.5px;
   }
 
   &:focus-visible {
-    outline: 3px solid $green;
-    outline-offset: 2px;
+    outline: 3px solid rgba($orange, 0.35);
+    outline-offset: 3px;
   }
 
+  // Bouton vert principal
   &--primary {
-    color: $white;
-    background: $green;
     border-color: $green;
+    color: $white;
+    background-color: $green;
+    box-shadow: 0 8px 18px rgba($green, 0.2);
 
     &:hover {
-      color: $white;
-      background: $orange;
       border-color: $orange;
-      box-shadow: 0 10px 22px -8px rgba(239, 115, 8, 0.4);
+      color: $white;
+      background-color: $orange;
+      box-shadow: 0 10px 22px -8px rgba($orange, 0.4);
     }
   }
 
+  // Bouton blanc compact
   &--secondary {
     width: auto;
     min-height: $btn-secondary-min-height;
-    padding: $btn-secondary-padding;
     margin: 0 auto;
+    padding: $btn-secondary-padding;
 
-    font-size: $btn-secondary-font-size;
     border-width: $btn-secondary-border-width;
-
-    color: $green;
-    background: transparent;
     border-color: $green;
 
+    color: $green;
+    background-color: $white;
+    font-size: $btn-secondary-font-size;
+
     &:hover {
-      color: #ffffff;
-      background: $orange;
       border-color: $orange;
+      color: $white;
+      background-color: $orange;
+      box-shadow: 0 8px 18px rgba($orange, 0.22);
+    }
+  }
+
+  // Bouton orange réservé à la connexion
+  &--login {
+    border-color: $orange;
+    color: $white;
+    background-color: $orange;
+    box-shadow: 0 8px 18px rgba($orange, 0.25);
+
+    &:hover {
+      border-color: $orange;
+      color: $orange;
+      background-color: $white;
+      box-shadow: 0 10px 22px -8px rgba($orange, 0.35);
     }
   }
 }
