@@ -7,7 +7,6 @@ Rails.application.routes.draw do
       patch :like
       patch :reject
     end
-
     resource :itinerary, only: [:create, :show]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -17,7 +16,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "components", to: "components#index"
-  
+
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
