@@ -11,12 +11,6 @@
                meal_time: "—",
                total_time: "—" %>
 
-
-    <div data-controller="geolocation"
-         data-geolocation-url-value="<%= go_meal_match_itinerary_path(@match) %>">
-      <a href="#"
-         data-action="click->geolocation#search"
-         class="btn-go btn-go--primary">Y aller</a>
-    </div>
+    <%= link_to "Y aller", map_test_path, class: "btn-go btn-go--primary" %>
   </section>
 </div>
