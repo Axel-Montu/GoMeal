@@ -20,7 +20,7 @@ $btn-secondary-border-width: 1.5px;
   margin-bottom: 14px;
   padding: $btn-primary-padding;
 
-  border: $btn-primary-border-width solid $green;
+  border: $btn-primary-border-width solid transparent;
   border-radius: 40px;
 
   font-family: $font-family-sans-serif;
@@ -50,26 +50,26 @@ $btn-secondary-border-width: 1.5px;
   }
 
   &:focus-visible {
-    outline: 3px solid rgba($orange, 0.35);
+    outline: 3px solid rgba(var(--color-primary-rgb), 0.35);
     outline-offset: 3px;
   }
 
-  // Bouton vert principal
+  // CTA principal — rouge plein
   &--primary {
-    border-color: $green;
+    border-color: $primary;
     color: $white;
-    background-color: $green;
-    box-shadow: 0 8px 18px rgba($green, 0.2);
+    background-color: $primary;
+    box-shadow: 0 8px 18px rgba(var(--color-primary-rgb), 0.25);
 
     &:hover {
-      border-color: $orange;
+      border-color: $secondary;
       color: $white;
-      background-color: $orange;
-      box-shadow: 0 10px 22px -8px rgba($orange, 0.4);
+      background-color: $secondary;
+      box-shadow: 0 10px 22px -8px rgba(var(--color-secondary-rgb), 0.4);
     }
   }
 
-  // Bouton blanc compact
+  // Action secondaire — blanc bordé noir, compact
   &--secondary {
     width: auto;
     min-height: $btn-secondary-min-height;
@@ -77,32 +77,17 @@ $btn-secondary-border-width: 1.5px;
     padding: $btn-secondary-padding;
 
     border-width: $btn-secondary-border-width;
-    border-color: $green;
+    border-color: $secondary;
 
-    color: $green;
+    color: $secondary;
     background-color: $white;
     font-size: $btn-secondary-font-size;
 
     &:hover {
-      border-color: $orange;
+      border-color: $primary;
       color: $white;
-      background-color: $orange;
-      box-shadow: 0 8px 18px rgba($orange, 0.22);
-    }
-  }
-
-  // Bouton orange réservé à la connexion
-  &--login {
-    border-color: $orange;
-    color: $white;
-    background-color: $orange;
-    box-shadow: 0 8px 18px rgba($orange, 0.25);
-
-    &:hover {
-      border-color: $orange;
-      color: $orange;
-      background-color: $white;
-      box-shadow: 0 10px 22px -8px rgba($orange, 0.35);
+      background-color: $primary;
+      box-shadow: 0 8px 18px rgba(var(--color-primary-rgb), 0.22);
     }
   }
 }

@@ -7,6 +7,13 @@
 @import "bootstrap";
 @import "font-awesome";
 
+// Après Bootstrap : restaurer les alias vers les CSS vars pour que nos composants
+// custom suivent le thème (Bootstrap, lui, garde ses couleurs fixes).
+$primary:    var(--color-primary);
+$secondary:  var(--color-secondary);
+$background: var(--color-background);
+$surface:    var(--color-surface);
+
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
