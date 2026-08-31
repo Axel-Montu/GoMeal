@@ -1,71 +1,44 @@
-<% pending = @go_meal_matches.select { |m| m.status.to_s == "pending" } %>
-
-<div class="swipe-deck-wrapper" data-controller="swiper">
-
-
-  <div class="swiper swipe-deck" data-swiper-target="swiper">
+<div class="swipe-deck-wrapper">
+  <div data-controller="swiper" class="swiper swipe-deck">
     <div class="swiper-wrapper">
-      <% pending.each do |match| %>
+      <% @go_meal_matches.each do |match| %>
         <% restaurant = match.restaurant %>
-        <article class="swiper-slide swipe-card" data-match-id="<%= match.id %>">
-          <span class="swipe-card__stamp swipe-card__stamp--like">Miam</span>
-          <span class="swipe-card__stamp swipe-card__stamp--nope">Plus tard</span>
-
-          <div class="swipe-card__cover">
-            <%= image_tag restaurant_cover_photo(restaurant), class: "swipe-card__photo", alt: restaurant.name, draggable: false %>
+        <div class="swiper-slide swipe-card" data-match-id="<%= match.id %>">
+          <div class="swipe-card__header">
+            <h2 class="swipe-card__name"><%= restaurant.name %></h2>
             <% if restaurant.google_rating.present? %>
               <span class="swipe-card__rating">
-                <i class="fa-solid fa-star"></i><%= restaurant.google_rating %>
+                <i class="fa-solid fa-star"></i>
+                <%= restaurant.google_rating %>
               </span>
             <% end %>
           </div>
 
-          <div class="swipe-card__body">
-            <h2 class="swipe-card__name"><%= restaurant.name %></h2>
-
-            <div class="swipe-card__tags">
-              <span class="swipe-card__tag swipe-card__tag--accent">
-                <%= restaurant_category_label(restaurant) %>
+          <div class="swipe-card__tags">
+            <% if restaurant.types.first.present? %>
+              <span class="swipe-card__tag">
+                <%= restaurant.types.first.tr("_", " ").capitalize %>
               </span>
-              <% if restaurant.price_range&.start_price.present? %>
-                <span class="swipe-card__tag">
-                  <%= restaurant.price_range.start_price %>–<%= restaurant.price_range.end_price %> <%= restaurant.price_range.currency %>
-                </span>
-              <% end %>
-            </div>
+            <% end %>
+            <% if restaurant.price_range&.start_price.present? %>
+              <span class="swipe-card__tag">
+                <%= restaurant.price_range.start_price %>–<%= restaurant.price_range.end_price %> <%= restaurant.price_range.currency %>
+              </span>
+            <% end %>
+          </div>
 
-            <p class="swipe-card__address">
-              <span class="swipe-card__address-dot" aria-hidden="true"></span>
-              <%= restaurant.address %>
+          <p class="swipe-card__address">
+            <i class="fa-solid fa-location-dot"></i>
+            <%= restaurant.address %>
+          </p>
+
+          <% if restaurant.editorial_summary.present? %>
+            <p class="swipe-card__summary">
+              <%= truncate(restaurant.editorial_summary, length: 220) %>
             </p>
-
-            <% if restaurant.editorial_summary.present? %>
-              <p class="swipe-card__summary">
-                <%= truncate(restaurant.editorial_summary, length: 200) %>
-              </p>
-            <% end %>
-          </div>
-        </article>
+          <% end %>
+        </div>
       <% end %>
     </div>
-  </div>
-
-  <div class="swipe-actions" data-swiper-target="actions">
-    <button type="button" class="swipe-actions__btn swipe-actions__btn--nope"
-            data-action="swiper#reject" aria-label="Passer ce restaurant">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
- 
-    <button type="button" class="swipe-actions__btn swipe-actions__btn--like"
-            data-action="swiper#like" aria-label="Choisir ce restaurant">
-      <i class="fa-solid fa-heart"></i>
-    </button>
-  </div>
-
-  <div class="swipe-empty" data-swiper-target="empty" <%= "hidden" if pending.any? %>>
-    <span class="swipe-empty__emoji">🍽️</span>
-    <p class="swipe-empty__title">Tu as tout passé en revue !</p>
-    <p class="swipe-empty__text">Ajuste tes préférences pour découvrir de nouvelles adresses.</p>
-    <%= link_to "Modifier mes préférences", edit_preferences_path, class: "btn-go btn-go--secondary" %>
   </div>
 </div>
