@@ -1,11 +1,22 @@
 <div class="swipe-deck-wrapper">
-  <div data-controller="swiper" class="swiper swipe-deck">
+  <div
+    class="swiper swipe-deck"
+    data-controller="swiper">
+
     <div class="swiper-wrapper">
       <% @go_meal_matches.each do |match| %>
         <% restaurant = match.restaurant %>
-        <div class="swiper-slide swipe-card" data-match-id="<%= match.id %>">
-          <div class="swipe-card__header">
-            <h2 class="swipe-card__name"><%= restaurant.name %></h2>
+
+        <div
+          class="swiper-slide swipe-card"
+          data-match-id="<%= match.id %>">
+
+          <div class="swipe-card__cover">
+            <%= image_tag restaurant_cover_photo(restaurant),
+                          class: "swipe-card__photo",
+                          alt: restaurant.name,
+                          draggable: false %>
+
             <% if restaurant.google_rating.present? %>
               <span class="swipe-card__rating">
                 <i class="fa-solid fa-star"></i>
@@ -14,29 +25,55 @@
             <% end %>
           </div>
 
-          <div class="swipe-card__tags">
-            <% if restaurant.types.first.present? %>
-              <span class="swipe-card__tag">
-                <%= restaurant.types.first.tr("_", " ").capitalize %>
-              </span>
-            <% end %>
-            <% if restaurant.price_range&.start_price.present? %>
-              <span class="swipe-card__tag">
-                <%= restaurant.price_range.start_price %>–<%= restaurant.price_range.end_price %> <%= restaurant.price_range.currency %>
-              </span>
-            <% end %>
-          </div>
+          <div class="swipe-card__body">
+            <h2 class="swipe-card__name">
+              <%= restaurant.name %>
+            </h2>
 
-          <p class="swipe-card__address">
-            <i class="fa-solid fa-location-dot"></i>
-            <%= restaurant.address %>
-          </p>
+            <div class="swipe-card__tags">
+              <% if restaurant.types.first.present? %>
+                <span class="swipe-card__tag swipe-card__tag--accent">
+                  <%= restaurant.types.first.tr("_", " ").capitalize %>
+                </span>
+              <% end %>
 
-          <% if restaurant.editorial_summary.present? %>
-            <p class="swipe-card__summary">
-              <%= truncate(restaurant.editorial_summary, length: 220) %>
+              <% if restaurant.price_range&.start_price.present? %>
+                <span class="swipe-card__tag">
+                  <%= restaurant.price_range.start_price %>–<%= restaurant.price_range.end_price %>
+                  <%= restaurant.price_range.currency %>
+                </span>
+              <% end %>
+            </div>
+
+            <p class="swipe-card__address">
+              <span class="swipe-card__address-dot"></span>
+              <%= restaurant.address %>
             </p>
-          <% end %>
+
+            <% if restaurant.editorial_summary.present? %>
+              <p class="swipe-card__summary">
+                <%= truncate(restaurant.editorial_summary, length: 220) %>
+              </p>
+            <% end %>
+
+            <div class="swipe-actions">
+              <button
+                type="button"
+                class="swipe-actions__btn swipe-actions__btn--nope"
+                data-action="click->swiper#reject"
+                aria-label="Supprimer">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+
+              <button
+                type="button"
+                class="swipe-actions__btn swipe-actions__btn--like"
+                data-action="click->swiper#like"
+                aria-label="Aimer">
+                <i class="fa-solid fa-heart"></i>
+              </button>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>
