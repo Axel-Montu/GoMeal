@@ -21,4 +21,13 @@ class ItinerariesHelperTest < ActionView::TestCase
       assert_equal "12:41", arrival_time(611.7)
     end
   end
+
+  test "shows the meal time from the user's preference" do
+    assert_equal "30 min", meal_time(30)
+  end
+
+  test "totals the walk there, the meal, and the walk back" do
+    # 240 seconds each way is 4 minutes, plus 30 at the table
+    assert_equal "38 min", total_time(240.0, 30)
+  end
 end

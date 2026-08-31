@@ -18,4 +18,16 @@ module ItinerariesHelper
     minutes = (seconds / 60.0).ceil
     I18n.l(Time.zone.now + minutes.minutes, format: "%H:%M")
   end
+
+  # The user's own lunch length, from their preferences
+  def meal_time(minutes)
+    "#{minutes} min"
+  end
+
+  # What the whole break costs: walk there, sit down, walk back.
+  # The return leg is the same walk, so the same duration.
+  def total_time(walk_seconds, meal_minutes)
+    walk_minutes = (walk_seconds / 60.0).ceil
+    "#{(walk_minutes * 2) + meal_minutes} min"
+  end
 end
