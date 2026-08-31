@@ -12,23 +12,15 @@ class GoMealMatchesController < ApplicationController
   end
   def like
     @match = current_user.go_meal_matches.find(params[:id])
-    authorize @match
-    @match.update!(status: :liked)
 
-    respond_to do |format|
-      format.json { head :ok }
-      format.html { redirect_to go_meal_match_path(@match) }
-    end
+    # redirect_to root_path
+    authorize @match
   end
 
   def reject
     @match = current_user.go_meal_matches.find(params[:id])
-    authorize @match
     @match.update!(status: :rejected)
 
-    respond_to do |format|
-      format.json { head :ok }
-      format.html { redirect_to go_meal_matches_path }
-    end
+    authorize @match
   end
 end
