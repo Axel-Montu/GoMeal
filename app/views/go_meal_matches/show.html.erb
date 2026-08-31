@@ -1,6 +1,4 @@
-<div class="components-page"
-  data-controller="geolocation"
-  data-geolocation-url-value="<%= go_meal_match_itinerary_path(@match) %>">
+<div class="components-page">
   <section class="components-section">
     <h1>Match Found!</h1>
 
@@ -9,12 +7,10 @@
                address: @match.restaurant.address,
                category: (@match.restaurant.types.first || "Restaurant").tr("_", " ").capitalize,
                rating: (@match.restaurant.google_rating || "—"),
-               travel_time: "—",
-               meal_time: "—",
-               total_time: "—" %>
+               travel_time: @route ? walking_time(@route[:duration]) : "—",
+               meal_time: @meal ? meal_time(@meal) : "—",
+               total_time: (@route && @meal) ? total_time(@route[:duration], @meal) : "—" %>
 
-    <%# The position is already in the session by now: the controller above
-    asked for it on load. A plain link is enough. %>
     <%= link_to "Y aller", go_meal_match_itinerary_path(@match), class: "btn-go btn-go--primary" %>
   </section>
 </div>
