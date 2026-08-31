@@ -4,6 +4,13 @@
       <% @go_meal_matches.each do |match| %>
         <% restaurant = match.restaurant %>
         <div class="swiper-slide swipe-card" data-match-id="<%= match.id %>">
+          <div class="swipe-card__cover">
+            <%= image_tag restaurant_cover_photo(restaurant),
+                          class: "swipe-card__photo",
+                          alt: restaurant.name,
+                          draggable: false %>
+          </div>
+
           <div class="swipe-card__header">
             <h2 class="swipe-card__name"><%= restaurant.name %></h2>
             <% if restaurant.google_rating.present? %>
