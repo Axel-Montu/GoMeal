@@ -5,19 +5,20 @@
                       url: preferences_path,
                       html: { class: "preferences-edit-page__form" } do |f| %>
 
-    <%= f.input :average_lunch_time_minutes,
-                collection: [
-                  ["Express — 30 min", 30],
-                  ["Normal — 1 h", 60],
-                  ["J'ai le temps — 1 h 30+", 90]
-                ],
-                label: "Combien de temps as-tu pour déjeuner ?",
-                include_blank: false,
-                wrapper_html: { class: "form-input-go" } %>
+    <div class="form-input-go"
+         data-controller="lunch-time-slider"
+         data-lunch-time-slider-initial-value="<%= @user.average_lunch_time_minutes || 60 %>">
 
-    <%= f.input :preferred_start_address,
-                label: "Adresse de départ",
-                wrapper_html: { class: "form-input-go" } %>
+      <label>Combien de temps as-tu pour déjeuner ?</label>
+
+      <div data-lunch-time-slider-target="slider" class="lunch-slider"></div>
+
+      <p class="lunch-slider-caption"
+         data-lunch-time-slider-target="label"></p>
+
+      <%= f.hidden_field :average_lunch_time_minutes,
+                         data: { lunch_time_slider_target: "input" } %>
+    </div>
 
     <%= f.submit "Enregistrer mes préférences",
                  class: "btn-go btn-go--primary" %>
