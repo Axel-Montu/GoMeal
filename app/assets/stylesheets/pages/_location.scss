@@ -1,0 +1,49 @@
+.location-page {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding:
+    calc(24px + env(safe-area-inset-top))
+    24px
+    calc(28px + env(safe-area-inset-bottom));
+
+  font-family: "Baloo 2", sans-serif;
+  color: $text;
+  background: $background;
+
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  &__title {
+    margin: 8px 0 0;
+    color: $secondary;
+    font-size: 26px;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  &__description {
+    color: $text;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  &__blocked {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 520px;
+    min-height: auto;
+    margin: 60px auto;
+    padding: 40px 32px;
+    border-radius: 24px;
+    box-shadow: $box-shadow;
+  }
+}

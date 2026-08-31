@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       patch :like
       patch :reject
     end
-    resource :itinerary, only: [:create, :show]
+    resource :itinerary, only: [:show]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -25,5 +25,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
+  resource :locations, only: [:show, :create]
   resource :preferences, only: [:edit, :update]
 end
