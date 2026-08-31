@@ -1,5 +1,9 @@
 <nav class="mobile-navbar">
   <% case %>
+  <% when controller_name == "locations" %>
+    <%= link_to root_path, class: "mobile-navbar__button" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
   <% when controller_name == "preferences" %>
     <%= link_to root_path, class: "mobile-navbar__button" do %>
       <i class="fa-solid fa-arrow-left"></i>
