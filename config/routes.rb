@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       patch :like
       patch :reject
     end
-    resource :itinerary, only: [:create, :show]
+    resource :itinerary, only: [:show]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
