@@ -10,3 +10,7 @@ pin "@popperjs/core", to: "popper.js", preload: true
 pin "swiper", to: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.mjs"
 
 pin "maplibre-gl", to: "https://cdn.jsdelivr.net/npm/maplibre-gl@6.6.0/+esm"
+
+pin "gsap",               to: "https://cdn.jsdelivr.net/npm/gsap@3.13.0/index.js"
+pin "gsap/DrawSVGPlugin", to: "https://cdn.jsdelivr.net/npm/gsap@3.13.0/DrawSVGPlugin.js"
+pin "gsap/SplitText",     to: "https://cdn.jsdelivr.net/npm/gsap@3.13.0/SplitText.js"

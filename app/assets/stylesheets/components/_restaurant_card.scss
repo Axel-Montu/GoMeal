@@ -10,7 +10,7 @@
 
     h3 {
       margin: 0 0 5px;
-      color: $green;
+      color: $secondary;
     }
 
     p {
@@ -20,7 +20,7 @@
   }
 
   &__rating {
-    color: $orange;
+    color: $yellow;
     font-weight: 700;
   }
 
@@ -34,7 +34,7 @@
       flex: 1;
       padding: 10px 5px;
       text-align: center;
-      background: $light-green;
+      background: $surface;
       border-radius: 10px;
       font-size: 13px;
     }

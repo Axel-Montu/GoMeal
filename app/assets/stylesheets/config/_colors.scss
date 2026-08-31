@@ -1,19 +1,82 @@
-// Define variables for your color scheme
-
-// For example:
+// Palettes de couleurs statiques (non thémées)
 $red: #FD1015;
 $blue: #0D6EFD;
 $yellow: #FFC65A;
 $gray: #0E0000;
 $light-gray: #F4F4F4;
-
-$primary: #ef7308;
-$secondary: #173f25;
-$background: #fbfaf7;
-$light-green: #edf5ef;
 $text: #2c2928;
 $light-text: #747b77;
 $white: #ffffff;
 
-$light-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-$box-shadow :0 6px 20px rgba(23, 63, 37, 0.08);
+$light-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+$box-shadow: 0 6px 20px rgba(23, 63, 37, 0.08);
+
+// Couleurs thémées (runtime, changeables via [data-theme] sur <html>)
+// Chaque couleur a une version RGB séparée pour permettre les alphas
+// via rgba(var(--color-…-rgb), 0.x) — LibSass ne supporte pas rgb(from …).
+:root {
+  --color-primary:        #EF3E36;
+  --color-primary-rgb:    239, 62, 54;
+  --color-secondary:      #1A1A1A;
+  --color-secondary-rgb:  26, 26, 26;
+  --color-background:     #FFFBF4;
+  --color-surface:        #F4F0EA;
+}
+
+[data-theme="vintage"] {
+  --color-primary:        #ef7308;
+  --color-primary-rgb:    239, 115, 8;
+  --color-secondary:      #173f25;
+  --color-secondary-rgb:  23, 63, 37;
+  --color-background:     #fbfaf7;
+  --color-surface:        #edf5ef;
+}
+
+[data-theme="coral"] {
+  --color-primary:        #E63946;
+  --color-primary-rgb:    230, 57, 70;
+  --color-secondary:      #1D3557;
+  --color-secondary-rgb:  29, 53, 87;
+  --color-background:     #F8F9FB;
+  --color-surface:        #E9EEF4;
+}
+
+[data-theme="avocat"] {
+  --color-primary:        #D62828;
+  --color-primary-rgb:    214, 40, 40;
+  --color-secondary:      #1B7F3B;
+  --color-secondary-rgb:  27, 127, 59;
+  --color-background:     #FBFBF6;
+  --color-surface:        #EAF1EA;
+}
+
+[data-theme="brique"] {
+  --color-primary:        #C0392B;
+  --color-primary-rgb:    192, 57, 43;
+  --color-secondary:      #4A3627;
+  --color-secondary-rgb:  74, 54, 39;
+  --color-background:     #FFFBF4;
+  --color-surface:        #E8D5B7;
+}
+
+[data-theme="mono"] {
+  --color-primary:        #000000;
+  --color-primary-rgb:    0, 0, 0;
+  --color-secondary:      #000000;
+  --color-secondary-rgb:  0, 0, 0;
+  --color-background:     #FFFFFF;
+  --color-surface:        #FFFFFF;
+}
+
+// Alias Sass -> CSS vars. Utilisables directement (color, background, border, fill).
+// ATTENTION : rgba($primary, x) ne marche plus. À la place :
+//   rgba(var(--color-primary-rgb), 0.x)
+$primary:    var(--color-primary);
+$secondary:  var(--color-secondary);
+$background: var(--color-background);
+$surface:    var(--color-surface);
+
+// Couleurs figées pour Bootstrap (utilise darken/lighten en interne,
+// qui ne fonctionnent pas avec des CSS vars).
+$primary-static:   #EF3E36;
+$secondary-static: #1A1A1A;

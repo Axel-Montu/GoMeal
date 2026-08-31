@@ -1,18 +1,26 @@
 <main class="home-page">
-  <section class="home-page__content">
+  <section class="home-page__content" data-controller="home-intro">
 
-    <%= image_tag "logo-gomeal-horizontal.png",
-                  alt: "GoMeal",
-                  class: "home-page__logo" %>
+    <p class="home-page__brand">
+      Go<span>Meal</span>
+    </p>
 
-    <p class="home-page__description">
+    <%= inline_svg_tag "logo-gomeal.svg",
+                       class: "home-page__logo",
+                       aria: true,
+                       title: "GoMeal",
+                       data: { home_intro_target: "logo" } %>
+
+    <p class="home-page__description"
+       data-home-intro-target="description">
       <span>Trouvez le bon restaurant,</span>
       <span>au bon moment,</span>
       <span>selon vos envies et votre temps.</span>
     </p>
 
-  </section>
 
+  </section>
+  <%#
   <%= image_tag "city-line.png",
                 alt: "",
                 class: "home-page__illustration" %>
@@ -22,6 +30,7 @@
                text: "Créer un compte",
                path: new_user_registration_path,
                variant: "primary" %>
+
 
     <%= render "shared/button",
                text: "Se connecter",
