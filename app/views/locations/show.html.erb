@@ -1,0 +1,22 @@
+<main class="location-page"
+      data-controller="location-gate"
+      data-location-gate-url-value="<%= locations_path %>">
+
+  <h1 class="location-page__title">Ta position</h1>
+
+  <p class="location-page__description">
+    GoMeal a besoin de ta position pour t'indiquer le chemin jusqu'au restaurant.
+  </p>
+
+  <div class="location-page__blocked" data-location-gate-target="blocked" hidden>
+    <p class="location-page__blocked-text">
+      Nous avons besoin de ta position pour continuer.
+    </p>
+
+    <button type="button"
+            class="btn-go btn-go--primary"
+            data-action="location-gate#retry">
+      Réessayer
+    </button>
+  </div>
+</main>

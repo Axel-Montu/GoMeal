@@ -25,5 +25,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
+  resource :locations, only: [:show, :create]
   resource :preferences, only: [:edit, :update]
 end
