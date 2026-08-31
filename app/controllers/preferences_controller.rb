@@ -66,7 +66,7 @@ class PreferencesController < ApplicationController
     "mediterranean_restaurant",
     "korean_restaurant",
     "japanese_restaurant"],
-      "maxResultCount": 5,
+      "maxResultCount": 30,
       "locationRestriction": {
         "circle": {
           "center": {
@@ -81,7 +81,7 @@ class PreferencesController < ApplicationController
     data = JSON.parse(response.body)
 
     if response == '200'
-      puts 'API fectched successfully'
+      puts 'API fetched successfully'
     else
       puts 'Something went wrong with API'
     end
