@@ -10,7 +10,7 @@ class ItinerariesController < ApplicationController
   def show
     # 1. The position was already captured on the /locations gate page
     if session[:location].blank?
-      redirect_to locations_path, alert: "We need your position to show you the way."
+      redirect_to locations_path, alert: "Nous avons besoin de ta localisation pour t'emmener au restaurant."
       return
     end
 
