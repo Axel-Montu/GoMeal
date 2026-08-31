@@ -1,112 +1,410 @@
-body.page-go-meal-matches-index {
-  background: $secondary;
-}
-
-.swipe-deck-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px;
-  height: calc(100dvh - 80px);
-}
-
-.swipe-deck {
-  width: calc(100vw - 24px);
-  max-width: 520px;
-  height: 100%;
-}
-
-.swipe-card {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  width: 100%;
-  height: 100%;
-  padding: 32px 26px;
-  background: $white;
-  border-radius: 28px;
-  box-shadow: $box-shadow;
-  overflow: hidden;
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
+  body.page-go-meal-matches-index {
+    background:
+      radial-gradient(120% 60% at 50% 0%, rgba(var(--color-primary-rgb), 0.18)
+      0%, rgba(var(--color-primary-rgb), 0) 60%),
+      $secondary;
   }
 
-  &__cover {
-    // Pull the photo out to the card edges: the card has 32px 26px padding
-    margin: -32px -26px 0;
-    height: 200px;
-    overflow: hidden;
-  }
+  // ---------------------------------------------------------------- layout ----
 
-  &__photo {
+
+  .swipe-deck-wrapper {
+    box-sizing: border-box;
     width: 100%;
-    height: 100%;
-    // Crop rather than squash: photos come in every ratio
-    object-fit: cover;
+    max-width: 480px;
+    min-height: calc(100dvh - 94px);
+    margin: 0 auto;
+    padding: 8px 16px calc(20px + env(safe-area-inset-bottom));
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__head {
+      width: 100%;
+      padding: 6px 4px 14px;
+      text-align: center;
+    }
   }
 
-  &__name {
-    margin: 0;
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 1.1;
-    color: $secondary;
-    letter-spacing: -0.015em;
-  }
-
-  &__rating {
+  .swipe-deck__count {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-weight: 600;
-    font-size: 16px;
-    color: $primary;
-    white-space: nowrap;
+    gap: 8px;
+    margin: 0;
 
-    i {
-      font-size: 14px;
+    color: rgba($white, 0.82);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+
+    span {
+      font-weight: 700;
+      color: $white;
     }
   }
 
-  &__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+  .swipe-deck__count-dot {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: $primary;
   }
 
-  &__tag {
-    padding: 6px 12px;
-    background: $surface;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 500;
-    color: $secondary;
+  // ------------------------------------------------------------------ deck ----
+
+  .swipe-deck {
+    width: 100%;
+    max-width: 380px;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+
+    .swiper-slide {
+      border-radius: 26px;
+      overflow: hidden;
+      // clean, symmetric deck: only the top card + the one right behind it show,
+      // deeper cards stay hidden so the stack edge never looks messy.
+      opacity: 0;
+      box-shadow: 0 20px 45px -14px rgba(0, 0, 0, 0.45);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+
+    .swiper-slide-active,
+    .swiper-slide-next {
+      opacity: 1;
+    }
+
+    .swiper-slide-next {
+      filter: brightness(0.94);
+    }
   }
 
-  &__address {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    margin: 0;
-    color: $light-text;
-    font-size: 14px;
-    line-height: 1.4;
+  // ------------------------------------------------------------------ card ----
 
-    i {
-      margin-top: 3px;
+  .swipe-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+
+    background: $white;
+    box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.28s ease, opacity 0.28s ease;
+
+    &.is-liking {
+      transform: translateX(60%) rotate(12deg);
+      opacity: 0;
+    }
+
+    &.is-rejecting {
+      transform: translateX(-60%) rotate(-12deg);
+      opacity: 0;
+    }
+
+    // ---- cover -------------------------------------------------------------
+
+    &__cover {
+      position: relative;
+      height: 560px;
+      flex: 0 0 auto;
+      overflow: visible;
+      background: linear-gradient(150deg, $secondary 0%, #12301a 100%);
+    }
+
+    &__photo {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+
+      // `user-select` est prefixe automatiquement par autoprefixer-rails :
+      // on ecrit uniquement la version standard.
+      user-select: none;
+      // `user-drag` n'existe qu'en WebKit et n'est pas gere par autoprefixer :
+      // le prefixe reste ecrit a la main (evite le drag fantome de l'image).
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    &__rating {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 11px;
+
+      background: rgba($white, 0.95);
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+
+      font-size: 14px;
+      font-weight: 700;
+      color: $secondary;
+
+      i {
+        font-size: 12px;
+        color: $primary;
+      }
+    }
+
+    // ---- body ------------------------------------------------------------
+
+    &__body {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 22px 22px 26px;
+      overflow: hidden;
+    }
+
+    &__name {
+      margin: 0;
+      font-size: 25px;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
       color: $secondary;
     }
+
+    &__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    &__tag {
+      padding: 5px 11px;
+      background: $surface;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: $secondary;
+
+      &--accent {
+        background: rgba(var(--color-primary-rgb), 0.12);
+        color: #c25f06;
+      }
+    }
+
+    &__address {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin: 0;
+      color: $light-text;
+      font-size: 13.5px;
+      line-height: 1.4;
+    }
+
+    &__address-dot {
+      width: 5px;
+      height: 5px;
+      margin-top: 6px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: $primary;
+    }
+
+    &__summary {
+      margin: 2px 0 0;
+      font-size: 14.5px;
+      line-height: 1.5;
+      color: $text;
+
+      // Troncature multi-lignes : autoprefixer ne connait aucune de ces
+      // proprietes, les prefixes restent donc ecrits a la main. On declare
+      // `line-clamp` standard en dernier (navigateurs recents), le
+      // `-webkit-` servant de repli pour les versions plus anciennes.
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      overflow: hidden;
+    }
+
+    // ---- drag stamps ---------------------------------------------------
+
+    &__stamp {
+      position: absolute;
+      top: 26px;
+      z-index: 5;
+      padding: 8px 16px;
+
+      border: 3px solid;
+      border-radius: 12px;
+
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+
+      opacity: 0;
+      pointer-events: none;
+
+      &--like {
+        left: 20px;
+        transform: rotate(-14deg);
+        color: #1f9d55;
+        border-color: #1f9d55;
+        background: rgba(#1f9d55, 0.12);
+      }
+
+      &--nope {
+        right: 20px;
+        transform: rotate(14deg);
+        color: $red;
+        border-color: $red;
+        background: rgba($red, 0.1);
+      }
+    }
   }
 
-  &__summary {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.55;
-    color: $text;
-    flex-grow: 1;
+  // --------------------------------------------------------------- actions ----
+
+  .swipe-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+
+    width: 100%;
+    margin-top: 6px;
+    padding: 20px 0 0;
+
+    border-top: 1px solid rgba($secondary, 0.1);
+
+    &[hidden] {
+      display: none;
+    }
+
+    &__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 60px;
+      height: 60px;
+      padding: 0;
+
+      color: $secondary;
+      font-size: 24px;
+
+      background: $surface;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+
+      transition:
+        transform 0.15s ease,
+        background-color 0.15s ease,
+        color 0.15s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: scale(0.92);
+      }
+
+      &:focus-visible {
+        outline: 3px solid rgba($primary, 0.35);
+        outline-offset: 3px;
+      }
+
+      &--nope:hover {
+        color: $white;
+        background: $red;
+      }
+
+      &--like {
+        color: $primary;
+
+        &:hover {
+          color: $white;
+          background: $primary;
+        }
+      }
+    }
+  }
+
+  // ----------------------------------------------------------- empty state ----
+
+  .swipe-empty {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 40px 24px;
+    text-align: center;
+
+    &[hidden] {
+      display: none;
+    }
+
+    &__emoji {
+      font-size: 56px;
+      margin-bottom: 6px;
+    }
+
+    &__title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: $white;
+    }
+
+    &__text {
+      margin: 0 0 18px;
+      max-width: 15em;
+      font-size: 14.5px;
+      line-height: 1.5;
+      color: rgba($white, 0.75);
+    }
+  }
+
+  @media (max-width: 576px) {
+  .swipe-deck-wrapper {
+    padding-inline: 12px;
+  }
+
+  .swipe-deck {
+    max-width: 100%;
+  }
+
+  .swipe-card {
+    &__cover {
+      height: 62vh;
+      min-height: 460px;
+      max-height: 560px;
+    }
+
+    &__body {
+      padding: 18px;
+    }
+
+    &__name {
+      font-size: 22px;
+    }
+  }
+
+  .swipe-actions {
+    padding-top: 16px;
+
+    &__btn {
+      width: 56px;
+      height: 56px;
+      font-size: 22px;
+    }
   }
 }
