@@ -56,29 +56,31 @@ class PreferencesController < ApplicationController
     FIELDS
     request['Content-Type'] = 'application/json'
     request.body = '{
-    "includedTypes": ["french_restaurant",
-    "indian_restaurant",
-    "pizza_restaurant",
-    "fast_food_restaurant",
-    "turkish_restaurant",
-    "hamburger_restaurant",
-    "halal_restaurant",
-    "mediterranean_restaurant",
-    "korean_restaurant",
-    "japanese_restaurant"],
-      "maxResultCount": 30,
-      "locationRestriction": {
-        "circle": {
-          "center": {
-            "latitude": 48.8642973,
-            "longitude": 2.3814914},
-          "radius": 500.0
-        }
-      }
+      "includedTypes": ["french_restaurant",
+      "indian_restaurant",
+      "pizza_restaurant",
+      "fast_food_restaurant",
+      "turkish_restaurant",
+      "hamburger_restaurant",
+      "halal_restaurant",
+      "mediterranean_restaurant",
+      "korean_restaurant",
+      "japanese_restaurant"],
+        "maxResultCount": 20,
+        "locationRestriction": {
+          "circle": {
+            "center": {
+              "latitude": 48.8642973,
+              "longitude": 2.3814914},
+            "radius": 500.0
+            }
+          }
     }'
 
     response = http.request(request)
     data = JSON.parse(response.body)
+
+    puts response
 
     if response == '200'
       puts 'API fetched successfully'
@@ -106,7 +108,7 @@ class PreferencesController < ApplicationController
         types: types,
         google_rating: rating,
         editorial_summary: editorial_summary
-        )
+      )
 
       new_restaurant.save!
 
@@ -120,7 +122,7 @@ class PreferencesController < ApplicationController
         restaurant_id: new_restaurant.id,
         currency: currency,
         start_price: start_price,
-        end_price: end_price,
+        end_price: end_price
       )
     end
   end
