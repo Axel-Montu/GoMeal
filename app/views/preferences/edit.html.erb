@@ -19,9 +19,8 @@
              data-time-slider-pips-value="<%= [30, 60, 90].to_json %>">
 
       <div class="pref-setting__head">
-        <%# The question keeps the weight; the figure answers it, in colour %>
+        <%# The figure lives in the slider tooltip, so the head carries the question alone %>
         <label class="pref-setting__question">Combien de temps as-tu pour déjeuner ?</label>
-        <span class="pref-setting__value" data-time-slider-target="value"></span>
       </div>
 
       <div data-time-slider-target="slider" class="lunch-slider"></div>
@@ -44,7 +43,6 @@
 
       <div class="pref-setting__head">
         <label class="pref-setting__question">Jusqu'où acceptes-tu de marcher ?</label>
-        <span class="pref-setting__value" data-time-slider-target="value"></span>
       </div>
 
       <div data-time-slider-target="slider" class="lunch-slider"></div>
