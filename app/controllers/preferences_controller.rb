@@ -11,7 +11,7 @@ class PreferencesController < ApplicationController
     @user = current_user
     authorize @user
     if @user.update(preferences_params)
-      # api_call
+      api_call
       Restaurant.all.each do |restaurant|
         score = rand(0..100)
         @match = GoMealMatch.new(go_meal_score: score)
