@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_01_072539) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_01_104141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -48,6 +48,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_072539) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "api_type"
+    t.string "backend_tag"
+    t.datetime "created_at", null: false
+    t.string "frontend_tag"
+    t.string "frontend_type"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["tag_id"], name: "index_user_tags_on_tag_id"
+    t.index ["user_id"], name: "index_user_tags_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.integer "average_lunch_time_minutes"
     t.datetime "created_at", null: false
@@ -66,4 +84,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_072539) do
   add_foreign_key "go_meal_matches", "restaurants"
   add_foreign_key "go_meal_matches", "users"
   add_foreign_key "price_ranges", "restaurants"
+  add_foreign_key "user_tags", "tags"
+  add_foreign_key "user_tags", "users"
 end
