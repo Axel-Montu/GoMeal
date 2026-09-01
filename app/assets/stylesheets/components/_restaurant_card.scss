@@ -1,16 +1,12 @@
 .restaurant-card {
-  padding: 20px;
+  overflow: hidden;
   background: $white;
   border-radius: 20px;
   box-shadow: $box-shadow;
 
+  // Optional: only the match screen passes a cover.
   &__cover {
-    height: 180px;
-    // Negative margins so the photo reaches the card's edges, through its
-    // own 20px padding.
-    margin: -20px -20px 16px;
-    border-radius: 20px 20px 0 0;
-    overflow: hidden;
+    aspect-ratio: 16 / 9;
 
     img {
       display: block;
@@ -20,39 +16,121 @@
     }
   }
 
+  &__content {
+    padding: 20px;
+  }
+
   &__header {
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
+    gap: 12px;
+  }
+
+  &__identity {
+    min-width: 0;
 
     h3 {
-      margin: 0 0 5px;
+      margin: 0 0 4px;
       color: $secondary;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
     }
 
     p {
       margin: 0;
       color: $light-text;
+      font-size: 14px;
     }
   }
 
   &__rating {
-    color: $yellow;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+
+    padding: 5px 9px;
+    border-radius: 100px;
+    background: rgba(255, 198, 90, 0.16);
+
+    color: $secondary;
+    font-size: 13px;
     font-weight: 700;
+
+    svg {
+      width: 13px;
+      height: 13px;
+      fill: $yellow;
+    }
   }
 
-  &__stats {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
+  &__category {
+    display: inline-block;
+    margin: 12px 0 0;
+    padding: 5px 11px;
+    border-radius: 100px;
+    background: $surface;
 
-    span {
-      flex: 1;
-      padding: 10px 5px;
-      text-align: center;
-      background: $surface;
-      border-radius: 10px;
-      font-size: 13px;
+    color: $secondary;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  // Three tiles, each one a figure with the label that explains it.
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 18px 0 0;
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+    padding: 12px 4px;
+    border-radius: 10px;
+    background: $surface;
+    text-align: center;
+
+    svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: $primary;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    // The label reads under the figure, so it comes second visually.
+    dt {
+      order: 3;
+      color: $light-text;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    dd {
+      order: 2;
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    // The whole break is the figure that decides, so it carries the accent.
+    &--total {
+      background: $primary;
+      color: $white;
+
+      svg { stroke: $white; }
+      dt  { color: rgba(255, 255, 255, 0.82); }
     }
   }
 }
