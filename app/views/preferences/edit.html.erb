@@ -1,45 +1,59 @@
-<main class="preferences-edit-page">
-  <h1 class="preferences-edit-page__title">Mes préférences</h1>
+<main class="preferences-edit">
+  <div class="preferences-edit__glow" aria-hidden="true"></div>
+
+  <header class="preferences-edit__header">
+    <h1 class="preferences-edit__title">Mes préférences</h1>
+    <p class="preferences-edit__lead">Elles décident des restaurants qu'on te propose.</p>
+  </header>
 
   <%= simple_form_for @user,
                       url: preferences_path,
-                      html: { class: "preferences-edit-page__form" } do |f| %>
+                      html: { class: "preferences-edit__form" } do |f| %>
 
-    <div class="form-input-go"
-         data-controller="time-slider"
-         data-time-slider-initial-value="<%= @user.average_lunch_time_minutes || 60 %>"
-         data-time-slider-min-value="30"
-         data-time-slider-max-value="90"
-         data-time-slider-captions-value="<%= [[45, 'Express'], [75, 'Normal'], [90, "J'ai le temps"]].to_json %>"
-         data-time-slider-pips-value="<%= [30, 60, 90].to_json %>">
+    <section class="pref-setting"
+             data-controller="time-slider"
+             data-time-slider-initial-value="<%= @user.average_lunch_time_minutes || 60 %>"
+             data-time-slider-min-value="30"
+             data-time-slider-max-value="90"
+             data-time-slider-captions-value="<%= [[45, 'Express'], [75, 'Normal'], [90, "J'ai le temps"]].to_json %>"
+             data-time-slider-pips-value="<%= [30, 60, 90].to_json %>">
 
-      <label>Combien de temps au total as tu pour ta pause déjeuner?</label>
+      <div class="pref-setting__head">
+        <%# The question keeps the weight; the figure answers it, in colour %>
+        <label class="pref-setting__question">Combien de temps as-tu pour déjeuner ?</label>
+        <span class="pref-setting__value" data-time-slider-target="value"></span>
+      </div>
 
       <div data-time-slider-target="slider" class="lunch-slider"></div>
 
-      <p class="lunch-slider-caption" data-time-slider-target="label"></p>
+      <%# The caption is a consequence of the figure, so it reads under it,
+          smaller — it used to be the loudest thing on the screen %>
+      <p class="pref-setting__caption" data-time-slider-target="label"></p>
 
       <%= f.hidden_field :average_lunch_time_minutes,
                          data: { time_slider_target: "input" } %>
-    </div>
+    </section>
 
-    <div class="form-input-go"
-         data-controller="time-slider"
-         data-time-slider-initial-value="<%= @user.max_walking_minutes || 15 %>"
-         data-time-slider-min-value="0"
-         data-time-slider-max-value="30"
-         data-time-slider-captions-value="<%= [[5, 'Sur place'], [15, 'À deux pas'], [30, 'Un peu de marche']].to_json %>"
-         data-time-slider-pips-value="<%= [0, 15, 30].to_json %>">
+    <section class="pref-setting"
+             data-controller="time-slider"
+             data-time-slider-initial-value="<%= @user.max_walking_minutes || 15 %>"
+             data-time-slider-min-value="0"
+             data-time-slider-max-value="30"
+             data-time-slider-captions-value="<%= [[5, 'Sur place'], [15, 'À deux pas'], [30, 'Un peu de marche']].to_json %>"
+             data-time-slider-pips-value="<%= [0, 15, 30].to_json %>">
 
-      <label>Temps de marche max</label>
+      <div class="pref-setting__head">
+        <label class="pref-setting__question">Jusqu'où acceptes-tu de marcher ?</label>
+        <span class="pref-setting__value" data-time-slider-target="value"></span>
+      </div>
 
       <div data-time-slider-target="slider" class="lunch-slider"></div>
 
-      <p class="lunch-slider-caption" data-time-slider-target="label"></p>
+      <p class="pref-setting__caption" data-time-slider-target="label"></p>
 
       <%= f.hidden_field :max_walking_minutes,
                          data: { time_slider_target: "input" } %>
-    </div>
+    </section>
 
     <%= f.submit "Enregistrer mes préférences",
                  class: "btn-go btn-go--primary" %>

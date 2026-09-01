@@ -44,7 +44,7 @@ class AnimatedCaption {
 }
 
 export default class extends Controller {
-  static targets = ["slider", "input", "label"]
+  static targets = ["slider", "input", "label", "value"]
   static values = {
     initial: Number,
     min:     Number,
@@ -75,6 +75,9 @@ export default class extends Controller {
       const val = Math.round(v)
       // Le hidden input est optionnel (ex : walking pas encore migré côté back)
       if (this.hasInputTarget) this.inputTarget.value = val
+      // Optionnel comme l'input : seules les pages qui affichent la valeur
+      // hors de l'infobulle déclarent cette cible.
+      if (this.hasValueTarget) this.valueTarget.textContent = formatTime(val)
       this.caption.set(this.captionFor(val))
     })
   }

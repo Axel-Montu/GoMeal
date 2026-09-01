@@ -1,4 +1,8 @@
-.preferences-edit-page {
+// Préférences. Deux réglages, chacun sur une carte en verre dépoli posée sur
+// un fond teinté — le flou n'a de sens que s'il a quelque chose à flouter,
+// d'où les deux halos derrière.
+.preferences-edit {
+  position: relative;
   box-sizing: border-box;
   width: 100%;
   max-width: 430px;
@@ -6,44 +10,74 @@
   margin: 0 auto;
   padding:
     calc(24px + env(safe-area-inset-top))
-    24px
+    20px
     calc(28px + env(safe-area-inset-bottom));
-
-  font-family: "Baloo 2", sans-serif;
-  color: $text;
-  background: $background;
 
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
+
+  // La police du reste de l'app : cette page utilisait Baloo 2, que seules
+  // deux pages sur huit chargeaient.
+  font-family: $body-font;
+  color: $secondary;
+  background: $background;
+  overflow: hidden;
+
+  // Les deux halos. Sous les cartes, jamais au-dessus.
+  &__glow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+
+    background:
+      radial-gradient(58% 26% at 6% 34%,
+        rgba(var(--color-primary-rgb), 0.42) 0%,
+        rgba(var(--color-primary-rgb), 0) 68%),
+      radial-gradient(62% 28% at 98% 58%,
+        rgba(var(--color-secondary-rgb), 0.34) 0%,
+        rgba(var(--color-secondary-rgb), 0) 70%),
+      radial-gradient(48% 22% at 50% 90%,
+        rgba(var(--color-primary-rgb), 0.26) 0%,
+        rgba(var(--color-primary-rgb), 0) 72%);
+  }
+
+  > *:not(&__glow) {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 4px;
+  }
 
   &__title {
-    margin: 8px 0 0;
-    color: $secondary;
-    font-size: 26px;
-    font-weight: 800;
-    text-align: center;
+    margin: 0;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  &__lead {
+    margin: 0;
+    color: $light-text;
+    font-size: 14px;
+    line-height: 1.4;
   }
 
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-  }
-
-  &__form .form-input-go {
-    margin: 0;
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: $text;
-      font-weight: 700;
-    }
+    gap: 18px;
   }
 
   &__form input[type="submit"] {
-    margin-top: 12px;
+    margin-top: 6px;
   }
 
   @media (min-width: 1024px) {
@@ -53,5 +87,71 @@
     padding: 40px 32px;
     border-radius: 24px;
     box-shadow: $box-shadow;
+  }
+}
+
+// ------------------------------------------------------------- un réglage ---
+
+.pref-setting {
+  padding: 18px 18px 6px;
+  border-radius: 20px;
+
+  // Le verre : translucide, flouté, avec une arête claire en haut pour
+  // attraper la lumière. La couleur de repli passe à 0.92 d'opacité pour les
+  // navigateurs sans backdrop-filter — sinon le texte perd son contraste.
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 8px 28px rgba(var(--color-secondary-rgb), 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    background: rgba(255, 255, 255, 0.42);
+    -webkit-backdrop-filter: blur(22px) saturate(165%);
+    backdrop-filter: blur(22px) saturate(165%);
+  }
+
+  &__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  &__question {
+    display: block;
+    margin: 0;
+    color: $secondary;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  // La valeur répond à la question : même ligne, en couleur, alignée à droite.
+  &__value {
+    flex-shrink: 0;
+    color: $primary;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  // La légende redescend à sa place : une conséquence, pas un titre. Elle
+  // était jusqu'ici plus grosse et plus grasse que la question.
+  &__caption {
+    margin: 12px 0 14px;
+    color: $light-text;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0;
+  }
+
+  // L'infobulle doublonnerait avec la valeur affichée en haut à droite.
+  .lunch-slider {
+    margin: 22px 6px 44px;
+
+    .noUi-tooltip { display: none; }
   }
 }
