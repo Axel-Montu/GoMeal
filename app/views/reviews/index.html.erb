@@ -1,0 +1,30 @@
+<div class="reviews-index">
+  <p class="reviews-index__eyebrow">MES DÉJEUNERS</p>
+  <h1 class="reviews-index__title">Mes avis</h1>
+
+  <%# Nothing at all: the empty state, and one way out %>
+  <% if @awaiting.empty? && @reviewed.empty? %>
+    <section class="reviews-index__empty">
+      <i class="fa-regular fa-star"></i>
+      <h2>Aucun déjeuner à noter</h2>
+      <p>Tes avis apparaîtront ici après ton premier déjeuner GoMeal.</p>
+      <%= link_to "Trouver un restaurant", go_meal_matches_path,
+                  class: "btn-go btn-go--primary" %>
+    </section>
+  <% else %>
+    <%# Each section shows up only when it holds something %>
+    <% if @awaiting.any? %>
+      <h2 class="reviews-index__section">À NOTER · <%= @awaiting.size %></h2>
+      <% @awaiting.each do |match| %>
+        <%= render "reviews/review_row", match: match, awaiting: true %>
+      <% end %>
+    <% end %>
+
+    <% if @reviewed.any? %>
+      <h2 class="reviews-index__section">NOTÉS · <%= @reviewed.size %></h2>
+      <% @reviewed.each do |match| %>
+        <%= render "reviews/review_row", match: match, awaiting: false %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

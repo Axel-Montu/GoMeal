@@ -4,6 +4,10 @@ class PreferencesController < ApplicationController
     "Type d'établissement",
     "Cuisines du monde"
   ].freeze
+  def show
+    @user = current_user
+    authorize @user, :edit?
+  end
 
   def edit
     @user = current_user
