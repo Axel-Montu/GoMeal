@@ -1,4 +1,11 @@
 <article class="restaurant-card">
+  <article class="restaurant-card">
+  <% if local_assigns[:cover].present? %>
+    <div class="restaurant-card__cover">
+      <%= image_tag cover, alt: name %>
+    </div>
+  <% end %>
+  <div class="restaurant-card__content">
   <div class="restaurant-card__content">
     <div class="restaurant-card__header">
       <div>

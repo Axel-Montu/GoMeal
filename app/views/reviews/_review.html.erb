@@ -1,0 +1,28 @@
+<%# A review the user already wrote, on their own match.
+    Locals, never instance variables: this partial is rendered from the match
+    screen today, and from the review list tomorrow. %>
+<section class="review">
+  <%# Five stars, filled up to the rating. Font Awesome ships with the app,
+      so a rating needs no component of its own. %>
+  <div class="review__stars">
+    <% 1.upto(5) do |position| %>
+      <i class="fa-<%= position <= review.rating ? "solid" : "regular" %> fa-star"></i>
+    <% end %>
+  </div>
+
+  <%# The comment is optional, so an empty paragraph must never be rendered %>
+  <% if review.comment.present? %>
+    <p class="review__comment"><%= review.comment %></p>
+  <% end %>
+
+  <div class="review__actions">
+    <%= link_to "Modifier", edit_go_meal_match_review_path(match),
+                class: "btn-go btn-go--secondary" %>
+
+    <%# A DELETE that cannot be undone, so Turbo asks first %>
+    <%= button_to "Supprimer", go_meal_match_review_path(match),
+                  method: :delete,
+                  form: { data: { turbo_confirm: "Supprimer ton avis ?" } },
+                  class: "btn-go btn-go--secondary" %>
+  </div>
+</section>

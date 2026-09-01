@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       patch :not_visited
     end
     resource :itinerary, only: [:show]
+    resource :review, only: [:new, :create, :edit, :update, :destroy]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
