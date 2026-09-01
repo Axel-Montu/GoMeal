@@ -1,0 +1,73 @@
+// Match screen. The card carries the detail, so this file only places the
+// page around it: the announcement above, the actions below.
+.match-show {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 480px;
+  min-height: calc(100dvh - 70px);
+  margin: 0 auto;
+  padding: 8px 20px calc(26px + env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+
+  background:
+    radial-gradient(120% 55% at 50% 0%, rgba(var(--color-primary-rgb), 0.13) 0%,
+    rgba(var(--color-primary-rgb), 0) 62%),
+    $background;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+
+  &__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0;
+
+    padding: 6px 13px;
+    border-radius: 100px;
+    background: rgba(var(--color-primary-rgb), 0.10);
+
+    color: $primary;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    svg {
+      width: 13px;
+      height: 13px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    color: $secondary;
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  // btn-go already carries its own bottom margin, so the stack only has to
+  // stop it from stretching the secondary button to full width.
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
