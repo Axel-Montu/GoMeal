@@ -41,8 +41,9 @@ class ItinerariesController < ApplicationController
     # 2. No route means no reliable walking time
     return if @route.blank?
 
-    # 3. Walking comes in seconds, lunch in minutes
-    walking = @route[:duration].seconds
+    # 3. Walking counts twice, there and back, as the total tile already does.
+    #    It comes in seconds, lunch in minutes.
+    walking = (@route[:duration] * 2).seconds
     lunch = current_user.average_lunch_time_minutes.to_i.minutes
 
     # 4. Record when the user should be back at their desk

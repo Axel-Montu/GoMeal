@@ -1,0 +1,12 @@
+// The screen of one match: the restaurant, then either its review or the call
+// to rate. Carries the framing that `.components-page` was lending it, which
+// belonged to the components demo page.
+.match-show {
+  min-height: 100vh;
+  padding: 30px 20px 80px;
+  // Mobile first: the column never grows wider than a phone, even on a desktop
+  max-width: 390px;
+  margin: 0 auto;
+  color: $text;
+  background: $background;
+}
