@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_01_072539) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_01_094535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -48,6 +48,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_072539) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.bigint "go_meal_match_id", null: false
+    t.integer "rating", null: false
+    t.datetime "updated_at", null: false
+    t.index ["go_meal_match_id"], name: "index_reviews_on_go_meal_match_id", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.integer "average_lunch_time_minutes"
     t.datetime "created_at", null: false
@@ -66,4 +75,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_072539) do
   add_foreign_key "go_meal_matches", "restaurants"
   add_foreign_key "go_meal_matches", "users"
   add_foreign_key "price_ranges", "restaurants"
+  add_foreign_key "reviews", "go_meal_matches"
 end

@@ -139,3 +139,25 @@ puts ""
 puts "#{GoMealMatch.count} GoMealMatches created"
 puts "Now go back to work boy..."
 puts "GO MEAL"
+
+# Reviews on some of the visited matches, so the review screens have
+# something to show before the rating form is built.
+REVIEW_COMMENTS = [
+  "Servi en douze minutes chrono, pile ce qu'il me fallait.",
+  "La meilleure blanquette du quartier.",
+  "Correct, mais vingt minutes d'attente.",
+  nil
+].freeze
+
+GoMealMatch.where(visited: true).each_with_index do |match, index|
+  # Every other one only: the rest stay available for the awaiting list.
+  next if index.odd?
+
+  Review.create!(
+    go_meal_match: match,
+    rating: rand(1..5),
+    comment: REVIEW_COMMENTS.sample
+  )
+end
+
+puts "#{Review.count} reviews created"
