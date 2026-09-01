@@ -41,11 +41,11 @@ class GoMealMatchesController < ApplicationController
     authorize @match
   end
 
-def not_visited
+  def not_visited
     # 1. Look among the current user's own matches only
-  @match = current_user.go_meal_matches.find_by(id: params[:id])
+    @match = current_user.go_meal_matches.find_by(id: params[:id])
 
-  if @match.nil?
+    if @match.nil?
     # 2. A 404, and we never say whether the match exists elsewhere
     skip_authorization
     head :not_found
