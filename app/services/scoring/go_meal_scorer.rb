@@ -1,8 +1,8 @@
 module Scoring
   class GoMealScorer
-    def self.call(restaurant:, user_latitude:, user_longitude:)
+    def self.call(restaurant:, user_location:)
       distance = haversine_meters(
-        [user_latitude, user_longitude],
+        [user_location["latitude"].to_f, user_location["longitude"].to_f],
         [restaurant.latitude, restaurant.longitude]
       )
       rating_pts   = (restaurant.google_rating || 0) * 10
