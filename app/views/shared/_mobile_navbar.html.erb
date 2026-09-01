@@ -30,6 +30,17 @@
     Go<span>Meal</span>
   </p>
 
+  <ul class="mobile-navbar__actions">
+    <% if user_signed_in? && controller_name != "preferences" %>
+      <li>
+        <%= link_to preferences_path, class: "theme-dropdown__trigger" do %>
+          Préférences
+          <i class="fa-solid fa-chevron-down"></i>
+        <% end %>
+      </li>
+    <% end %>
+
+    <li class="theme-dropdown" data-controller="theme">
   <%# The way into the review list, from every screen carrying the navbar.
       Sits next to the theme picker and borrows its weight: the navbar already
       carries two round buttons, a third one would turn it into a toolbar. %>
@@ -98,6 +109,8 @@
         </button>
       </li>
     </ul>
+    </li>
+  </ul>
   </div>
 </div>
 </nav>

@@ -61,6 +61,7 @@ export default class extends Controller {
       start: this.initialValue,
       step: this.stepValue,
       range: { min: this.minValue, max: this.maxValue },
+      connect: [true, false],
       tooltips: { to: (v) => formatTime(Math.round(v)) },
       pips: {
         mode: "values",

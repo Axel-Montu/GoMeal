@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resource :locations, only: [:show, :create]
-  resource :preferences, only: [:edit, :update] do
+  resource :preferences, only: [:show, :edit, :update] do
     get :cuisines
     patch :cuisines, action: :update_cuisines
   end
