@@ -12,6 +12,10 @@ class GoMealMatchPolicy < ApplicationPolicy
     true
   end
 
+  def not_visited?
+    record.user == user
+  end
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope.where(user: user)

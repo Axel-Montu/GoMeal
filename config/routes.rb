@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     member do
       patch :like
       patch :reject
+      patch :not_visited
     end
     resource :itinerary, only: [:show]
   end

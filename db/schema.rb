@@ -16,12 +16,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_104141) do
 
   create_table "go_meal_matches", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.datetime "expected_back_at"
     t.integer "go_meal_score"
     t.bigint "restaurant_id", null: false
     t.integer "status", default: 0
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.boolean "visited", default: false
+    t.boolean "visited"
+    t.index ["expected_back_at"], name: "index_go_meal_matches_on_expected_back_at"
     t.index ["restaurant_id"], name: "index_go_meal_matches_on_restaurant_id"
     t.index ["user_id"], name: "index_go_meal_matches_on_user_id"
   end
