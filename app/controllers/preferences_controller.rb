@@ -10,28 +10,18 @@ class PreferencesController < ApplicationController
   def update
     @user = current_user
     authorize @user
-
-    unless @user.update(preferences_params)
-      render :edit, status: :unprocessable_entity
-      return
-    end
-
-    # 1. Ask Google first. Nothing is destroyed until we hold new data —
-    #    the previous version emptied the tables, then crashed on a nil
-    #    response and left the app with no restaurants at all.
-    places = fetch_places
-    replace_restaurants_with(places) if places
-
-    # 2. The preferences changed either way, so the matches are rebuilt
-    #    against whatever restaurants we have — the fresh ones, or the
-    #    ones already in place when the API is unavailable.
-    rebuild_matches_for(@user)
-
-    if places
+    if @user.update(preferences_params)
+      api_call
+      Restaurant.all.each do |restaurant|
+        score = rand(0..100)
+        @match = GoMealMatch.new(go_meal_score: score)
+        @match.user = current_user
+        @match.restaurant = restaurant
+        @match.save
+      end
       redirect_to cuisines_preferences_path, notice: "Preferences updated."
     else
-      redirect_to cuisines_preferences_path,
-                  alert: "Préférences enregistrées. Les restaurants n'ont pas pu être actualisés (Google Places indisponible) — la sélection précédente est conservée."
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -56,16 +46,16 @@ class PreferencesController < ApplicationController
     )
   end
 
-  # Returns the places array, or nil when Google Places gave us nothing
-  # usable — a quota refusal (429), an error status, or a body we cannot
-  # parse. Never raises: a failed refresh must not break saving preferences.
-  def fetch_places
+  def api_call
+    GoMealMatch.destroy_all
+    Restaurant.destroy_all
+
     uri = URI('https://places.googleapis.com/v1/places:searchNearby')
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
 
     request = Net::HTTP::Post.new(uri)
-    request['X-Goog-Api-Key'] = ENV.fetch('GOOGLE_PLACES_API_KEY')
+    request['X-Goog-Api-Key'] = ENV['GOOGLE_PLACES_API_KEY']
     request['X-Goog-FieldMask'] = <<~FIELDS.split("\n").join(",")
       places.displayName.text
       places.formattedAddress
@@ -77,79 +67,75 @@ class PreferencesController < ApplicationController
       places.priceRange
     FIELDS
     request['Content-Type'] = 'application/json'
-    request.body = {
-      includedTypes: %w[
-        french_restaurant indian_restaurant pizza_restaurant
-        fast_food_restaurant turkish_restaurant hamburger_restaurant
-        halal_restaurant mediterranean_restaurant korean_restaurant
-        japanese_restaurant
-      ],
-      maxResultCount: 20,
-      locationRestriction: {
-        circle: {
-          center: { latitude: 48.8642973, longitude: 2.3814914 },
-          radius: 500.0
-        }
-      }
-    }.to_json
+    request.body = '{
+      "includedTypes": ["french_restaurant",
+      "indian_restaurant",
+      "pizza_restaurant",
+      "fast_food_restaurant",
+      "turkish_restaurant",
+      "hamburger_restaurant",
+      "halal_restaurant",
+      "mediterranean_restaurant",
+      "korean_restaurant",
+      "japanese_restaurant"],
+        "maxResultCount": 20,
+        "locationRestriction": {
+          "circle": {
+            "center": {
+              "latitude": 48.8642973,
+              "longitude": 2.3814914},
+            "radius": 500.0
+            }
+          }
+    }'
 
     response = http.request(request)
+    data = JSON.parse(response.body)
 
-    unless response.is_a?(Net::HTTPSuccess)
-      Rails.logger.warn("Places refresh refused: #{response.code} #{response.body.to_s.truncate(200)}")
-      return nil
+    puts response
+
+    if response == '200'
+      puts 'API fetched successfully'
+    else
+      puts 'Something went wrong with API'
     end
 
-    JSON.parse(response.body)["places"].presence
-  rescue JSON::ParserError, Net::OpenTimeout, Net::ReadTimeout, SocketError => e
-    Rails.logger.warn("Places refresh failed: #{e.class}")
-    nil
-  end
+    data["places"].each do |place|
+      name = place["displayName"]["text"]
+      address = place["formattedAddress"]
+      latitude = place["location"]["latitude"]
+      longitude = place["location"]["longitude"]
+      types = place["types"]
+      rating = place["rating"]
 
-  # Swaps the whole restaurant table for the freshly fetched one. Matches and
-  # price ranges follow through Restaurant's dependent: :destroy.
-  def replace_restaurants_with(places)
-    Restaurant.destroy_all
+      if place["editorialSummary"]
+        editorial_summary = place["editorialSummary"]["text"]
+      end
 
-    places.each do |place|
-      restaurant = Restaurant.create!(
-        name: place.dig("displayName", "text"),
-        address: place["formattedAddress"],
-        latitude: place.dig("location", "latitude"),
-        longitude: place.dig("location", "longitude"),
-        types: place["types"],
-        google_rating: place["rating"],
-        editorial_summary: place.dig("editorialSummary", "text")
+      new_restaurant = Restaurant.new(
+        name: name,
+        address: address,
+        latitude: latitude,
+        longitude: longitude,
+        types: types,
+        google_rating: rating,
+        editorial_summary: editorial_summary
       )
 
-      price_range_for(restaurant, place["priceRange"])
-    end
-  end
+      new_restaurant.save!
 
-  # A place may carry no price range, or two currencies we cannot compare —
-  # both mean no price range rather than a crash.
-  def price_range_for(restaurant, range)
-    return if range.blank?
+      if place["priceRange"]["startPrice"]["currencyCode"] == place["priceRange"]["endPrice"]["currencyCode"]
+        currency = place["priceRange"]["startPrice"]["currencyCode"]
+        start_price = place["priceRange"]["startPrice"]["units"]
+        end_price = place["priceRange"]["endPrice"]["units"]
+      end
 
-    start_price = range.dig("startPrice", "units")
-    end_price   = range.dig("endPrice", "units")
-    currency    = range.dig("startPrice", "currencyCode")
-    return unless currency && currency == range.dig("endPrice", "currencyCode")
-
-    PriceRange.create!(
-      restaurant: restaurant,
-      currency: currency,
-      start_price: start_price,
-      end_price: end_price
-    )
-  end
-
-  # Only this user's matches — the previous version wiped every user's.
-  def rebuild_matches_for(user)
-    user.go_meal_matches.destroy_all
-
-    Restaurant.find_each do |restaurant|
-      user.go_meal_matches.create!(restaurant: restaurant, go_meal_score: rand(0..100))
+      PriceRange.create!(
+        restaurant_id: new_restaurant.id,
+        currency: currency,
+        start_price: start_price,
+        end_price: end_price
+      )
     end
   end
 end
