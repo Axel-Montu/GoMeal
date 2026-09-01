@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get "components/index"
   devise_for :users
   root to: "pages#home"
+  resources :reviews, only: [:index]
   resources :go_meal_matches, only: [:index, :show] do
     member do
       patch :like
