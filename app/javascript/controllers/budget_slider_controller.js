@@ -48,7 +48,7 @@ export default class extends Controller {
     initial: Number,
     min:     Number,
     max:     Number,
-    step:    { type: Number, default: 5 },
+    step:    { type: Number, default: 10 },
     captions: Array,   // [[seuilMax, texte], ...]
     pips:     Array    // [0, 10, 20, ...]
   }
