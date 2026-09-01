@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :go_meal_matches, dependent: :destroy
+  has_many :user_tags, dependent: :destroy
+  has_many :tags, through: :user_tags
 
   WALK_SPEED_M_PER_MIN = 80    # ~4.8 km/h, marche urbaine réaliste
   DETOUR_FACTOR        = 1.3   # rues ≠ ligne droite

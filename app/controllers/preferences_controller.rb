@@ -11,7 +11,7 @@ class PreferencesController < ApplicationController
     @user = current_user
     authorize @user
     if @user.update(preferences_params)
-      api_call
+      # api_call
       Restaurant.all.each do |restaurant|
         score = rand(0..100)
         @match = GoMealMatch.new(go_meal_score: score)
@@ -25,15 +25,33 @@ class PreferencesController < ApplicationController
     end
   end
 
+  CUISINE_CATEGORIES = [
+    "Régime particulier",
+    "Type d'établissement",
+    "Cuisines du monde"
+  ].freeze
+
   def cuisines
     @user = current_user
     authorize @user, :edit?
+    @tags_by_category = Tag
+      .where(frontend_tag: CUISINE_CATEGORIES)
+      .order(:frontend_type)
+      .group_by(&:frontend_tag)
   end
 
   def update_cuisines
     @user = current_user
     authorize @user, :edit?
-    redirect_to go_meal_matches_path
+    if @user.update(cuisines_params)
+      redirect_to go_meal_matches_path, notice: "Préférences culinaires mises à jour."
+    else
+      @tags_by_category = Tag
+        .where(frontend_tag: CUISINE_CATEGORIES)
+        .order(:frontend_type)
+        .group_by(&:frontend_tag)
+      render :cuisines, status: :unprocessable_entity
+    end
   end
 
   private
@@ -44,6 +62,10 @@ class PreferencesController < ApplicationController
       :preferred_start_address,
       :max_walking_minutes
     )
+  end
+
+  def cuisines_params
+    params.require(:user).permit(tag_ids: [])
   end
 
   def api_call

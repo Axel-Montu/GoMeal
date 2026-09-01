@@ -6,46 +6,33 @@
                       html: { class: "preferences-cuisines-page__form",
                               data: { controller: "cuisine-steps" } } do |f| %>
 
-    <!-- Carte 1 -->
-    <section class="cuisine-card" data-cuisine-steps-target="card">
-      <h2>Régime particulier</h2>
-      <% [["halal_restaurant", "Halal"],
-          ["vegan_restaurant", "Vegan"],
-          ["vegetarian_restaurant", "Végétarien"]].each do |value, label| %>
-        <div class="tag-item">
-          <%= check_box_tag "user[dietary_restrictions][]", value, false,
-                            id: "diet_#{value}", class: "tag-selector" %>
-          <%= label_tag "diet_#{value}", label %>
-        </div>
-      <% end %>
-      <button type="button" data-action="click->cuisine-steps#next" class="btn-go btn-go--secondary">Suivant</button>
-    </section>
+    <%= hidden_field_tag "user[tag_ids][]", "" %>
 
-    <!-- Carte 2 -->
-    <section class="cuisine-card" data-cuisine-steps-target="card" hidden>
-      <h2>Type d'établissement</h2>
-      <% [["bakery", "Boulangerie"], ["restaurant", "Restaurant"]].each do |value, label| %>
-        <div class="tag-item">
-          <%= check_box_tag "user[establishment_types][]", value, false,
-                            id: "type_#{value}", class: "tag-selector" %>
-          <%= label_tag "type_#{value}", label %>
-        </div>
-      <% end %>
-      <button type="button" data-action="click->cuisine-steps#next" class="btn-go btn-go--secondary">Suivant</button>
-    </section>
+    <% selected_tag_ids = @user.tag_ids %>
+    <% categories = PreferencesController::CUISINE_CATEGORIES %>
 
-    <!-- Carte 3 -->
-    <section class="cuisine-card" data-cuisine-steps-target="card" hidden>
-      <h2>Cuisines du monde</h2>
-      <% [["acai_shop", "Açai"], ["pastry_shop", "Pâtisserie"], ["ice_cream_shop", "Glacier"]].each do |value, label| %>
-        <div class="tag-item">
-          <%= check_box_tag "user[world_cuisines][]", value, false,
-                            id: "world_#{value}", class: "tag-selector" %>
-          <%= label_tag "world_#{value}", label %>
-        </div>
-      <% end %>
-    <%= f.submit "Valider", class: "btn-go btn-go--primary" %>
-    </section>
+    <% categories.each_with_index do |category, index| %>
+      <section class="cuisine-card" data-cuisine-steps-target="card" <%= "hidden" if index.positive? %>>
+        <h2><%= category %></h2>
+
+        <% Array(@tags_by_category[category]).each do |tag| %>
+          <div class="tag-item">
+            <%= check_box_tag "user[tag_ids][]",
+                              tag.id,
+                              selected_tag_ids.include?(tag.id),
+                              id: "tag_#{tag.id}",
+                              class: "tag-selector" %>
+            <%= label_tag "tag_#{tag.id}", tag.frontend_type %>
+          </div>
+        <% end %>
+
+        <% if index < categories.length - 1 %>
+          <button type="button" data-action="click->cuisine-steps#next" class="btn-go btn-go--secondary">Suivant</button>
+        <% else %>
+          <%= f.submit "Valider", class: "btn-go btn-go--primary" %>
+        <% end %>
+      </section>
+    <% end %>
 
   <% end %>
 </main>
