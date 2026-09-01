@@ -1,0 +1,39 @@
+// The block asking for a rating, on a lunch that is over.
+// Three ways out, of decreasing weight: rate, start another GoMeal, say you
+// did not go. The visual weight carries the hierarchy, so the third one is a
+// plain link and never a button.
+.rate-prompt {
+  margin-top: 18px;
+  padding: 20px;
+  // Surface, not white: the block reads as an aside to the restaurant card
+  // above it, which is the white one.
+  background: $surface;
+  border-radius: 20px;
+
+  &__title {
+    margin: 0 0 4px;
+    font-size: 19px;
+    font-weight: 700;
+    color: $secondary;
+  }
+
+  &__text {
+    margin: 0 0 16px;
+    color: $light-text;
+    font-size: 14px;
+  }
+
+  // The way out for someone who never went. It stays a link so it never
+  // competes with the two buttons above it.
+  &__decline {
+    width: 100%;
+    margin-top: 4px;
+    padding: 8px;
+    background: none;
+    border: none;
+    color: $light-text;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
