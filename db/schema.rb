@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_01_135021) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_01_144707) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,12 +42,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_135021) do
     t.string "address"
     t.datetime "created_at", null: false
     t.text "editorial_summary"
+    t.string "google_place_id"
     t.float "google_rating"
     t.float "latitude"
     t.float "longitude"
     t.string "name"
     t.string "types", default: [], array: true
     t.datetime "updated_at", null: false
+    t.index ["google_place_id"], name: "index_restaurants_on_google_place_id", unique: true
   end
 
   create_table "reviews", force: :cascade do |t|
