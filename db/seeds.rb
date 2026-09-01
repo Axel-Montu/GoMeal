@@ -24,7 +24,17 @@ http.use_ssl = true
 
 request = Net::HTTP::Post.new(uri)
 request['X-Goog-Api-Key'] = ENV['GOOGLE_PLACES_API_KEY']
-request['X-Goog-FieldMask'] = 'places.displayName.text,places.formattedAddress,places.location.latitude,places.location.longitude,places.types,places.rating,places.editorialSummary.text,places.priceRange'
+request['X-Goog-FieldMask'] = <<~FIELDS.split("\n").join(",")
+      places.displayName.text
+      places.formattedAddress
+      places.location.latitude
+      places.location.longitude
+      places.types
+      places.rating
+      places.editorialSummary.text
+      places.priceRange
+    FIELDS
+
 request['Content-Type'] = 'application/json'
 request.body = '{
 "includedTypes": ["french_restaurant",
