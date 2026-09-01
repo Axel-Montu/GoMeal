@@ -1,16 +1,25 @@
-<div class="components-page">
-  <section class="components-section">
-    <h1>Match Found!</h1>
+<div class="match-show">
+  <%# 1. The restaurant, with its cover photo %>
+  <%= render "shared/restaurant_card",
+            cover: restaurant_cover_photo(@match.restaurant),
+            name: @match.restaurant.name,
+            address: @match.restaurant.address,
+            category: (@match.restaurant.types.first || "Restaurant").tr("_", " ").capitalize,
+            rating: (@match.restaurant.google_rating || "—"),
+            travel_time: @route ? walking_time(@route[:duration]) : "—",
+            meal_time: @meal ? meal_time(@meal) : "—",
+            total_time: (@route && @meal) ? total_time(@route[:duration], @meal) : "—" %>
 
-    <%= render "shared/restaurant_card",
-               name: @match.restaurant.name,
-               address: @match.restaurant.address,
-               category: (@match.restaurant.types.first || "Restaurant").tr("_", " ").capitalize,
-               rating: (@match.restaurant.google_rating || "—"),
-               travel_time: @route ? walking_time(@route[:duration]) : "—",
-               meal_time: @meal ? meal_time(@meal) : "—",
-               total_time: (@route && @meal) ? total_time(@route[:duration], @meal) : "—" %>
+  <%# 2. One block, or none. A review once it exists, the call to rate while
+         the lunch is over and unanswered, nothing the rest of the time %>
+  <% if @review.present? %>
+    <%= render "reviews/review", review: @review, match: @match %>
+  <% elsif @match.awaiting_review? %>
+    <%= render "go_meal_matches/rate_prompt", match: @match %>
+  <% end %>
 
-    <%= link_to "Y aller", go_meal_match_itinerary_path(@match), class: "btn-go btn-go--primary" %>
-  </section>
+  <%# 3. Going there stays possible in every state: a rated lunch can be
+         walked to again %>
+  <%= link_to "Y aller", go_meal_match_itinerary_path(@match),
+              class: "btn-go btn-go--primary" %>
 </div>

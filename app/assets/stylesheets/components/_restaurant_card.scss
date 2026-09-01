@@ -4,6 +4,22 @@
   border-radius: 20px;
   box-shadow: $box-shadow;
 
+  &__cover {
+    height: 180px;
+    // Negative margins so the photo reaches the card's edges, through its
+    // own 20px padding.
+    margin: -20px -20px 16px;
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
