@@ -6,18 +6,36 @@
                       html: { class: "preferences-edit-page__form" } do |f| %>
 
     <div class="form-input-go"
-         data-controller="lunch-time-slider"
-         data-lunch-time-slider-initial-value="<%= @user.average_lunch_time_minutes || 60 %>">
+         data-controller="time-slider"
+         data-time-slider-initial-value="<%= @user.average_lunch_time_minutes || 60 %>"
+         data-time-slider-min-value="30"
+         data-time-slider-max-value="90"
+         data-time-slider-captions-value="<%= [[45, 'Express'], [75, 'Normal'], [90, "J'ai le temps"]].to_json %>"
+         data-time-slider-pips-value="<%= [30, 60, 90].to_json %>">
 
-      <label>Combien de temps as-tu pour déjeuner ?</label>
+      <label>Combien de temps au total as tu pour ta pause déjeuner?</label>
 
-      <div data-lunch-time-slider-target="slider" class="lunch-slider"></div>
+      <div data-time-slider-target="slider" class="lunch-slider"></div>
 
-      <p class="lunch-slider-caption"
-         data-lunch-time-slider-target="label"></p>
+      <p class="lunch-slider-caption" data-time-slider-target="label"></p>
 
       <%= f.hidden_field :average_lunch_time_minutes,
-                         data: { lunch_time_slider_target: "input" } %>
+                         data: { time_slider_target: "input" } %>
+    </div>
+
+    <div class="form-input-go"
+         data-controller="time-slider"
+         data-time-slider-initial-value="15"
+         data-time-slider-min-value="0"
+         data-time-slider-max-value="30"
+         data-time-slider-captions-value="<%= [[5, 'Sur place'], [15, 'À deux pas'], [30, 'Un peu de marche']].to_json %>"
+         data-time-slider-pips-value="<%= [0, 15, 30].to_json %>">
+
+      <label>Temps de marche max</label>
+
+      <div data-time-slider-target="slider" class="lunch-slider"></div>
+
+      <p class="lunch-slider-caption" data-time-slider-target="label"></p>
     </div>
 
     <%= f.submit "Enregistrer mes préférences",
