@@ -30,7 +30,8 @@ class PreferencesController < ApplicationController
   def preferences_params
     params.require(:user).permit(
       :average_lunch_time_minutes,
-      :preferred_start_address
+      :preferred_start_address,
+      :max_walking_minutes
     )
   end
 

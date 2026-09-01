@@ -25,7 +25,7 @@
 
     <div class="form-input-go"
          data-controller="time-slider"
-         data-time-slider-initial-value="15"
+         data-time-slider-initial-value="<%= @user.max_walking_minutes || 15 %>"
          data-time-slider-min-value="0"
          data-time-slider-max-value="30"
          data-time-slider-captions-value="<%= [[5, 'Sur place'], [15, 'À deux pas'], [30, 'Un peu de marche']].to_json %>"
@@ -36,6 +36,9 @@
       <div data-time-slider-target="slider" class="lunch-slider"></div>
 
       <p class="lunch-slider-caption" data-time-slider-target="label"></p>
+
+      <%= f.hidden_field :max_walking_minutes,
+                         data: { time_slider_target: "input" } %>
     </div>
 
     <%= f.submit "Enregistrer mes préférences",
