@@ -64,6 +64,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_104141) do
     t.bigint "user_id", null: false
     t.index ["tag_id"], name: "index_user_tags_on_tag_id"
     t.index ["user_id"], name: "index_user_tags_on_user_id"
+  create_table "reviews", force: :cascade do |t|
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.bigint "go_meal_match_id", null: false
+    t.integer "rating", null: false
+    t.datetime "updated_at", null: false
+    t.index ["go_meal_match_id"], name: "index_reviews_on_go_meal_match_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -86,4 +93,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_104141) do
   add_foreign_key "price_ranges", "restaurants"
   add_foreign_key "user_tags", "tags"
   add_foreign_key "user_tags", "users"
+  add_foreign_key "reviews", "go_meal_matches"
 end
