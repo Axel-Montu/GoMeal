@@ -1,62 +1,28 @@
-<%# The card is shared: the match screen passes a cover and an address, the
-    components page passes neither, so both stay optional. %>
 <article class="restaurant-card">
+  <article class="restaurant-card">
   <% if local_assigns[:cover].present? %>
     <div class="restaurant-card__cover">
       <%= image_tag cover, alt: name %>
     </div>
   <% end %>
-
+  <div class="restaurant-card__content">
   <div class="restaurant-card__content">
     <div class="restaurant-card__header">
-      <div class="restaurant-card__identity">
+      <div>
         <h3><%= name %></h3>
-        <% if local_assigns[:address].present? %>
-          <p><%= address %></p>
-        <% end %>
+        <p><%= address %></p>
+        <p><%= category %></p>
       </div>
 
       <span class="restaurant-card__rating">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/>
-        </svg>
-        <%= rating %>
+        ★ <%= rating %>
       </span>
     </div>
 
-    <p class="restaurant-card__category"><%= category %></p>
-
-    <%# Each figure carries its label: "69 min" alone says nothing about
-        whether it is the walk, the meal, or the whole break. %>
-    <dl class="restaurant-card__stats">
-      <div class="restaurant-card__stat">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <circle cx="13" cy="4" r="1.6"/>
-          <path d="m9 21 2-4 2.5-2.5L12 9l-3 2-2 4"/>
-          <path d="m14 12 2.5 2 1.5 5"/>
-        </svg>
-        <dt>Marche</dt>
-        <dd><%= travel_time %></dd>
-      </div>
-
-      <div class="restaurant-card__stat">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M3 2v7a3 3 0 0 0 6 0V2"/>
-          <path d="M6 9v13"/>
-          <path d="M18 2c-1.7 1.5-2.5 3.8-2.5 6.5S16.3 13 18 14v8"/>
-        </svg>
-        <dt>Sur place</dt>
-        <dd><%= meal_time %></dd>
-      </div>
-
-      <div class="restaurant-card__stat restaurant-card__stat--total">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M12 7v5l3 2"/>
-        </svg>
-        <dt>Pause totale</dt>
-        <dd><%= total_time %></dd>
-      </div>
-    </dl>
+    <div class="restaurant-card__stats">
+      <span>🚶 <%= travel_time %></span>
+      <span>🍽️ <%= meal_time %></span>
+      <span>⏱️ <%= total_time %></span>
+    </div>
   </div>
 </article>
