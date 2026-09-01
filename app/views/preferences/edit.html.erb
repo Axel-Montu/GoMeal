@@ -41,6 +41,24 @@
                          data: { time_slider_target: "input" } %>
     </div>
 
+    <div class="form-input-go"
+         data-controller="budget-slider"
+         data-budget-slider-initial-value="<%= @user.budget || 15 %>"
+         data-budget-slider-min-value="0"
+         data-budget-slider-max-value="80"
+         data-budget-slider-captions-value="<%= [[10, 'Efficace'], [20, 'Un bon kiff'], [30, 'ça lâche les chevaux...'], [50, 'Repas de roi'], [80, 'No limits'] ].to_json %>"
+         data-budget-slider-pips-value="<%= [0, 10, 20, 30, 40, 50, 60, 70, 80].to_json %>">
+
+      <label>Budget pour ton repas</label>
+
+      <div data-budget-slider-target="slider" class="lunch-slider"></div>
+
+      <p class="lunch-slider-caption" data-budget-slider-target="label"></p>
+
+      <%= f.hidden_field :budget,
+                         data: { budget_slider_target: "input" } %>
+    </div>
+
     <%= f.submit "Enregistrer mes préférences",
                  class: "btn-go btn-go--primary" %>
 
