@@ -19,10 +19,21 @@ class PreferencesController < ApplicationController
         @match.restaurant = restaurant
         @match.save
       end
-      redirect_to go_meal_matches_path, notice: "Preferences updated."
+      redirect_to cuisines_preferences_path, notice: "Preferences updated."
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def cuisines
+    @user = current_user
+    authorize @user, :edit?
+  end
+
+  def update_cuisines
+    @user = current_user
+    authorize @user, :edit?
+    redirect_to go_meal_matches_path
   end
 
   private
