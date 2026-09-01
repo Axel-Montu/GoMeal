@@ -20,6 +20,10 @@
     <%= link_to go_meal_matches_path, class: "mobile-navbar__button" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
+    <% when controller_name == "reviews" %>
+    <%= link_to go_meal_matches_path, class: "mobile-navbar__button" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
   <% end %>
 
   <p class="mobile-navbar__logo">
@@ -37,6 +41,17 @@
     <% end %>
 
     <li class="theme-dropdown" data-controller="theme">
+  <%# The way into the review list, from every screen carrying the navbar.
+      Sits next to the theme picker and borrows its weight: the navbar already
+      carries two round buttons, a third one would turn it into a toolbar. %>
+  <%# Star and theme picker travel together, so the navbar keeps three blocks
+      and the logo stays centred %>
+  <div class="mobile-navbar__actions">
+    <%= link_to reviews_path, class: "mobile-navbar__link", title: "Mes avis" do %>
+      <i class="fa-solid fa-star"></i>
+    <% end %>
+
+    <div class="theme-dropdown" data-controller="theme">
     <button type="button"
             class="theme-dropdown__trigger"
             data-action="click->theme#toggleMenu">
@@ -96,4 +111,6 @@
     </ul>
     </li>
   </ul>
+  </div>
+</div>
 </nav>

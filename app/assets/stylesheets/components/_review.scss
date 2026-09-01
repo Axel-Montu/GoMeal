@@ -1,0 +1,32 @@
+// A review, once it exists, shown on the match screen.
+// Same shell as `.restaurant-card` above it, white and raised, so the two
+// read as one column.
+.review {
+  margin-top: 18px;
+  padding: 20px;
+  background: $white;
+  border-radius: 20px;
+  box-shadow: $box-shadow;
+
+  // The same yellow as `.restaurant-card__rating`, so a rating always looks
+  // the same across the app.
+  &__stars {
+    margin-bottom: 12px;
+    color: $yellow;
+    font-size: 20px;
+  }
+
+  &__comment {
+    margin: 0 0 16px;
+    color: $text;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  // Modifier and Supprimer, side by side and of equal weight: neither is the
+  // one we push.
+  &__actions {
+    display: flex;
+    gap: 10px;
+  }
+}

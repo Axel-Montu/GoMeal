@@ -6,13 +6,27 @@ class GoMealMatchesController < ApplicationController
   end
 
   def show
-    @match = GoMealMatch.find(params[:id])
+    # 1. Look among the current user's own matches only: someone else's is
+    #    simply not found
+    @match = current_user.go_meal_matches.find_by(id: params[:id])
+
+    if @match.nil?
+      # 2. A 404, and we never say whether the match exists elsewhere
+      skip_authorization
+      head :not_found
+      return
+    end
+
     authorize @match
     @back_path = go_meal_matches_path
+
+    # 3. The review, when one was already written
+    @review = @match.review
 
     @route = walking_route
     @meal = current_user.average_lunch_time_minutes
   end
+
   def like
     @match = current_user.go_meal_matches.find(params[:id])
 
@@ -27,11 +41,11 @@ class GoMealMatchesController < ApplicationController
     authorize @match
   end
 
-def not_visited
+  def not_visited
     # 1. Look among the current user's own matches only
-  @match = current_user.go_meal_matches.find_by(id: params[:id])
+    @match = current_user.go_meal_matches.find_by(id: params[:id])
 
-  if @match.nil?
+    if @match.nil?
     # 2. A 404, and we never say whether the match exists elsewhere
     skip_authorization
     head :not_found

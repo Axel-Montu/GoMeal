@@ -1,0 +1,20 @@
+<%# Asks for a rating on a lunch that is over.
+    Three ways out: rate it, start another GoMeal, or say you never went.
+    The third one writes `visited: false` and takes the lunch out of the
+    waiting list for good. %>
+<section class="rate-prompt">
+  <h2 class="rate-prompt__title">Tu y es allé ?</h2>
+  <p class="rate-prompt__text">
+    Une note suffit. Elle nous sert à mieux te proposer le déjeuner de demain.
+  </p>
+
+  <%= link_to "Noter mon expérience", new_go_meal_match_review_path(match),
+              class: "btn-go btn-go--primary" %>
+
+  <%= link_to "Lancer un nouveau GoMeal", go_meal_matches_path,
+              class: "btn-go btn-go--secondary" %>
+
+  <%# A PATCH, so a button_to and never a link: it changes a record %>
+  <%= button_to "Je n'y suis pas allé", not_visited_go_meal_match_path(match),
+                method: :patch, class: "rate-prompt__decline" %>
+</section>

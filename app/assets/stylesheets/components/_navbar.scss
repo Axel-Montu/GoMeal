@@ -63,7 +63,30 @@ $navbar-logo-font-size: 23px;
       color: $primary;
     }
   }
+  // The way into the review list. No round background on purpose: the navbar
+  // already carries one for the back button, and the theme picker is flat.
+  // This one aligns on the picker, not on the button.
+  &__link {
+    flex-shrink: 0;
+    padding: 6px;
 
+    color: $light-text;
+    font-size: 18px;
+    line-height: 1;
+    text-decoration: none;
+
+    &:hover {
+      color: $secondary;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  
   &__spacer {
     width: $navbar-button-size;
     height: $navbar-button-size;

@@ -1,0 +1,34 @@
+<%# One line of the list. Two shapes behind one partial: a lunch waiting for a
+    rating, and a review already written. Both open the same match screen. %>
+<%= link_to go_meal_match_path(match),
+            class: "review-row #{'review-row--awaiting' if awaiting}" do %>
+  <div class="review-row__body">
+    <h3 class="review-row__name"><%= match.restaurant.name %></h3>
+
+    <% if awaiting %>
+      <%# time_ago_in_words rather than a date: "il y a 2 jours" reads faster
+          than "29 août" when deciding what to rate first %>
+      <p class="review-row__date">
+        Déjeuner il y a <%= time_ago_in_words(match.expected_back_at) %>
+      </p>
+    <% else %>
+      <div class="review-row__stars">
+        <% 1.upto(5) do |position| %>
+          <i class="fa-<%= position <= match.review.rating ? "solid" : "regular" %> fa-star"></i>
+        <% end %>
+      </div>
+
+      <% if match.review.comment.present? %>
+        <p class="review-row__excerpt">
+          <%= truncate(match.review.comment, length: 60) %>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if awaiting %>
+    <span class="review-row__cta">Noter</span>
+  <% else %>
+    <i class="fa-solid fa-chevron-right review-row__chevron"></i>
+  <% end %>
+<% end %>

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get "components/index"
   devise_for :users
   root to: "pages#home"
+  resources :reviews, only: [:index]
   resources :go_meal_matches, only: [:index, :show] do
     member do
       patch :like
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
       patch :not_visited
     end
     resource :itinerary, only: [:show]
+    resource :review, only: [:new, :create, :edit, :update, :destroy]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
