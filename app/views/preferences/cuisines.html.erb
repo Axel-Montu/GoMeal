@@ -1,0 +1,51 @@
+<main class="preferences-edit-page">
+  <h1 class="preferences-edit-page__title">Tes préférences culinaires</h1>
+
+  <%= simple_form_for @user,
+                      url: cuisines_preferences_path,
+                      html: { class: "preferences-cuisines-page__form",
+                              data: { controller: "cuisine-steps" } } do |f| %>
+
+    <!-- Carte 1 -->
+    <section class="cuisine-card" data-cuisine-steps-target="card">
+      <h2>Régime particulier</h2>
+      <% [["halal_restaurant", "Halal"],
+          ["vegan_restaurant", "Vegan"],
+          ["vegetarian_restaurant", "Végétarien"]].each do |value, label| %>
+        <div class="tag-item">
+          <%= check_box_tag "user[dietary_restrictions][]", value, false,
+                            id: "diet_#{value}", class: "tag-selector" %>
+          <%= label_tag "diet_#{value}", label %>
+        </div>
+      <% end %>
+      <button type="button" data-action="click->cuisine-steps#next" class="btn-go btn-go--secondary">Suivant</button>
+    </section>
+
+    <!-- Carte 2 -->
+    <section class="cuisine-card" data-cuisine-steps-target="card" hidden>
+      <h2>Type d'établissement</h2>
+      <% [["bakery", "Boulangerie"], ["restaurant", "Restaurant"]].each do |value, label| %>
+        <div class="tag-item">
+          <%= check_box_tag "user[establishment_types][]", value, false,
+                            id: "type_#{value}", class: "tag-selector" %>
+          <%= label_tag "type_#{value}", label %>
+        </div>
+      <% end %>
+      <button type="button" data-action="click->cuisine-steps#next" class="btn-go btn-go--secondary">Suivant</button>
+    </section>
+
+    <!-- Carte 3 -->
+    <section class="cuisine-card" data-cuisine-steps-target="card" hidden>
+      <h2>Cuisines du monde</h2>
+      <% [["acai_shop", "Açai"], ["pastry_shop", "Pâtisserie"], ["ice_cream_shop", "Glacier"]].each do |value, label| %>
+        <div class="tag-item">
+          <%= check_box_tag "user[world_cuisines][]", value, false,
+                            id: "world_#{value}", class: "tag-selector" %>
+          <%= label_tag "world_#{value}", label %>
+        </div>
+      <% end %>
+    <%= f.submit "Valider", class: "btn-go btn-go--primary" %>
+    </section>
+
+  <% end %>
+</main>

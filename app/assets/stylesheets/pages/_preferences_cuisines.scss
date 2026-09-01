@@ -1,0 +1,15 @@
+.cuisine-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+
+  & > h2 {
+    margin: 0 0 16px;
+  }
+
+  & > button[type="button"],
+  & > input[type="submit"] {
+    align-self: center;
+    margin-top: 20px;
+  }
+}
