@@ -25,7 +25,18 @@
   <p class="mobile-navbar__logo">
     Go<span>Meal</span>
   </p>
-  <div class="theme-dropdown" data-controller="theme">
+
+  <ul class="mobile-navbar__actions">
+    <% if user_signed_in? && controller_name != "preferences" %>
+      <li>
+        <%= link_to preferences_path, class: "theme-dropdown__trigger" do %>
+          Préférences
+          <i class="fa-solid fa-chevron-down"></i>
+        <% end %>
+      </li>
+    <% end %>
+
+    <li class="theme-dropdown" data-controller="theme">
     <button type="button"
             class="theme-dropdown__trigger"
             data-action="click->theme#toggleMenu">
@@ -83,5 +94,6 @@
         </button>
       </li>
     </ul>
-  </div>
+    </li>
+  </ul>
 </nav>

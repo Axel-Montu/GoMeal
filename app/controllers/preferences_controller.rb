@@ -2,6 +2,11 @@ require 'net/http'
 require 'json'
 
 class PreferencesController < ApplicationController
+  def show
+    @user = current_user
+    authorize @user, :edit?
+  end
+
   def edit
     @user = current_user
     authorize @user

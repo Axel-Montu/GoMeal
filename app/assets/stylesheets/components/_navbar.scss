@@ -69,4 +69,13 @@ $navbar-logo-font-size: 23px;
     height: $navbar-button-size;
     flex-shrink: 0;
   }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
 }
