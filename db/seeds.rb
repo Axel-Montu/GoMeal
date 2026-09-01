@@ -10,6 +10,7 @@
 
 require 'net/http'
 require 'json'
+require 'csv'
 
 puts "Let's gooooo..."
 
@@ -17,6 +18,20 @@ GoMealMatch.destroy_all
 User.destroy_all
 Restaurant.destroy_all
 PriceRange.destroy_all
+Tag.destroy_all
+
+puts "Now let's create some tags..."
+
+CSV.foreach(Rails.root.join("db/data/restaurant_types.csv"), headers: true) do |row|
+  Tag.create!(
+    api_type: row["api_type"],
+    frontend_type: row["frontend_type"],
+    backend_tag: row["backend_tag"],
+    frontend_tag: row["frontend_tag"]
+  )
+end
+
+puts "Seeding done : #{Tag.count} tags created."
 
 uri = URI('https://places.googleapis.com/v1/places:searchNearby')
 http = Net::HTTP.new(uri.host, uri.port)

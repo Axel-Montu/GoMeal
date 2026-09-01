@@ -42,3 +42,7 @@
 
 # The example file IS committed: it carries names, never values.
 !.env.example
+
+/.claude/
+.claude/
+.claude
