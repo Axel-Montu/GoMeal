@@ -65,7 +65,8 @@ class PreferencesController < ApplicationController
     params.require(:user).permit(
       :average_lunch_time_minutes,
       :preferred_start_address,
-      :max_walking_minutes
+      :max_walking_minutes,
+      :budget
     )
   end
 
