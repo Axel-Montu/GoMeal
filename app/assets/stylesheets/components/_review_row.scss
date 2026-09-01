@@ -1,0 +1,55 @@
+// One row of the review list. The awaiting variant is flat and grey, so the eye
+// lands on what still needs doing before what is already done.
+.review-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-bottom: 12px;
+  padding: 16px 20px;
+
+  background: $white;
+  border-radius: 20px;
+  box-shadow: $box-shadow;
+  color: $text;
+  text-decoration: none;
+
+  &--awaiting {
+    background: $surface;
+    box-shadow: none;
+  }
+
+  &__name {
+    margin: 0 0 4px;
+    font-size: 16px;
+    color: $secondary;
+  }
+
+  &__date,
+  &__excerpt {
+    margin: 0;
+    color: $light-text;
+    font-size: 14px;
+  }
+
+  &__stars {
+    margin-bottom: 6px;
+    color: $yellow;
+  }
+
+  // A label rather than a button: the whole row is already the link
+  &__cta {
+    flex-shrink: 0;
+    padding: 8px 18px;
+    border: 1.5px solid $secondary;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  &__chevron {
+    flex-shrink: 0;
+    color: $light-text;
+  }
+}

@@ -1,0 +1,56 @@
+// The list of my lunches. Same framing as `.match-show`: this is the second
+// screen of the review flow, and the two must sit at the same width.
+.reviews-index {
+  min-height: 100vh;
+  padding: 30px 20px 80px;
+  max-width: 390px;
+  margin: 0 auto;
+  color: $text;
+  background: $background;
+
+  &__eyebrow {
+    margin: 0 0 4px;
+    color: $primary;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  &__title {
+    margin: 0 0 24px;
+    font-size: 28px;
+    color: $secondary;
+  }
+
+  // The section headers double as counters, so the user knows how much is left
+  &__section {
+    margin: 24px 0 12px;
+    color: $secondary;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  &__empty {
+    padding: 60px 0;
+    text-align: center;
+
+    i {
+      color: $light-text;
+      font-size: 48px;
+    }
+
+    h2 {
+      margin: 20px 0 8px;
+      font-size: 22px;
+      color: $secondary;
+    }
+
+    p {
+      margin: 0 auto 28px;
+      max-width: 260px;
+      color: $light-text;
+      font-size: 15px;
+    }
+  }
+}
