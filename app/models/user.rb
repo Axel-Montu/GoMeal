@@ -11,6 +11,6 @@ class User < ApplicationRecord
 
   def max_radius_search_meters
     return nil if max_walking_minutes.blank?
-    (MAX_SPEED_M_PER_MIN * max_walking_minutes / DETOUR_FACTOR).round
+    (WALK_SPEED_M_PER_MIN * max_walking_minutes / DETOUR_FACTOR).round
   end
 end
