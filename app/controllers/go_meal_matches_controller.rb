@@ -27,6 +27,26 @@ class GoMealMatchesController < ApplicationController
     authorize @match
   end
 
+def not_visited
+    # 1. Look among the current user's own matches only
+  @match = current_user.go_meal_matches.find_by(id: params[:id])
+
+  if @match.nil?
+    # 2. A 404, and we never say whether the match exists elsewhere
+    skip_authorization
+    head :not_found
+    return
+  end
+
+  authorize @match
+
+  # 3. The answer is recorded: this lunch leaves the waiting list for good
+  @match.update!(visited: false)
+
+  # 4. Back to the matches, with a word saying it was taken into account
+  redirect_to go_meal_matches_path, notice: "C'est noté, tu n'y es pas allé."
+  end
+
   private
 
   def walking_route
