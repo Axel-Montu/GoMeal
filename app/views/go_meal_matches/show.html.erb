@@ -1,5 +1,17 @@
-<div class="match-show">
-  <%# 1. The restaurant, with its cover photo %>
+<main class="match-show">
+  <%# 1. The match is the event: it gets said before anything is listed %>
+  <header class="match-show__header">
+    <p class="match-show__eyebrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20 6 9 17l-5-5"/>
+      </svg>
+      Ça matche
+    </p>
+
+    <h1 class="match-show__title">Ton déjeuner est trouvé</h1>
+  </header>
+
+  <%# 2. The restaurant, with its cover photo %>
   <%= render "shared/restaurant_card",
             cover: restaurant_cover_photo(@match.restaurant),
             name: @match.restaurant.name,
@@ -10,7 +22,7 @@
             meal_time: @meal ? meal_time(@meal) : "—",
             total_time: (@route && @meal) ? total_time(@route[:duration], @meal) : "—" %>
 
-  <%# 2. One block, or none. A review once it exists, the call to rate while
+  <%# 3. One block, or none. A review once it exists, the call to rate while
          the lunch is over and unanswered, nothing the rest of the time %>
   <% if @review.present? %>
     <%= render "reviews/review", review: @review, match: @match %>
@@ -18,8 +30,14 @@
     <%= render "go_meal_matches/rate_prompt", match: @match %>
   <% end %>
 
-  <%# 3. Going there stays possible in every state: a rated lunch can be
-         walked to again %>
-  <%= link_to "Y aller", go_meal_match_itinerary_path(@match),
-              class: "btn-go btn-go--primary" %>
-</div>
+  <%# 4. Going there stays possible in every state: a rated lunch can be
+         walked to again. The way back to the other matches sits under it,
+         so the screen is never a dead end %>
+  <div class="match-show__actions">
+    <%= link_to "Y aller", go_meal_match_itinerary_path(@match),
+                class: "btn-go btn-go--primary" %>
+
+    <%= link_to "Voir mes autres matchs", @back_path,
+                class: "btn-go btn-go--secondary" %>
+  </div>
+</main>
