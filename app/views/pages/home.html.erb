@@ -26,20 +26,21 @@
                 class: "home-page__illustration" %>
 
   <div class="home-page__actions">
-    <%= render "shared/button",
-               text: "Créer un compte",
-               path: new_user_registration_path,
-               variant: "primary" %>
+    <% if user_signed_in? %>
+      <%= render "shared/button",
+                 text: "C'est parti !",
+                 path: locations_path,
+                 variant: "primary" %>
+    <% else %>
+      <%= render "shared/button",
+                 text: "Créer un compte",
+                 path: new_user_registration_path,
+                 variant: "primary" %>
 
-
-    <%= render "shared/button",
-               text: "Se connecter",
-               path: new_user_session_path,
-               variant: "secondary" %>
-
-    <%= render "shared/button",
-               text: "C'est parti!",
-               path: locations_path,
-               variant: "secondary" %>
+      <%= render "shared/button",
+                 text: "Se connecter",
+                 path: new_user_session_path,
+                 variant: "tertiary" %>
+    <% end %>
   </div>
 </main>
