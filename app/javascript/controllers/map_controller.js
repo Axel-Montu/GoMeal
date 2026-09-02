@@ -34,13 +34,29 @@ export default class extends Controller {
       paint: { "line-width": 5, "line-color": "#ef7308" }
     })
 
-    // 7. Frame both ends of the line, with room so neither touches an edge
     const coordinates = this.routeValue.coordinates
+
+    // 7. The route runs from the user to the restaurant, so its two ends are
+    //    already the two points to mark. Colours come from the active theme,
+    //    which the user can switch at runtime. Size carries the difference as
+    //    well: the "mono" theme paints both variables black.
+    const theme = getComputedStyle(document.documentElement)
+
+    new maplibregl.Marker({
+      color: theme.getPropertyValue("--color-secondary").trim(),
+      scale: 0.75
+    }).setLngLat(coordinates[0]).addTo(this.map)
+
+    new maplibregl.Marker({
+      color: theme.getPropertyValue("--color-primary").trim()
+    }).setLngLat(coordinates.at(-1)).addTo(this.map)
+
+    // 8. Frame both ends of the line, with room so neither touches an edge
     const bounds = new maplibregl.LngLatBounds(coordinates[0], coordinates[0])
     coordinates.forEach((point) => bounds.extend(point))
     this.map.fitBounds(bounds, { padding: 60 })
   }
-  
+
   disconnect() {
     // 2. Destroy the map, so Turbo does not leave one running in the background
     this.map.remove()

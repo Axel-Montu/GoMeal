@@ -55,11 +55,11 @@
 
     <section class="pref-setting"
              data-controller="budget-slider"
-             data-budget-slider-initial-value="<%= @user.budget || 15 %>"
-             data-budget-slider-min-value="0"
+             data-budget-slider-initial-value="<%= @user.budget || 10 %>"
+             data-budget-slider-min-value="10"
              data-budget-slider-max-value="80"
              data-budget-slider-captions-value="<%= [[10, 'Efficace 💸'], [20, 'Un bon kiff 🍲'], [30, 'Ça lâche les chevaux... 🍴'], [50, 'Repas de roi 👑'], [80, 'No limits 🤪'] ].to_json %>"
-             data-budget-slider-pips-value="<%= [0, 10, 20, 30, 40, 50, 60, 70, 80].to_json %>">
+             data-budget-slider-pips-value="<%= [10, 20, 30, 40, 50, 60, 70, 80].to_json %>">
 
       <div class="pref-setting__head">
         <label class="pref-setting__question">Quel budget pour ton repas ?</label>
