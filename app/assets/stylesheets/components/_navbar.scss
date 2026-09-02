@@ -10,6 +10,8 @@ $navbar-button-font-size: 24px;
 
 $navbar-logo-font-size: 23px;
 
+$navbar-desktop-breakpoint: 768px;
+
 .navbar-lewagon {
   justify-content: space-between;
   background: $surface;
@@ -24,6 +26,7 @@ $navbar-logo-font-size: 23px;
 }
 
 .mobile-navbar {
+  position: relative;
   min-height: $navbar-mobile-min-height;
   padding: $navbar-mobile-padding;
 
@@ -63,30 +66,7 @@ $navbar-logo-font-size: 23px;
       color: $primary;
     }
   }
-  // The way into the review list. No round background on purpose: the navbar
-  // already carries one for the back button, and the theme picker is flat.
-  // This one aligns on the picker, not on the button.
-  &__link {
-    flex-shrink: 0;
-    padding: 6px;
 
-    color: $light-text;
-    font-size: 18px;
-    line-height: 1;
-    text-decoration: none;
-
-    &:hover {
-      color: $secondary;
-    }
-  }
-
-  &__actions {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-  }
-  
   &__spacer {
     width: $navbar-button-size;
     height: $navbar-button-size;
@@ -94,11 +74,106 @@ $navbar-logo-font-size: 23px;
   }
 
   &__actions {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
     margin: 0;
     padding: 0;
     list-style: none;
+    flex-shrink: 0;
+  }
+
+  &__menu-trigger {
+    width: $navbar-button-size;
+    height: $navbar-button-size;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: $secondary;
+    background: rgba(var(--color-secondary-rgb), 0.08);
+    border: none;
+    border-radius: 50%;
+    font-size: $navbar-button-font-size;
+    line-height: 1;
+    cursor: pointer;
+
+    @media (min-width: $navbar-desktop-breakpoint) {
+      display: none;
+    }
+  }
+
+  &__panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 100;
+
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    min-width: 180px;
+
+    background: $white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+    &.is-open {
+      display: flex;
+    }
+
+    @media (min-width: $navbar-desktop-breakpoint) {
+      position: static;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      min-width: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+  }
+
+  &__panel-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 12px;
+
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+
+    color: $secondary;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+
+    i {
+      font-size: 10px;
+    }
+
+    &:hover {
+      background: $surface;
+      color: $secondary;
+    }
+
+    @media (min-width: $navbar-desktop-breakpoint) {
+      padding: 8px 14px;
+      background: $surface;
+      border-radius: 999px;
+
+      &:hover {
+        background: rgba(var(--color-secondary-rgb), 0.12);
+      }
+    }
   }
 }

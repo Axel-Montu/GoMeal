@@ -64,3 +64,16 @@
     }
   }
 }
+
+// Inside the mobile navbar dropdown panel, the theme menu collapses inline
+// as an accordion — the parent panel already provides the popover chrome.
+@media (max-width: 767px) {
+  .mobile-navbar__panel .theme-dropdown__menu {
+    position: static;
+    padding: 4px 0 4px 12px;
+    min-width: 0;
+
+    background: transparent;
+    box-shadow: none;
+  }
+}
