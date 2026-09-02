@@ -52,7 +52,7 @@ class PreferencesController < ApplicationController
 
     @user.go_meal_matches.destroy_all
     restaurants.each do |restaurant|
-      score = Scoring::GoMealScorer.call(restaurant: restaurant, user_location: location)
+      score = Scoring::GoMealScorer.call(restaurant: restaurant, user_location: location, user: @user)
       @user.go_meal_matches.create!(restaurant: restaurant, go_meal_score: score)
     end
 

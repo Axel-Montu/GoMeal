@@ -1,13 +1,36 @@
 module Scoring
   class GoMealScorer
-    def self.call(restaurant:, user_location:)
+    RATING_MAX_PTS   = 100 / 3.0
+    DISTANCE_MAX_PTS = 100 / 3.0
+    PRICE_MAX_PTS    = 100 - RATING_MAX_PTS - DISTANCE_MAX_PTS
+
+    def self.call(restaurant:, user_location:, user:)
       distance = haversine_meters(
         [user_location["latitude"].to_f, user_location["longitude"].to_f],
         [restaurant.latitude, restaurant.longitude]
       )
-      rating_pts   = (restaurant.google_rating || 0) * 10
-      distance_pts = [50 - (distance * 0.05), 0].max
-      (rating_pts + distance_pts).round.clamp(0, 100)
+      rating_pts   = (restaurant.google_rating || 0) * (RATING_MAX_PTS / 5)
+      distance_pts = [DISTANCE_MAX_PTS - (distance * 0.0333), 0].max
+      price_pts    = price_score(restaurant.price_range, user.budget)
+      (rating_pts + distance_pts + price_pts).round.clamp(0, 100)
+    end
+
+    # No price data on the restaurant: stay neutral rather than reward or penalize it.
+    private_class_method def self.price_score(price_range, budget)
+      return PRICE_MAX_PTS / 2 if price_range.blank? || budget.blank?
+
+      start_price = price_range.start_price.to_f
+      end_price   = price_range.end_price.to_f
+
+      gap = if budget < start_price
+        start_price - budget
+      elsif budget > end_price
+        budget - end_price
+      else
+        0
+      end
+
+      [PRICE_MAX_PTS - (gap * 1.5), 0].max
     end
 
     private_class_method def self.haversine_meters(coord_a, coord_b)
