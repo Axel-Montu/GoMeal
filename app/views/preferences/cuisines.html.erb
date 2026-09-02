@@ -1,9 +1,14 @@
-<main class="preferences-edit-page">
-  <h1 class="preferences-edit-page__title">Tes préférences culinaires</h1>
+<main class="cuisines">
+  <div class="cuisines__glow" aria-hidden="true"></div>
+
+  <header class="cuisines__header">
+    <h1 class="cuisines__title">Tes préférences culinaires</h1>
+    <p class="cuisines__lead">Choisis ce qui te tente. Plusieurs réponses possibles, aucune aussi.</p>
+  </header>
 
   <%= simple_form_for @user,
                       url: cuisines_preferences_path,
-                      html: { class: "preferences-cuisines-page__form",
+                      html: { class: "cuisines__form",
                               data: { controller: "cuisine-steps" } } do |f| %>
 
     <%= hidden_field_tag "user[tag_ids][]", "" %>
@@ -13,24 +18,37 @@
 
     <% categories.each_with_index do |category, index| %>
       <section class="cuisine-card" data-cuisine-steps-target="card" <%= "hidden" if index.positive? %>>
-        <h2><%= category %></h2>
+        <header class="cuisine-card__head">
+          <p class="cuisine-card__step">Étape <%= index + 1 %> sur <%= categories.length %></p>
+          <h2 class="cuisine-card__title"><%= category %></h2>
 
-        <% Array(@tags_by_category[category]).each do |tag| %>
-          <div class="tag-item">
-            <%= check_box_tag "user[tag_ids][]",
-                              tag.id,
-                              selected_tag_ids.include?(tag.id),
-                              id: "tag_#{tag.id}",
-                              class: "tag-selector" %>
-            <%= label_tag "tag_#{tag.id}", tag.frontend_type %>
+          <%# The bar fills as the steps go by — the controller only toggles
+              cards, so each one carries its own state %>
+          <div class="cuisine-card__progress" aria-hidden="true">
+            <span style="width: <%= ((index + 1) * 100.0 / categories.length).round %>%"></span>
           </div>
-        <% end %>
+        </header>
 
-        <% if index < categories.length - 1 %>
-          <button type="button" data-action="click->cuisine-steps#next" class="btn-go btn-go--secondary">Suivant</button>
-        <% else %>
-          <%= f.submit "Valider", class: "btn-go btn-go--primary" %>
-        <% end %>
+        <div class="cuisine-card__tags">
+          <% Array(@tags_by_category[category]).each do |tag| %>
+            <div class="tag-item">
+              <%= check_box_tag "user[tag_ids][]",
+                                tag.id,
+                                selected_tag_ids.include?(tag.id),
+                                id: "tag_#{tag.id}",
+                                class: "tag-selector" %>
+              <%= label_tag "tag_#{tag.id}", tag.frontend_type %>
+            </div>
+          <% end %>
+        </div>
+
+        <footer class="cuisine-card__actions">
+          <% if index < categories.length - 1 %>
+            <button type="button" data-action="click->cuisine-steps#next" class="btn-go btn-go--primary">Suivant</button>
+          <% else %>
+            <%= f.submit "Valider", class: "btn-go btn-go--primary" %>
+          <% end %>
+        </footer>
       </section>
     <% end %>
 
