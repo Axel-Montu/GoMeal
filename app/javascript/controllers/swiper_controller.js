@@ -1,12 +1,24 @@
 import { Controller } from "@hotwired/stimulus"
 import Swiper from "swiper"
+import gsap from "gsap"
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin"
+import { SplitText } from "gsap/SplitText"
+
+gsap.registerPlugin(DrawSVGPlugin, SplitText)
+
 // Connects to data-controller="swiper"
 
 export default class extends Controller {
+  static targets = ["deck", "overlay", "overlayLogo", "overlayText"]
+
   connect() {
     this.locked = false
 
-    this.swiper = new Swiper(this.element, {
+    // Swiper doit s'initialiser sur .swiper.swipe-deck (le vrai container),
+    // pas sur .swipe-deck-wrapper qui porte maintenant le controller pour que
+    // l'overlay (position: fixed) puisse echapper au perspective pose par
+    // l'effet "cards".
+    this.swiper = new Swiper(this.deckTarget, {
       effect: "cards",
       grabCursor: true,
       on: {
@@ -17,6 +29,8 @@ export default class extends Controller {
 
   disconnect() {
     this.swiper?.destroy(true, true)
+    this.overlayTimeline?.kill()
+    this.overlaySplit?.revert()
   }
 
   // Drag : Swiper a deja fait glisser la carte, on n'anime rien nous-memes.
@@ -67,7 +81,7 @@ export default class extends Controller {
       )
 
       if (action === "like") {
-        window.location.href = `/go_meal_matches/${matchId}`
+        this.showMatchOverlay(matchId)
         return
       }
 
@@ -82,4 +96,48 @@ export default class extends Controller {
     })
   }
 
+  // Meme timeline que home_intro_controller : on trace les paths, on remplit,
+  // puis on fait entrer les chars du texte. Le redirect est cale sur onComplete
+  // pour ne pas couper l'anim si on tune les durees plus tard.
+  showMatchOverlay(matchId) {
+    if (!this.hasOverlayTarget) {
+      window.location.href = `/go_meal_matches/${matchId}`
+      return
+    }
+
+    const paths = this.overlayLogoTarget.querySelectorAll("path")
+    this.overlaySplit = new SplitText(this.overlayTextTarget, {
+      type: "chars",
+      charsClass: "char"
+    })
+
+    gsap.set(paths, { drawSVG: "0%", fillOpacity: 0 })
+    gsap.set(this.overlaySplit.chars, { opacity: 0, x: -60 })
+
+    this.overlayTarget.classList.add("is-visible")
+    this.overlayTarget.setAttribute("aria-hidden", "false")
+
+    this.overlayTimeline = gsap.timeline({
+      defaults: { ease: "expo.out" },
+      onComplete: () => {
+        window.location.href = `/go_meal_matches/${matchId}`
+      }
+    })
+      .to(paths, {
+        drawSVG: "100%",
+        duration: 1.5,
+        stagger: 0.01
+      })
+      .to(paths, {
+        fillOpacity: 1,
+        duration: 1.3,
+        stagger: 0.01
+      }, "-=1.5")
+      .to(this.overlaySplit.chars, {
+        opacity: 1,
+        x: 0,
+        duration: 0.5,
+        stagger: 0.06
+      }, "-=1.1")
+  }
 }

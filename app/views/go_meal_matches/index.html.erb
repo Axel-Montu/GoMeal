@@ -1,7 +1,7 @@
-<div class="swipe-deck-wrapper">
+<div class="swipe-deck-wrapper" data-controller="swiper">
   <div
     class="swiper swipe-deck"
-    data-controller="swiper">
+    data-swiper-target="deck">
 
     <div class="swiper-wrapper">
       <% @go_meal_matches.each do |match| %>
@@ -78,4 +78,6 @@
       <% end %>
     </div>
   </div>
+
+  <%= render "match_overlay" %>
 </div>
