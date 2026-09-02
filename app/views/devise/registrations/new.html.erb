@@ -8,12 +8,11 @@
 
     <div class="auth-card__content">
       <header class="auth-card__introduction">
-        <p class="auth-card__welcome">Créez votre compte sur</p>
-
         <%= link_to root_path, class: "auth-card__logo-link" do %>
-          <%= image_tag "logo-gomeal-horizontal.png",
-                        alt: "GoMeal",
-                        class: "auth-card__logo" %>
+          <%= inline_svg_tag "logo-gomeal.svg",
+                             class: "auth-card__logo",
+                             aria: true,
+                             title: "GoMeal" %>
         <% end %>
 
         <p class="auth-card__description">

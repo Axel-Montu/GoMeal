@@ -34,8 +34,8 @@
       inset: 0;
       background: linear-gradient(
         to top,
-        rgba($green, 0.55) 0%,
-        rgba($green, 0.18) 50%,
+        rgba($green, 0.28) 0%,
+        rgba($green, 0.08) 50%,
         transparent 55%
       );
     }
@@ -61,14 +61,6 @@
     text-align: center;
   }
 
-  &__welcome {
-    margin: 0 0 12px;
-    color: $green;
-    font-family: $headings-font-family;
-    font-size: 1.7rem;
-    font-weight: 800;
-  }
-
   &__logo-link {
     display: inline-block;
     margin-bottom: 10px;
@@ -80,6 +72,12 @@
     max-width: 100%;
     height: auto;
     margin: 0 auto;
+
+    // La mascotte est un SVG sans fill : sans ça elle sort en noir
+    path {
+      fill: $green;
+      stroke: $green;
+    }
   }
 
   &__description {
@@ -282,10 +280,6 @@
 
     &__content {
       padding: 30px 20px;
-    }
-
-    &__welcome {
-      font-size: 1.5rem;
     }
 
     &__logo {
