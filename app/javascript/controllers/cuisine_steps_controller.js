@@ -4,20 +4,18 @@ export default class extends Controller {
   static targets = ["card"]
 
   connect() {
-    this.currentIndex = 0
-    this.showCurrent()
+    this.showOnly(this.cardTargets[0])
   }
 
-  next(event) {
+  selectBranch(event) {
     event.preventDefault()
-    if (this.currentIndex >= this.cardTargets.length - 1) return
-    this.currentIndex += 1
-    this.showCurrent()
+    const card = this.cardTargets.find((card) => card.dataset.category === event.params.category)
+    if (card) this.showOnly(card)
   }
 
-  showCurrent() {
-    this.cardTargets.forEach((card, index) => {
-      card.hidden = index !== this.currentIndex
+  showOnly(cardToShow) {
+    this.cardTargets.forEach((card) => {
+      card.hidden = card !== cardToShow
     })
   }
 }

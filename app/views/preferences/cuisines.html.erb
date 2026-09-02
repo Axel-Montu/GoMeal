@@ -14,18 +14,61 @@
     <%= hidden_field_tag "user[tag_ids][]", "" %>
 
     <% selected_tag_ids = @user.tag_ids %>
-    <% categories = PreferencesController::CUISINE_CATEGORIES %>
+    <% regime_category, *branch_categories = PreferencesController::CUISINE_CATEGORIES %>
+    <% total_steps = 2 %>
+    <% branch_labels = {
+         "Spécialités" => "Par spécialité culinaire",
+         "Cuisines du monde" => "Par cuisine du monde"
+       } %>
 
-    <% categories.each_with_index do |category, index| %>
-      <section class="cuisine-card" data-cuisine-steps-target="card" <%= "hidden" if index.positive? %>>
+    <section class="cuisine-card" data-cuisine-steps-target="card" data-category="<%= regime_category %>">
+      <header class="cuisine-card__head">
+        <p class="cuisine-card__step">Étape 1 sur <%= total_steps %></p>
+        <h2 class="cuisine-card__title"><%= regime_category %></h2>
+
+        <div class="cuisine-card__progress" aria-hidden="true">
+          <span style="width: <%= (100.0 / total_steps).round %>%"></span>
+        </div>
+      </header>
+
+      <p class="cuisine-card__prompt">Indique-nous si tu as un régime particulier :</p>
+
+      <div class="cuisine-card__tags">
+        <% Array(@tags_by_category[regime_category]).each do |tag| %>
+          <div class="tag-item">
+            <%= check_box_tag "user[tag_ids][]",
+                              tag.id,
+                              selected_tag_ids.include?(tag.id),
+                              id: "tag_#{tag.id}",
+                              class: "tag-selector" %>
+            <%= label_tag "tag_#{tag.id}", tag.frontend_type %>
+          </div>
+        <% end %>
+      </div>
+
+      <footer class="cuisine-card__actions cuisine-card__actions--branches">
+        <p class="cuisine-card__branch-prompt">Choisis comment sélectionner ton restaurant :</p>
+        <div class="cuisine-card__branch-buttons">
+          <% branch_categories.each do |category| %>
+            <button type="button"
+                    class="btn-go btn-go--primary"
+                    data-action="click->cuisine-steps#selectBranch"
+                    data-cuisine-steps-category-param="<%= category %>">
+              <%= branch_labels.fetch(category, category) %>
+            </button>
+          <% end %>
+        </div>
+      </footer>
+    </section>
+
+    <% branch_categories.each do |category| %>
+      <section class="cuisine-card" data-cuisine-steps-target="card" data-category="<%= category %>" hidden>
         <header class="cuisine-card__head">
-          <p class="cuisine-card__step">Étape <%= index + 1 %> sur <%= categories.length %></p>
+          <p class="cuisine-card__step">Étape <%= total_steps %> sur <%= total_steps %></p>
           <h2 class="cuisine-card__title"><%= category %></h2>
 
-          <%# The bar fills as the steps go by — the controller only toggles
-              cards, so each one carries its own state %>
           <div class="cuisine-card__progress" aria-hidden="true">
-            <span style="width: <%= ((index + 1) * 100.0 / categories.length).round %>%"></span>
+            <span style="width: 100%"></span>
           </div>
         </header>
 
@@ -43,11 +86,7 @@
         </div>
 
         <footer class="cuisine-card__actions">
-          <% if index < categories.length - 1 %>
-            <button type="button" data-action="click->cuisine-steps#next" class="btn-go btn-go--primary">Suivant</button>
-          <% else %>
-            <%= f.submit "Valider", class: "btn-go btn-go--primary" %>
-          <% end %>
+          <%= f.submit "Valider", class: "btn-go btn-go--primary" %>
         </footer>
       </section>
     <% end %>

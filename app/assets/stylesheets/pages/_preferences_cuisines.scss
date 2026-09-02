@@ -150,6 +150,12 @@
     }
   }
 
+  &__prompt {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
   // « Cuisines du monde » compte 130 pastilles : sans hauteur bornée, le
   // bouton part sous l'écran et devient inatteignable.
   &__tags {
@@ -173,6 +179,30 @@
     flex-direction: column;
 
     .btn-go {
+      margin-bottom: 0;
+    }
+  }
+
+  // Étape « Régime particulier » : deux chemins possibles au lieu d'un
+  // simple « Suivant » — une phrase d'accroche, puis les boutons côte à côte.
+  &__actions--branches {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__branch-prompt {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  &__branch-buttons {
+    display: flex;
+    gap: 12px;
+
+    .btn-go {
+      flex: 1;
       margin-bottom: 0;
     }
   }
