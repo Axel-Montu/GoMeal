@@ -1,13 +1,17 @@
 <%# The pill markup lives here so the three places that draw tags — the diet
     card, and each branch split between what is shown and what is folded away —
     cannot drift apart. %>
+<%# La valeur en base garde son suffixe "Restaurant" (elle sert d'identifiant
+    côté API Google) ; on l'efface uniquement à l'affichage pour désencombrer
+    la grille — « Italian Restaurant » devient « Italian ». %>
 <% tags.each do |tag| %>
+  <% label = tag.frontend_type.sub(/\s+restaurant\z/i, "") %>
   <div class="tag-item">
     <%= check_box_tag "user[tag_ids][]",
                       tag.id,
                       selected_ids.include?(tag.id),
                       id: "tag_#{tag.id}",
                       class: "tag-selector" %>
-    <%= label_tag "tag_#{tag.id}", tag.frontend_type %>
+    <%= label_tag "tag_#{tag.id}", label %>
   </div>
 <% end %>

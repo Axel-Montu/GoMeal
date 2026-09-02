@@ -44,7 +44,7 @@
         <div class="cuisine-card__branch-buttons">
           <% branch_categories.each do |category| %>
             <button type="button"
-                    class="btn-go btn-go--primary"
+                    class="btn-go btn-go--secondary"
                     data-action="click->cuisine-steps#selectBranch"
                     data-cuisine-steps-category-param="<%= category %>">
               <%= branch_labels.fetch(category, category) %>
@@ -102,7 +102,7 @@
         <% end %>
 
         <footer class="cuisine-card__actions">
-          <%= f.submit "Valider", class: "btn-go btn-go--primary" %>
+          <%= f.submit "Valider", class: "btn-go btn-go--secondary" %>
         </footer>
       </section>
     <% end %>
