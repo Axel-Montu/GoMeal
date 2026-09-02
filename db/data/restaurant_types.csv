@@ -1,6 +1,6 @@
 api_type,frontend_type,backend_tag,frontend_tag
 acai_shop,Acai Shop,sweet,Cuisines du monde
-bagel_shop,Bagel Shop,single_dish_specialist,Cuisines du monde
+bagel_shop,Bagel Shop,single_dish_specialist,Spécialités
 bakery,Bakery,place_type,Type d'établissement
 cake_shop,Cake Shop,sweet,Cuisines du monde
 candy_store,Candy Store,sweet,Cuisines du monde
@@ -35,10 +35,10 @@ oyster_bar_restaurant,Oyster Bar Restaurant,regional_gastronomy,Cuisines du mond
 korean_barbecue_restaurant,Korean Barbecue Restaurant,regional_gastronomy,Cuisines du monde
 mongolian_barbecue_restaurant,Mongolian Barbecue Restaurant,regional_gastronomy,Cuisines du monde
 yakiniku_restaurant,Yakiniku Restaurant,regional_gastronomy,Cuisines du monde
-barbecue_restaurant,Barbecue Restaurant,single_dish_specialist,Cuisines du monde
-fondue_restaurant,Fondue Restaurant,single_dish_specialist,Cuisines du monde
-hot_pot_restaurant,Hot Pot Restaurant,single_dish_specialist,Cuisines du monde
-yakitori_restaurant,Yakitori Restaurant,single_dish_specialist,Cuisines du monde
+barbecue_restaurant,Barbecue Restaurant,single_dish_specialist,Spécialités
+fondue_restaurant,Fondue Restaurant,single_dish_specialist,Spécialités
+hot_pot_restaurant,Hot Pot Restaurant,single_dish_specialist,Spécialités
+yakitori_restaurant,Yakitori Restaurant,single_dish_specialist,Spécialités
 cat_cafe,Cat Cafe,excluded,excluded
 dog_cafe,Dog Cafe,excluded,excluded
 afghani_restaurant,Afghani Restaurant,regional_gastronomy,Cuisines du monde
@@ -127,7 +127,7 @@ south_indian_restaurant,South Indian Restaurant,regional_gastronomy,Cuisines du 
 southwestern_us_restaurant,Southwestern Us Restaurant,regional_gastronomy,Cuisines du monde
 spanish_restaurant,Spanish Restaurant,regional_gastronomy,Cuisines du monde
 sri_lankan_restaurant,Sri Lankan Restaurant,regional_gastronomy,Cuisines du monde
-steak_house,Steak House,single_dish_specialist,Cuisines du monde
+steak_house,Steak House,single_dish_specialist,Spécialités
 swiss_restaurant,Swiss Restaurant,regional_gastronomy,Cuisines du monde
 taiwanese_restaurant,Taiwanese Restaurant,regional_gastronomy,Cuisines du monde
 tea_house,Tea House,excluded,excluded
@@ -138,30 +138,30 @@ turkish_restaurant,Turkish Restaurant,regional_gastronomy,Cuisines du monde
 ukrainian_restaurant,Ukrainian Restaurant,regional_gastronomy,Cuisines du monde
 vietnamese_restaurant,Vietnamese Restaurant,regional_gastronomy,Cuisines du monde
 western_restaurant,Western Restaurant,regional_gastronomy,Cuisines du monde
-burrito_restaurant,Burrito Restaurant,single_dish_specialist,Cuisines du monde
-chicken_restaurant,Chicken Restaurant,single_dish_specialist,Cuisines du monde
-chicken_wings_restaurant,Chicken Wings Restaurant,single_dish_specialist,Cuisines du monde
-chinese_noodle_restaurant,Chinese Noodle Restaurant,single_dish_specialist,Cuisines du monde
-deli,Deli,single_dish_specialist,Cuisines du monde
-dim_sum_restaurant,Dim Sum Restaurant,single_dish_specialist,Cuisines du monde
-dumpling_restaurant,Dumpling Restaurant,single_dish_specialist,Cuisines du monde
-falafel_restaurant,Falafel Restaurant,single_dish_specialist,Cuisines du monde
-fish_and_chips_restaurant,Fish And Chips Restaurant,single_dish_specialist,Cuisines du monde
-gyro_restaurant,Gyro Restaurant,single_dish_specialist,Cuisines du monde
-hamburger_restaurant,Hamburger Restaurant,single_dish_specialist,Cuisines du monde
-hot_dog_restaurant,Hot Dog Restaurant,single_dish_specialist,Cuisines du monde
-hot_dog_stand,Hot Dog Stand,single_dish_specialist,Cuisines du monde
-japanese_curry_restaurant,Japanese Curry Restaurant,single_dish_specialist,Cuisines du monde
-kebab_shop,Kebab Shop,single_dish_specialist,Cuisines du monde
-noodle_shop,Noodle Shop,single_dish_specialist,Cuisines du monde
-pizza_delivery,Pizza Delivery,single_dish_specialist,Cuisines du monde
-pizza_restaurant,Pizza Restaurant,single_dish_specialist,Cuisines du monde
-ramen_restaurant,Ramen Restaurant,single_dish_specialist,Cuisines du monde
-salad_shop,Salad Shop,single_dish_specialist,Cuisines du monde
-sandwich_shop,Sandwich Shop,single_dish_specialist,Cuisines du monde
-shawarma_restaurant,Shawarma Restaurant,single_dish_specialist,Cuisines du monde
-soup_restaurant,Soup Restaurant,single_dish_specialist,Cuisines du monde
-sushi_restaurant,Sushi Restaurant,single_dish_specialist,Cuisines du monde
-taco_restaurant,Taco Restaurant,single_dish_specialist,Cuisines du monde
-tapas_restaurant,Tapas Restaurant,single_dish_specialist,Cuisines du monde
-tonkatsu_restaurant,Tonkatsu Restaurant,single_dish_specialist,Cuisines du monde
+burrito_restaurant,Burrito Restaurant,single_dish_specialist,Spécialités
+chicken_restaurant,Chicken Restaurant,single_dish_specialist,Spécialités
+chicken_wings_restaurant,Chicken Wings Restaurant,single_dish_specialist,Spécialités
+chinese_noodle_restaurant,Chinese Noodle Restaurant,single_dish_specialist,Spécialités
+deli,Deli,single_dish_specialist,Spécialités
+dim_sum_restaurant,Dim Sum Restaurant,single_dish_specialist,Spécialités
+dumpling_restaurant,Dumpling Restaurant,single_dish_specialist,Spécialités
+falafel_restaurant,Falafel Restaurant,single_dish_specialist,Spécialités
+fish_and_chips_restaurant,Fish And Chips Restaurant,single_dish_specialist,Spécialités
+gyro_restaurant,Gyro Restaurant,single_dish_specialist,Spécialités
+hamburger_restaurant,Hamburger Restaurant,single_dish_specialist,Spécialités
+hot_dog_restaurant,Hot Dog Restaurant,single_dish_specialist,Spécialités
+hot_dog_stand,Hot Dog Stand,single_dish_specialist,Spécialités
+japanese_curry_restaurant,Japanese Curry Restaurant,single_dish_specialist,Spécialités
+kebab_shop,Kebab Shop,single_dish_specialist,Spécialités
+noodle_shop,Noodle Shop,single_dish_specialist,Spécialités
+pizza_delivery,Pizza Delivery,single_dish_specialist,Spécialités
+pizza_restaurant,Pizza Restaurant,single_dish_specialist,Spécialités
+ramen_restaurant,Ramen Restaurant,single_dish_specialist,Spécialités
+salad_shop,Salad Shop,single_dish_specialist,Spécialités
+sandwich_shop,Sandwich Shop,single_dish_specialist,Spécialités
+shawarma_restaurant,Shawarma Restaurant,single_dish_specialist,Spécialités
+soup_restaurant,Soup Restaurant,single_dish_specialist,Spécialités
+sushi_restaurant,Sushi Restaurant,single_dish_specialist,Spécialités
+taco_restaurant,Taco Restaurant,single_dish_specialist,Spécialités
+tapas_restaurant,Tapas Restaurant,single_dish_specialist,Spécialités
+tonkatsu_restaurant,Tonkatsu Restaurant,single_dish_specialist,Spécialités

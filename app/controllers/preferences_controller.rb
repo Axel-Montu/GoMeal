@@ -1,8 +1,8 @@
 class PreferencesController < ApplicationController
   CUISINE_CATEGORIES = [
     "Régime particulier",
-    "Type d'établissement",
-    "Cuisines du monde"
+    "Cuisines du monde",
+    "Spécialités"
   ].freeze
   def show
     @user = current_user
