@@ -1,53 +1,179 @@
-.cuisine-card {
+// Préférences culinaires. Un parcours en trois étapes, une carte par étape,
+// même langage de verre dépoli que l'écran des préférences horaires.
+.cuisines {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 430px;
+  // Hauteur bornée, pas seulement minimale : sans cela la chaîne flex n'a
+  // aucune limite à répartir, et l'aire de pastilles s'étire au lieu de
+  // défiler — les 130 cuisines poussaient le bouton hors de l'écran.
+  height: calc(100dvh - 70px);
+  margin: 0 auto;
+  padding:
+    calc(20px + env(safe-area-inset-top))
+    20px
+    calc(28px + env(safe-area-inset-bottom));
+
   display: flex;
   flex-direction: column;
-  padding: 24px 20px;
+  gap: 20px;
 
-  & > h2 {
-    margin: 0 0 16px;
+  font-family: $body-font;
+  color: $secondary;
+  background: $background;
+  overflow: hidden;
+
+  &__glow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+
+    background:
+      radial-gradient(58% 24% at 8% 26%,
+        rgba(var(--color-primary-rgb), 0.38) 0%,
+        rgba(var(--color-primary-rgb), 0) 68%),
+      radial-gradient(62% 26% at 96% 62%,
+        rgba(var(--color-secondary-rgb), 0.30) 0%,
+        rgba(var(--color-secondary-rgb), 0) 70%);
   }
 
-  & > button[type="button"],
-  & > input[type="submit"] {
-    align-self: center;
-    margin-top: 20px;
+  > *:not(&__glow) {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  &__lead {
+    margin: 0;
+    color: $light-text;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  &__form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 560px;
+    height: auto;
+    max-height: calc(100dvh - 140px);
+    margin: 48px auto;
+    border-radius: 24px;
+    box-shadow: $box-shadow;
   }
 }
 
-.pref-section {
-  border: 1px solid rgba(var(--color-secondary-rgb), 0.15);
-  border-radius: 12px;
-  background: $surface;
-  overflow: hidden;
+// --------------------------------------------------------- une étape ---
 
-  & > summary {
-    padding: 14px 16px;
-    font-weight: 700;
-    color: $secondary;
-    cursor: pointer;
-    list-style: none;
+.cuisine-card {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  padding: 20px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 8px 28px rgba(var(--color-secondary-rgb), 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    background: rgba(255, 255, 255, 0.48);
+    -webkit-backdrop-filter: blur(22px) saturate(165%);
+    backdrop-filter: blur(22px) saturate(165%);
+  }
+
+  // Le contrôleur bascule l'attribut hidden : sans ceci, display:flex l'emporte
+  // et les trois étapes s'afficheraient en même temps.
+  &[hidden] {
+    display: none;
+  }
+
+  &__head {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 6px;
+  }
 
-    &::-webkit-details-marker {
-      display: none;
-    }
+  &__step {
+    margin: 0;
+    color: $primary;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
 
-    &::after {
-      content: "\f078";
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
-      font-size: 12px;
-      transition: transform 0.2s ease;
+  &__title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  &__progress {
+    height: 4px;
+    margin-top: 4px;
+    border-radius: 999px;
+    background: rgba(var(--color-secondary-rgb), 0.12);
+    overflow: hidden;
+
+    span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: $primary;
     }
   }
 
-  &[open] > summary::after {
-    transform: rotate(180deg);
+  // « Cuisines du monde » compte 130 pastilles : sans hauteur bornée, le
+  // bouton part sous l'écran et devient inatteignable.
+  &__tags {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 8px;
+
+    margin: 0 -4px;
+    padding: 4px;
+    -webkit-overflow-scrolling: touch;
   }
 
-  & > *:not(summary) {
-    padding: 0 16px 16px;
+  &__actions {
+    display: flex;
+    flex-direction: column;
+
+    .btn-go {
+      margin-bottom: 0;
+    }
   }
 }
