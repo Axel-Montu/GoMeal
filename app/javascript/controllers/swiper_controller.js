@@ -17,6 +17,7 @@ export default class extends Controller {
     // On la capture au touchStart parce qu'au touchEnd, swiper.activeIndex
     // a deja bascule sur la carte suivante et on flasherait la mauvaise.
     this.dragCard = null
+    this.dragStartIndex = null
 
     // Swiper doit s'initialiser sur .swiper.swipe-deck (le vrai container),
     // pas sur .swipe-deck-wrapper qui porte maintenant le controller pour que
@@ -26,7 +27,10 @@ export default class extends Controller {
       effect: "cards",
       grabCursor: true,
       on: {
-        touchStart: (swiper) => { this.dragCard = swiper.slides[swiper.activeIndex] },
+        touchStart: (swiper) => {
+          this.dragCard = swiper.slides[swiper.activeIndex]
+          this.dragStartIndex = swiper.activeIndex
+        },
         touchMove: (swiper) => this.updateFlash(swiper),
         touchEnd: (swiper) => this.handleSwipe(swiper)
       }
@@ -42,20 +46,28 @@ export default class extends Controller {
   // Drag : Swiper a deja fait glisser la carte, on n'anime rien nous-memes.
   handleSwipe(swiper) {
     const card = this.dragCard
+    const startIndex = this.dragStartIndex
     this.dragCard = null
+    this.dragStartIndex = null
+    if (!card) return
 
-    const direction = swiper.swipeDirection
-    if (!direction) {
-      // Drag annule : on efface le rouge qu'on avait fait monter.
-      this.resetFlash(card)
-      return
-    }
+    // swiper.swipeDirection est pose des le premier pixel de drag et n'est
+    // jamais efface quand la carte snap back sous le seuil : s'y fier ferait
+    // partir un reject fantome (et laisserait l'overlay rouge en place). On
+    // regarde donc si activeIndex a vraiment bouge. Notre callback est emit
+    // AVANT le slideTo interne de Swiper, d'ou le rAF pour lire l'index final.
+    requestAnimationFrame(() => {
+      if (swiper.activeIndex === startIndex) {
+        this.resetFlash(card)
+        return
+      }
 
-    const action = direction === "prev" ? "like" : "reject"
-    // Sur un reject au drag, l'overlay rouge est deja a son maximum
-    // (le user a franchi le seuil) et va s'en aller avec la carte ; pas
-    // besoin de rejouer la keyframe flashReject.
-    this.decide(card, action, { animate: false })
+      const action = swiper.activeIndex > startIndex ? "reject" : "like"
+      // Sur un reject au drag, l'overlay rouge est deja a son maximum
+      // (le user a franchi le seuil) et va s'en aller avec la carte ; pas
+      // besoin de rejouer la keyframe flashReject.
+      this.decide(card, action, { animate: false })
+    })
   }
 
   // Fait monter le rouge sur la carte manipulee pendant le drag gauche.
