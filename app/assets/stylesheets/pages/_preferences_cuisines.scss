@@ -278,14 +278,17 @@
     transform: rotate(180deg);
   }
 
-  // La liste dépliée prend exactement ce qui reste et défile chez elle. Une
-  // hauteur fixe en vh ne pouvait pas savoir combien de pastilles restaient
-  // au-dessus, et poussait Valider hors de l'écran.
-  // Pas de hauteur bornée ici : elle ne peut pas deviner ce qui reste au-dessus,
-  // et le bouton Valider se faisait écraser au milieu des pastilles. C'est la
-  // carte entière qui défile, ouverte comme fermée.
+  // Le défilement de la carte parente n'était pas fiable sur toutes les
+  // configurations (Safari mobile, desktop où .cuisines passe en height:auto)
+  // et le dépliant restait bloqué à sa taille maximale. La liste porte donc son
+  // propre scroll, avec une hauteur bornée en unités dynamiques qui suivent la
+  // barre d'adresse mobile. Valider reste visible sous la carte, atteignable.
   &__list {
     margin-top: 12px;
+    max-height: 45dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
