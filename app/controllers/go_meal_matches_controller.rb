@@ -1,7 +1,7 @@
 class GoMealMatchesController < ApplicationController
   def index
     @user = current_user
-    @go_meal_matches = current_user.go_meal_matches.includes(:restaurant)
+    @go_meal_matches = current_user.go_meal_matches.includes(:restaurant).order(go_meal_score: :desc)
     policy_scope(@go_meal_matches)
   end
 

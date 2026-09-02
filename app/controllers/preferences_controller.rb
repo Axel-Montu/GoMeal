@@ -41,7 +41,7 @@ class PreferencesController < ApplicationController
 
     location = session[:location]
     if location.blank?
-      redirect_to location_path, alert: "Nous avons besoin de votre position." and return
+      redirect_to locations_path, alert: "Nous avons besoin de votre position." and return
     end
 
     restaurants = Restaurants::NearbySearch.call(
@@ -52,7 +52,7 @@ class PreferencesController < ApplicationController
 
     @user.go_meal_matches.destroy_all
     restaurants.each do |restaurant|
-      score = Scoring::GoMealScorer.call(restaurant: restaurant, user_location: location)
+      score = Scoring::GoMealScorer.call(restaurant: restaurant, user_location: location, user: @user)
       @user.go_meal_matches.create!(restaurant: restaurant, go_meal_score: score)
     end
 
