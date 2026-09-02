@@ -4,12 +4,20 @@
     <%= link_to root_path, class: "mobile-navbar__button" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
+  <% when controller_name == "preferences" && %w[edit update].include?(action_name) %>
+    <%= link_to root_path, class: "mobile-navbar__button" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% when controller_name == "preferences" && %w[cuisines update_cuisines].include?(action_name) %>
+    <%= link_to edit_preferences_path, class: "mobile-navbar__button" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
   <% when controller_name == "preferences" %>
     <%= link_to root_path, class: "mobile-navbar__button" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
   <% when controller_name == "go_meal_matches" && action_name == "index" %>
-    <%= link_to edit_preferences_path, class: "mobile-navbar__button" do %>
+    <%= link_to cuisines_preferences_path, class: "mobile-navbar__button" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
   <% when controller_name == "go_meal_matches" && action_name == "show" %>
@@ -17,7 +25,7 @@
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
   <% when controller_name == "itineraries" %>
-    <%= link_to go_meal_matches_path, class: "mobile-navbar__button" do %>
+    <%= link_to go_meal_match_path(params[:go_meal_match_id]), class: "mobile-navbar__button" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
   <% when controller_name == "reviews" %>

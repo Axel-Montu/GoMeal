@@ -290,65 +290,15 @@
 
 // -------------------------------------------------------------- le retour ---
 
-// Les deux sorties : se faire guider pour de bon, ou revenir au match.
-.itinerary__actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-// Action principale : c'est elle qu'on cherche une fois debout.
-.itinerary__guide {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  flex: 1;
-
-  min-height: 44px;
-  padding: 10px 18px;
-
-  border: 2px solid $primary;
-  border-radius: 40px;
-  background: $primary;
-
-  color: $white;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1;
-  text-decoration: none;
-
-  box-shadow: 0 6px 16px rgba(var(--color-primary-rgb), 0.28);
-  transition: background-color 0.15s ease, border-color 0.15s ease;
-
-  svg {
-    width: 16px;
-    height: 16px;
-    fill: currentColor;
-  }
-
-  &:hover {
-    border-color: $secondary;
-    background: $secondary;
-    color: $white;
-    text-decoration: none;
-  }
-
-  &:focus-visible {
-    outline: 3px solid rgba(var(--color-primary-rgb), 0.35);
-    outline-offset: 3px;
-  }
-}
-
-// Action secondaire, en verre : bordée, translucide.
+// Le retour, seule sortie de l'écran : pleine largeur, atteignable au pouce.
 .itinerary__back {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  flex-shrink: 0;
+  width: 100%;
   min-height: 44px;
+  margin-top: 16px;
   padding: 10px 20px;
 
   border: 1.5px solid rgba(var(--color-secondary-rgb), 0.35);
