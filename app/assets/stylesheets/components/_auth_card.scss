@@ -156,6 +156,44 @@
     }
   }
 
+  // L'inscription pose des règles que la connexion n'a pas : la longueur
+  // minimale du mot de passe, et les erreurs de validation.
+  .hint {
+    display: block;
+    margin-top: 6px;
+    color: $light-text;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .error {
+    display: block;
+    margin-top: 6px;
+    color: $red;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  // Le champ fautif se signale lui-même, sans attendre qu'on lise le message.
+  .form-group.has-error &__input,
+  .field_with_errors &__input {
+    border-color: $red;
+  }
+
+  // Le récapitulatif d'erreurs, en tête de formulaire.
+  .error_notification {
+    margin-bottom: 4px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(253, 16, 21, 0.28);
+    background: rgba(253, 16, 21, 0.08);
+
+    color: $secondary;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
   &__remember {
     margin-bottom: 20px !important;
 
