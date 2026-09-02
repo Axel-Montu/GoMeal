@@ -1,7 +1,10 @@
 // Préférences. Deux réglages, chacun sur une carte en verre dépoli posée sur
 // un fond teinté — le flou n'a de sens que s'il a quelque chose à flouter,
 // d'où les deux halos derrière.
-.preferences-edit {
+// L'alias .preferences-edit-page est conservé : cuisines et show l'emploient
+// encore, et les renommer reviendrait à toucher des vues qui ne sont pas à nous.
+.preferences-edit,
+.preferences-edit-page {
   position: relative;
   box-sizing: border-box;
   width: 100%;
