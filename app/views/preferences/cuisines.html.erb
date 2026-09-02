@@ -34,16 +34,9 @@
       <p class="cuisine-card__prompt">Indique-nous si tu as un régime particulier :</p>
 
       <div class="cuisine-card__tags">
-        <% Array(@tags_by_category[regime_category]).each do |tag| %>
-          <div class="tag-item">
-            <%= check_box_tag "user[tag_ids][]",
-                              tag.id,
-                              selected_tag_ids.include?(tag.id),
-                              id: "tag_#{tag.id}",
-                              class: "tag-selector" %>
-            <%= label_tag "tag_#{tag.id}", tag.frontend_type %>
-          </div>
-        <% end %>
+        <%= render "preferences/tag_pills",
+                   tags: Array(@tags_by_category[regime_category]),
+                   selected_ids: selected_tag_ids %>
       </div>
 
       <footer class="cuisine-card__actions cuisine-card__actions--branches">
@@ -72,18 +65,41 @@
           </div>
         </header>
 
+        <%# Ten is what the eye takes in at once; 130 is a wall. The rest folds
+            away behind a native <details>, so no script is involved and the
+            hidden checkboxes still travel with the form. Exactly ten show, and
+            what is already ticked takes the first places — otherwise a choice
+            made far down the list would vanish from sight on the next visit. %>
+        <% all_tags = Array(@tags_by_category[category]) %>
+        <% picked, unpicked = all_tags.partition { |t| selected_tag_ids.include?(t.id) } %>
+        <% shown_tags = (picked + unpicked).first(10) %>
+        <% folded_tags = all_tags - shown_tags %>
+
         <div class="cuisine-card__tags">
-          <% Array(@tags_by_category[category]).each do |tag| %>
-            <div class="tag-item">
-              <%= check_box_tag "user[tag_ids][]",
-                                tag.id,
-                                selected_tag_ids.include?(tag.id),
-                                id: "tag_#{tag.id}",
-                                class: "tag-selector" %>
-              <%= label_tag "tag_#{tag.id}", tag.frontend_type %>
-            </div>
-          <% end %>
+          <%= render "preferences/tag_pills",
+                     tags: shown_tags,
+                     selected_ids: selected_tag_ids %>
         </div>
+
+        <% if folded_tags.any? %>
+          <details class="tag-more">
+            <summary class="tag-more__summary">
+              Voir les <%= folded_tags.size %> autres
+            </summary>
+
+            <%# The direct child of <details> must not declare a display of its
+                own: browsers hide a closed panel with display:none from their
+                own stylesheet, and any class more specific than that wins,
+                leaving the list permanently open. The grid goes inside. %>
+            <div class="tag-more__list">
+              <div class="cuisine-card__tags">
+                <%= render "preferences/tag_pills",
+                           tags: folded_tags,
+                           selected_ids: selected_tag_ids %>
+              </div>
+            </div>
+          </details>
+        <% end %>
 
         <footer class="cuisine-card__actions">
           <%= f.submit "Valider", class: "btn-go btn-go--primary" %>

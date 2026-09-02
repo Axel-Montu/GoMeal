@@ -91,6 +91,11 @@
   flex-direction: column;
   gap: 16px;
 
+  // Repliée, l'étape tient sans défilement. Dépliée, c'est la carte qui défile
+  // et Valider reste en fin de flux, atteignable.
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
   padding: 20px;
   border-radius: 20px;
 
@@ -158,15 +163,19 @@
 
   // « Cuisines du monde » compte 130 pastilles : sans hauteur bornée, le
   // bouton part sous l'écran et devient inatteignable.
+  // Le groupe visible ne compte plus qu'une dizaine de pastilles : il prend sa
+  // hauteur naturelle. Il défilait quand les 130 y tenaient toutes ; garder
+  // flex: 1 l'écrasait à une lisière dès que le dépliant s'ouvrait.
+  // Une grille plutôt qu'un flex-wrap : en flex, chaque pastille prend la
+  // largeur de son texte, le bord droit part en dents de scie et rien ne
+  // s'aligne d'une rangée à l'autre. Ici les colonnes sont égales, et leur
+  // nombre s'adapte à la largeur disponible.
   &__tags {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
+    flex: 0 0 auto;
 
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(146px, 1fr));
+    align-content: start;
     gap: 8px;
 
     margin: 0 -4px;
@@ -175,6 +184,7 @@
   }
 
   &__actions {
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
 
@@ -206,4 +216,94 @@
       margin-bottom: 0;
     }
   }
+}
+
+// ------------------------------------------------------- voir les autres ---
+
+// Dépliant natif : pas de contrôleur, et les cases repliées restent dans le
+// formulaire, donc une sélection cachée part quand même à l'enregistrement.
+.tag-more {
+  // Surtout pas de display: flex ni grid sur le <details> lui-même : plusieurs
+  // moteurs cessent alors de replier son contenu, et la liste reste ouverte en
+  // permanence. Il garde donc son rendu de bloc.
+  // Surtout pas de rétrécissement : la boîte flex écrasait le dépliant à 82px
+  // et son contenu débordait par-dessus le bouton Valider. Il garde sa taille,
+  // c'est la carte qui défile.
+  flex: 0 0 auto;
+  margin-top: 4px;
+
+  &__summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 14px;
+    border: 1.5px dashed rgba(var(--color-secondary-rgb), 0.30);
+    border-radius: 50rem;
+
+    color: $secondary;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+
+    transition: border-color 0.15s ease, color 0.15s ease;
+
+    // Le triangle par défaut, dans les deux dialectes de navigateur.
+    &::-webkit-details-marker { display: none; }
+    &::marker { content: ""; }
+
+    // Le chevron pivote à l'ouverture, pour dire dans quel sens ça va.
+    &::after {
+      content: "\f078";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      font-size: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    &:hover {
+      border-color: $primary;
+      color: $primary;
+    }
+
+    &:focus-visible {
+      outline: 3px solid rgba(var(--color-primary-rgb), 0.35);
+      outline-offset: 2px;
+    }
+  }
+
+  &[open] &__summary::after {
+    transform: rotate(180deg);
+  }
+
+  // La liste dépliée prend exactement ce qui reste et défile chez elle. Une
+  // hauteur fixe en vh ne pouvait pas savoir combien de pastilles restaient
+  // au-dessus, et poussait Valider hors de l'écran.
+  // Pas de hauteur bornée ici : elle ne peut pas deviner ce qui reste au-dessus,
+  // et le bouton Valider se faisait écraser au milieu des pastilles. C'est la
+  // carte entière qui défile, ouverte comme fermée.
+  &__list {
+    margin-top: 12px;
+  }
+}
+
+// Les pastilles ne s'étirent que dans cette grille-ci. Le composant partagé
+// reste intact : /preferences l'emploie sans grille, et l'y étirer y mettait
+// une pastille par ligne sur toute la largeur.
+.cuisine-card__tags .tag-item {
+  display: flex;
+}
+
+.cuisine-card__tags .tag-selector + label {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+
+  font-size: 13px;
+  line-height: 1.25;
+  text-align: center;
 }
