@@ -248,30 +248,106 @@
   }
 }
 
+// Quand ORS ne renvoie aucun chemin. L'écran garde sa carte et son restaurant,
+// il dit seulement ce qui manque — sans dramatiser, ce n'est pas une erreur.
 .itinerary__no-route {
-  margin: 18px 0 0;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.55);
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
 
-  color: $secondary;
-  font-size: 14px;
-  line-height: 1.4;
-  text-align: center;
+  margin: 16px 0 0;
+  padding: 13px 14px;
+  border-radius: 12px;
+  background: rgba(255, 198, 90, 0.20);
+  border: 1px solid rgba(255, 198, 90, 0.45);
+
+  svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    fill: none;
+    stroke: #B07A17;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+  }
+
+  p {
+    margin: 0;
+    color: $secondary;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  strong {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 14px;
+    font-weight: 700;
+  }
 }
 
 // -------------------------------------------------------------- le retour ---
 
-// Le bouton reprend btn-go--secondary, en verre : bordé, translucide, pleine
-// largeur pour rester atteignable au pouce.
+// Les deux sorties : se faire guider pour de bon, ou revenir au match.
+.itinerary__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+// Action principale : c'est elle qu'on cherche une fois debout.
+.itinerary__guide {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 1;
+
+  min-height: 44px;
+  padding: 10px 18px;
+
+  border: 2px solid $primary;
+  border-radius: 40px;
+  background: $primary;
+
+  color: $white;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+
+  box-shadow: 0 6px 16px rgba(var(--color-primary-rgb), 0.28);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  &:hover {
+    border-color: $secondary;
+    background: $secondary;
+    color: $white;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(var(--color-primary-rgb), 0.35);
+    outline-offset: 3px;
+  }
+}
+
+// Action secondaire, en verre : bordée, translucide.
 .itinerary__back {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 100%;
+  flex-shrink: 0;
   min-height: 44px;
-  margin-top: 16px;
   padding: 10px 20px;
 
   border: 1.5px solid rgba(var(--color-secondary-rgb), 0.35);
