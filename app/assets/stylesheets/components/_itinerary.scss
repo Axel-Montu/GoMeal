@@ -131,6 +131,63 @@
   }
 }
 
+// ------------------------------------------------------------- le trajet ---
+
+// D'où l'on part, où l'on arrive. Les deux pastilles reprennent exactement le
+// dessin des marqueurs posés sur la carte : la liste leur sert de légende.
+.itinerary__legs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 0;
+}
+
+.itinerary__leg {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+
+  color: $light-text;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+
+  &--end {
+    color: $secondary;
+    font-weight: 700;
+  }
+}
+
+// Le fil pointillé qui relie les deux bouts et absorbe la place restante.
+.itinerary__thread {
+  flex: 1;
+  height: 0;
+  border-top: 2px dotted rgba(var(--color-secondary-rgb), 0.28);
+}
+
+.itinerary__dot {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  margin: 0 2px;
+  border-radius: 50%;
+  background: #2F6FE0;
+  border: 2px solid $white;
+  box-shadow: 0 0 0 3px rgba(47, 111, 224, 0.20);
+}
+
+// Réplique du marqueur d'arrivée. En SVG et non en carré pivoté comme sur la
+// carte : à cette taille les arrondis mangeaient la pointe et la goutte
+// passait pour un rond.
+.itinerary__pin {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  fill: $primary;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.22));
+}
+
 // ----------------------------------------------------------- les chiffres ---
 
 .itinerary__stats {

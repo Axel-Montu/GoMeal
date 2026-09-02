@@ -22,6 +22,26 @@
         </span>
       </header>
 
+      <%# The walk in one line, from one end to the other. The two shapes are
+          the ones standing on the map, so this doubles as their legend — the
+          restaurant is named in the title just above, not repeated here. %>
+      <p class="itinerary__legs">
+        <span class="itinerary__leg">
+          <span class="itinerary__dot" aria-hidden="true"></span>
+          Ta position
+        </span>
+
+        <span class="itinerary__thread" aria-hidden="true"></span>
+
+        <span class="itinerary__leg itinerary__leg--end">
+          <svg class="itinerary__pin" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 22s7.5-6.6 7.5-12A7.5 7.5 0 0 0 4.5 10c0 5.4 7.5 12 7.5 12z"/>
+            <circle cx="12" cy="10" r="2.9" fill="#fff"/>
+          </svg>
+          Le restaurant
+        </span>
+      </p>
+
       <% if @route %>
         <%# Each figure carries its label: "411 m" and "08:02" say nothing
             about which is the distance and which the arrival %>
