@@ -1,4 +1,4 @@
-<nav class="mobile-navbar">
+<nav class="mobile-navbar" data-controller="nav-menu">
   <% case %>
   <% when controller_name == "locations" %>
     <%= link_to root_path, class: "mobile-navbar__button" do %>
@@ -20,7 +20,7 @@
     <%= link_to go_meal_matches_path, class: "mobile-navbar__button" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
-    <% when controller_name == "reviews" %>
+  <% when controller_name == "reviews" %>
     <%= link_to go_meal_matches_path, class: "mobile-navbar__button" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
@@ -30,87 +30,80 @@
     Go<span>Meal</span>
   </p>
 
-  <ul class="mobile-navbar__actions">
-    <% if user_signed_in? && controller_name != "preferences" %>
-      <li>
-        <%= link_to preferences_path, class: "theme-dropdown__trigger" do %>
-          Préférences
-          <i class="fa-solid fa-chevron-down"></i>
-        <% end %>
-      </li>
-    <% end %>
-
-    <li class="theme-dropdown" data-controller="theme">
-  <%# The way into the review list, from every screen carrying the navbar.
-      Sits next to the theme picker and borrows its weight: the navbar already
-      carries two round buttons, a third one would turn it into a toolbar. %>
-  <%# Star and theme picker travel together, so the navbar keeps three blocks
-      and the logo stays centred %>
   <div class="mobile-navbar__actions">
-    <%= link_to reviews_path, class: "mobile-navbar__link", title: "Mes avis" do %>
-      <i class="fa-solid fa-star"></i>
-    <% end %>
-
-    <div class="theme-dropdown" data-controller="theme">
     <button type="button"
-            class="theme-dropdown__trigger"
-            data-action="click->theme#toggleMenu">
-      Themes
-      <i class="fa-solid fa-chevron-down"></i>
+            class="mobile-navbar__menu-trigger"
+            data-action="click->nav-menu#toggle"
+            aria-label="Ouvrir le menu">
+      <i class="fa-solid fa-ellipsis-vertical"></i>
     </button>
 
-    <ul class="theme-dropdown__menu" data-theme-target="menu">
-      <li>
+    <div class="mobile-navbar__panel" data-nav-menu-target="panel">
+      <% if user_signed_in? && controller_name != "preferences" %>
+        <%= link_to "Préférences", preferences_path, class: "mobile-navbar__panel-item" %>
+      <% end %>
+
+      <%= link_to "Avis", reviews_path, class: "mobile-navbar__panel-item" %>
+
+      <div class="theme-dropdown" data-controller="theme">
         <button type="button"
-                class="theme-dropdown__item"
-                data-theme-name="default"
-                data-action="click->theme#select">
-          Default
+                class="mobile-navbar__panel-item"
+                data-action="click->theme#toggleMenu">
+          Themes
+          <i class="fa-solid fa-chevron-down"></i>
         </button>
-      </li>
-      <li>
-        <button type="button"
-                class="theme-dropdown__item"
-                data-theme-name="vintage"
-                data-action="click->theme#select">
-          Vintage
-        </button>
-      </li>
-      <li>
-        <button type="button"
-                class="theme-dropdown__item"
-                data-theme-name="coral"
-                data-action="click->theme#select">
-          Coral
-        </button>
-      </li>
-      <li>
-        <button type="button"
-                class="theme-dropdown__item"
-                data-theme-name="avocat"
-                data-action="click->theme#select">
-          Avocat
-        </button>
-      </li>
-      <li>
-        <button type="button"
-                class="theme-dropdown__item"
-                data-theme-name="brique"
-                data-action="click->theme#select">
-          Brique
-        </button>
-      </li>
-      <li>
-        <button type="button"
-                class="theme-dropdown__item"
-                data-theme-name="mono"
-                data-action="click->theme#select">
-          Noir & Blanc
-        </button>
-      </li>
-    </ul>
-    </li>
-  </ul>
+
+        <ul class="theme-dropdown__menu" data-theme-target="menu">
+          <li>
+            <button type="button"
+                    class="theme-dropdown__item"
+                    data-theme-name="default"
+                    data-action="click->theme#select">
+              Default
+            </button>
+          </li>
+          <li>
+            <button type="button"
+                    class="theme-dropdown__item"
+                    data-theme-name="vintage"
+                    data-action="click->theme#select">
+              Vintage
+            </button>
+          </li>
+          <li>
+            <button type="button"
+                    class="theme-dropdown__item"
+                    data-theme-name="coral"
+                    data-action="click->theme#select">
+              Coral
+            </button>
+          </li>
+          <li>
+            <button type="button"
+                    class="theme-dropdown__item"
+                    data-theme-name="avocat"
+                    data-action="click->theme#select">
+              Avocat
+            </button>
+          </li>
+          <li>
+            <button type="button"
+                    class="theme-dropdown__item"
+                    data-theme-name="brique"
+                    data-action="click->theme#select">
+              Brique
+            </button>
+          </li>
+          <li>
+            <button type="button"
+                    class="theme-dropdown__item"
+                    data-theme-name="mono"
+                    data-action="click->theme#select">
+              Noir & Blanc
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-</div>
 </nav>
