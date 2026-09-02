@@ -11,6 +11,8 @@
           class="swiper-slide swipe-card"
           data-match-id="<%= match.id %>">
 
+          <span class="swipe-card__flash" aria-hidden="true"></span>
+
           <div class="swipe-card__cover">
             <%= image_tag restaurant_cover_photo(restaurant),
                           class: "swipe-card__photo",
