@@ -43,8 +43,12 @@
         <p class="cuisine-card__branch-prompt">Choisis comment sélectionner ton restaurant :</p>
         <div class="cuisine-card__branch-buttons">
           <% branch_categories.each do |category| %>
+            <%# Secondary, not primary: choosing a path is not committing to
+                anything. The orange stays for Valider, the one act that
+                actually saves — two identical primaries side by side left the
+                screen with no hierarchy at all. %>
             <button type="button"
-                    class="btn-go btn-go--primary"
+                    class="btn-go btn-go--secondary"
                     data-action="click->cuisine-steps#selectBranch"
                     data-cuisine-steps-category-param="<%= category %>">
               <%= branch_labels.fetch(category, category) %>
