@@ -174,9 +174,9 @@
     flex: 0 0 auto;
 
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(146px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(138px, 1fr));
     align-content: start;
-    gap: 8px;
+    gap: 7px;
 
     margin: 0 -4px;
     padding: 4px;
@@ -211,9 +211,12 @@
     display: flex;
     gap: 12px;
 
+    // btn-go--secondary est taillé compact et centré par défaut : ici les deux
+    // choix se partagent la largeur à parts égales.
     .btn-go {
       flex: 1;
-      margin-bottom: 0;
+      width: auto;
+      margin: 0;
     }
   }
 }
@@ -237,8 +240,12 @@
     align-items: center;
     gap: 8px;
 
-    padding: 8px 14px;
-    border: 1.5px dashed rgba(var(--color-secondary-rgb), 0.30);
+    // Mêmes hauteur, bordure et rayon que les pastilles au milieu desquelles
+    // il se trouve : c'était le seul élément en pointillés de l'écran, et sa
+    // hauteur ne correspondait à rien. Seule la graisse le distingue d'elles.
+    min-height: 34px;
+    padding: 6px 14px;
+    border: 1.5px solid rgba(var(--color-secondary-rgb), 0.18);
     border-radius: 50rem;
 
     color: $secondary;
@@ -300,10 +307,47 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  min-height: 40px;
-  padding: 8px 12px;
+  // Plus basses et plus serrées : à 40px elles pesaient autant que les vrais
+  // boutons, alors qu'elles ne sont qu'un choix parmi cent trente.
+  min-height: 34px;
+  padding: 6px 10px;
 
-  font-size: 13px;
-  line-height: 1.25;
+  font-size: 12.5px;
+  line-height: 1.2;
   text-align: center;
+}
+
+// Sélection et action partagent l'orange mais pas l'écriture : la pastille
+// choisie porte le vert de la marque, le bouton qui enregistre garde le blanc.
+// Les deux couleurs de la charte se répondent au lieu de se répéter.
+// Limité à cette page : le composant partagé sert aussi à /preferences.
+.cuisine-card__tags .tag-selector:checked + label {
+  border-color: $primary;
+  background: $primary;
+  color: $secondary;
+  font-weight: 700;
+}
+
+.cuisine-card__tags .tag-selector:checked + label:hover {
+  border-color: $primary;
+  background: $primary;
+  color: $secondary;
+}
+
+// Le thème mono peint --color-primary et --color-secondary en noir tous les
+// deux : l'écriture verte y deviendrait noir sur noir. Elle repasse en blanc,
+// et seulement là — les cinq autres thèmes gardent le vert sur orange.
+[data-theme="mono"] .cuisine-card__tags .tag-selector:checked + label,
+[data-theme="mono"] .cuisine-card__tags .tag-selector:checked + label:hover {
+  color: $white;
+}
+
+// btn-go--primary est taillé pour un bouton seul en bas d'écran : 58px de haut
+// et 18px de texte. Au bout d'une colonne de pastilles de 40px, il écrasait
+// tout. Il garde son orange et sa pleine largeur — c'est bien l'action de
+// l'écran — mais adopte une échelle proche de ce qu'il termine.
+.cuisine-card__actions input[type="submit"] {
+  min-height: 48px;
+  padding: 12px 24px;
+  font-size: 16px;
 }
