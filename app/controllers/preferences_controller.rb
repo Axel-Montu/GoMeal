@@ -41,7 +41,7 @@ class PreferencesController < ApplicationController
 
     location = session[:location]
     if location.blank?
-      redirect_to location_path, alert: "Nous avons besoin de votre position." and return
+      redirect_to locations_path, alert: "Nous avons besoin de votre position." and return
     end
 
     restaurants = Restaurants::NearbySearch.call(

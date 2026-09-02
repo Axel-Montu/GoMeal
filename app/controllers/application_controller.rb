@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
 
   include Pundit::Authorization
 
-  after_action :verify_authorized, except: :index, unless: :skip_pundit?
-  after_action :verify_policy_scoped, only: :index, unless: :skip_pundit?
+  after_action :verify_authorized, unless: -> { skip_pundit? || action_name == "index" }
+  after_action :verify_policy_scoped, if: -> { action_name == "index" && !skip_pundit? }
 
   private
 

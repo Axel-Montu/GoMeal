@@ -1,0 +1,68 @@
+.match-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: $background;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+
+  &.is-visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__logo {
+    display: block;
+    width: 220px;
+    max-width: 60vw;
+    height: auto;
+    color: $secondary;
+
+    path {
+      fill: $secondary;
+      stroke: $secondary;
+      stroke-width: 1;
+      vector-effect: non-scaling-stroke;
+    }
+  }
+
+  &__text {
+    margin: 0;
+    color: $secondary;
+    font-family: $headers-font;
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+
+    // SplitText wraps every glyph in its own span ; on colore le "!"
+    // par sa position plutot que via un span nested (qui serait aplati).
+    .char:last-child {
+      color: $primary;
+    }
+  }
+
+  @media (min-width: 600px) {
+    &__logo {
+      width: 280px;
+    }
+
+    &__text {
+      font-size: 72px;
+    }
+  }
+}
