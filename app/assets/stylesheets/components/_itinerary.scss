@@ -1,20 +1,213 @@
-// The map fills the screen, the panel sits on top of it — see the wireframe.
+// La carte occupe tout l'écran, le panneau flotte par-dessus en verre dépoli.
+// C'est l'endroit où le flou a le plus de sens : ce qu'il laisse deviner,
+// c'est le plan et le tracé du trajet.
 .itinerary {
   position: relative;
-  min-height: 100vh;
+  // La navbar occupe 70 px au-dessus : sans la déduire, le bas du panneau
+  // tombe sous la ligne de flottaison et le bouton Retour devient inatteignable.
+  min-height: calc(100dvh - 70px);
   overflow: hidden;
   background: $background;
 }
-// On this screen the map fills everything: the panel is laid over it,
-// not under it. Elsewhere .map keeps its 60vh.
+
+// Ici la carte remplit tout : le panneau est posé dessus, pas dessous.
+// Ailleurs, .map garde ses 60vh.
 .itinerary .map {
   position: absolute;
-  inset: 0;  border-radius: 0;
+  inset: 0;
+  border-radius: 0;
 }
 
 .itinerary__panel {
   position: absolute;
   right: 12px;
-  bottom: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
   left: 12px;
+
+  // Sur grand écran le panneau ne s'étire pas : il reste une carte posée
+  // dans le coin, la carte géographique gardant le reste.
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+// ------------------------------------------------------------ le panneau ---
+
+.itinerary__card {
+  padding: 20px;
+  border-radius: 22px;
+
+  // Repli pour les navigateurs sans backdrop-filter : quasi opaque, sinon le
+  // texte passerait devant le plan sans contraste suffisant.
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 12px 40px rgba(var(--color-secondary-rgb), 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    background: rgba(255, 255, 255, 0.60);
+    -webkit-backdrop-filter: blur(24px) saturate(170%);
+    backdrop-filter: blur(24px) saturate(170%);
+  }
+}
+
+.itinerary__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.itinerary__identity {
+  min-width: 0;
+}
+
+.itinerary__name {
+  margin: 0 0 4px;
+  color: $secondary;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+.itinerary__address {
+  margin: 0;
+  color: $light-text;
+  font-size: 14px;
+}
+
+.itinerary__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+
+  padding: 5px 9px;
+  border-radius: 100px;
+  background: rgba(255, 198, 90, 0.22);
+
+  color: $secondary;
+  font-size: 13px;
+  font-weight: 700;
+
+  svg {
+    width: 13px;
+    height: 13px;
+    fill: $yellow;
+  }
+}
+
+// ----------------------------------------------------------- les chiffres ---
+
+.itinerary__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 18px 0 0;
+}
+
+.itinerary__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+
+  padding: 12px 4px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  text-align: center;
+
+  svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: $primary;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  // Le libellé se lit sous le chiffre : il vient donc après, visuellement.
+  dt {
+    order: 3;
+    color: $light-text;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+  }
+
+  dd {
+    order: 2;
+    margin: 0;
+    color: $secondary;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  // L'heure d'arrivée est le chiffre qui décide : c'est elle qu'on cherche.
+  &--arrival {
+    background: $primary;
+    border-color: transparent;
+
+    svg { stroke: $white; }
+    dt  { color: rgba(255, 255, 255, 0.85); }
+    dd  { color: $white; }
+  }
+}
+
+.itinerary__no-route {
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.55);
+
+  color: $secondary;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+// -------------------------------------------------------------- le retour ---
+
+// Le bouton reprend btn-go--secondary, en verre : bordé, translucide, pleine
+// largeur pour rester atteignable au pouce.
+.itinerary__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 44px;
+  margin-top: 16px;
+  padding: 10px 20px;
+
+  border: 1.5px solid rgba(var(--color-secondary-rgb), 0.35);
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.5);
+
+  color: $secondary;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    border-color: $primary;
+    color: $white;
+    background: $primary;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(var(--color-primary-rgb), 0.35);
+    outline-offset: 3px;
+  }
 }

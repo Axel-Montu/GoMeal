@@ -7,36 +7,61 @@
   </div>
 
   <div class="itinerary__panel">
-        <article class="restaurant-card">
-      <div class="restaurant-card__content">
-        <div class="restaurant-card__header">
-          <div>
-            <h3><%= @match.restaurant.name %></h3>
-            <p><%= @match.restaurant.address %></p>
-          </div>
-
-          <span class="restaurant-card__rating">
-            ★ <%= @match.restaurant.google_rating || "—" %>
-          </span>
+    <article class="itinerary__card">
+      <header class="itinerary__head">
+        <div class="itinerary__identity">
+          <h1 class="itinerary__name"><%= @match.restaurant.name %></h1>
+          <p class="itinerary__address"><%= @match.restaurant.address %></p>
         </div>
 
-        <% if @route %>
-          <div class="restaurant-card__stats">
-            <span>🚶 <%= walking_time(@route[:duration]) %></span>
-            <span>📍 <%= walking_distance(@route[:distance]) %></span>
-            <span>⏱️ <%= arrival_time(@route[:duration]) %></span>
-          </div>
-        <% else %>
-          <p class="itinerary__no-route">
-            Nous n'avons pas trouvé de chemin à pied jusqu'à ce restaurant.
-          </p>
-        <% end %>
-      </div>
-    </article>
+        <span class="itinerary__rating">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/>
+          </svg>
+          <%= @match.restaurant.google_rating || "—" %>
+        </span>
+      </header>
 
-    <%= render "shared/button",
-               text: "Retour",
-               path: go_meal_match_path(@match),
-               variant: "secondary" %>
+      <% if @route %>
+        <%# Each figure carries its label: "411 m" and "08:02" say nothing
+            about which is the distance and which the arrival %>
+        <dl class="itinerary__stats">
+          <div class="itinerary__stat">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="13" cy="4" r="1.6"/>
+              <path d="m9 21 2-4 2.5-2.5L12 9l-3 2-2 4"/>
+              <path d="m14 12 2.5 2 1.5 5"/>
+            </svg>
+            <dt>Marche</dt>
+            <dd><%= walking_time(@route[:duration]) %></dd>
+          </div>
+
+          <div class="itinerary__stat">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/>
+              <circle cx="12" cy="10" r="2.6"/>
+            </svg>
+            <dt>Distance</dt>
+            <dd><%= walking_distance(@route[:distance]) %></dd>
+          </div>
+
+          <div class="itinerary__stat itinerary__stat--arrival">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 7v5l3 2"/>
+            </svg>
+            <dt>Arrivée</dt>
+            <dd><%= arrival_time(@route[:duration]) %></dd>
+          </div>
+        </dl>
+      <% else %>
+        <p class="itinerary__no-route">
+          Nous n'avons pas trouvé de chemin à pied jusqu'à ce restaurant.
+        </p>
+      <% end %>
+
+      <%= link_to "Retour", go_meal_match_path(@match),
+                  class: "itinerary__back" %>
+    </article>
   </div>
 </div>
