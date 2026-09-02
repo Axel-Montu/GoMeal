@@ -35,3 +35,44 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+
+// Les marqueurs de carte n'existent que posés sur MapLibre : cette scène leur
+// donne un fond proche d'un plan pour qu'on puisse les juger sans la carte.
+.marker-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__stage {
+    display: grid;
+    place-items: center;
+    width: 132px;
+    height: 108px;
+    border-radius: 14px;
+
+    // Un faux plan : des rues claires sur un fond de blocs.
+    background:
+      linear-gradient(#FAF8F4 0 0) 22px 0 / 9px 100% no-repeat,
+      linear-gradient(#FAF8F4 0 0) 0 62px / 100% 11px no-repeat,
+      #E8E4DC;
+  }
+
+  p {
+    margin: 0;
+    color: $light-text;
+    font-size: 12px;
+    line-height: 1.4;
+
+    strong {
+      display: block;
+      color: $secondary;
+      font-size: 13px;
+    }
+  }
+}
