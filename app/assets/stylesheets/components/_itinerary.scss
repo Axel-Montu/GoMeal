@@ -32,8 +32,8 @@
 
   background: linear-gradient(
     to top,
-    rgba(var(--color-secondary-rgb), 0.28) 0%,
-    rgba(var(--color-secondary-rgb), 0.10) 45%,
+    rgba(var(--color-secondary-rgb), 0.20) 0%,
+    rgba(var(--color-secondary-rgb), 0.07) 45%,
     rgba(var(--color-secondary-rgb), 0) 100%
   );
 }
@@ -60,15 +60,19 @@
   // Repli pour les navigateurs sans backdrop-filter : quasi opaque, sinon le
   // texte passerait devant le plan sans contraste suffisant.
   background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   box-shadow:
-    0 12px 40px rgba(var(--color-secondary-rgb), 0.20),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 14px 44px rgba(var(--color-secondary-rgb), 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
 
   @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    background: rgba(255, 255, 255, 0.60);
-    -webkit-backdrop-filter: blur(24px) saturate(170%);
-    backdrop-filter: blur(24px) saturate(170%);
+    // Le fond de carte est très clair : à 0.60 et 24px de flou, il ne restait
+    // rien à voir au travers et la carte passait pour un simple carton blanc.
+    // Moins de blanc, moins de flou — on devine les rues — et davantage de
+    // saturation, c'est elle qui donne la teinte de vitre plutôt que de brume.
+    background: rgba(255, 255, 255, 0.32);
+    -webkit-backdrop-filter: blur(9px) saturate(215%);
+    backdrop-filter: blur(9px) saturate(215%);
   }
 }
 
@@ -202,7 +206,7 @@
 
   padding: 12px 4px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.6);
   text-align: center;
 
