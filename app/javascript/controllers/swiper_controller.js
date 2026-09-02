@@ -13,6 +13,11 @@ export default class extends Controller {
 
   connect() {
     this.locked = false
+    // Reference vers la carte que le user est en train de manipuler.
+    // On la capture au touchStart parce qu'au touchEnd, swiper.activeIndex
+    // a deja bascule sur la carte suivante et on flasherait la mauvaise.
+    this.dragCard = null
+    this.dragStartIndex = null
 
     // Swiper doit s'initialiser sur .swiper.swipe-deck (le vrai container),
     // pas sur .swipe-deck-wrapper qui porte maintenant le controller pour que
@@ -22,6 +27,11 @@ export default class extends Controller {
       effect: "cards",
       grabCursor: true,
       on: {
+        touchStart: (swiper) => {
+          this.dragCard = swiper.slides[swiper.activeIndex]
+          this.dragStartIndex = swiper.activeIndex
+        },
+        touchMove: (swiper) => this.updateFlash(swiper),
         touchEnd: (swiper) => this.handleSwipe(swiper)
       }
     })
@@ -35,13 +45,61 @@ export default class extends Controller {
 
   // Drag : Swiper a deja fait glisser la carte, on n'anime rien nous-memes.
   handleSwipe(swiper) {
-    const direction = swiper.swipeDirection
-    if (!direction) return
+    const card = this.dragCard
+    const startIndex = this.dragStartIndex
+    this.dragCard = null
+    this.dragStartIndex = null
+    if (!card) return
 
-    const card = swiper.slides[swiper.activeIndex]
-    const action = direction === "prev" ? "like" : "reject"
+    // swiper.swipeDirection est pose des le premier pixel de drag et n'est
+    // jamais efface quand la carte snap back sous le seuil : s'y fier ferait
+    // partir un reject fantome (et laisserait l'overlay rouge en place). On
+    // regarde donc si activeIndex a vraiment bouge. Notre callback est emit
+    // AVANT le slideTo interne de Swiper, d'ou le rAF pour lire l'index final.
+    requestAnimationFrame(() => {
+      if (swiper.activeIndex === startIndex) {
+        this.resetFlash(card)
+        return
+      }
 
-    this.decide(card, action, { animate: false })
+      const action = swiper.activeIndex > startIndex ? "reject" : "like"
+      // Sur un reject au drag, l'overlay rouge est deja a son maximum
+      // (le user a franchi le seuil) et va s'en aller avec la carte ; pas
+      // besoin de rejouer la keyframe flashReject.
+      this.decide(card, action, { animate: false })
+    })
+  }
+
+  // Fait monter le rouge sur la carte manipulee pendant le drag gauche.
+  // Cap 0.35 atteint des ~20% de la largeur de carte pour que le signal
+  // arrive tres tot ("des qu'on commence a tourner la page").
+  updateFlash(swiper) {
+    if (!this.dragCard) return
+    const flash = this.dragCard.querySelector(".swipe-card__flash")
+    if (!flash) return
+
+    const dx = swiper.touches.currentX - swiper.touches.startX
+    if (dx >= 0) {
+      flash.style.opacity = 0
+      return
+    }
+
+    const threshold = this.dragCard.offsetWidth * 0.2
+    const ratio = Math.min(1, Math.abs(dx) / threshold)
+    flash.style.opacity = (ratio * 0.35).toFixed(3)
+  }
+
+  // Fade court pour ne pas snap brutalement quand la carte revient a sa
+  // place au drag annule.
+  resetFlash(card) {
+    const flash = card?.querySelector(".swipe-card__flash")
+    if (!flash) return
+    flash.style.transition = "opacity 220ms ease-out"
+    flash.style.opacity = 0
+    setTimeout(() => {
+      flash.style.transition = ""
+      flash.style.opacity = ""
+    }, 240)
   }
 
   like(event) {
@@ -49,7 +107,25 @@ export default class extends Controller {
   }
 
   reject(event) {
-    this.decide(this.cardFor(event), "reject")
+    const card = this.cardFor(event)
+    this.flashReject(card)
+    this.decide(card, "reject")
+  }
+
+  // Overlay rouge qui pulse (300ms keyframe) via .is-flashing-reject.
+  // On la retire sur animationend pour pouvoir rejouer sur la carte
+  // suivante si le user enchaine les rejets vite.
+  flashReject(card) {
+    if (!card) return
+    card.classList.remove("is-flashing-reject")
+    // reflow pour redemarrer la keyframe si la classe etait encore la
+    void card.offsetWidth
+    card.classList.add("is-flashing-reject")
+    card.addEventListener(
+      "animationend",
+      () => card.classList.remove("is-flashing-reject"),
+      { once: true }
+    )
   }
 
   // Les boutons vivent dans la carte qu'ils concernent : on remonte depuis le

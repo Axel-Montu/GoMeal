@@ -256,6 +256,25 @@ body.page-go-meal-matches-index {
     overflow: hidden;
   }
 
+  // ---- reject flash --------------------------------------------------
+  // Overlay rouge qui pulse au moment ou le rejet est confirme (clic ou
+  // fin de drag). Declenche par .is-flashing-reject, separee de
+  // .is-rejecting car le drag n'ajoute pas cette derniere (Swiper gere
+  // deja la transform).
+
+  &__flash {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    background: $red;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &.is-flashing-reject &__flash {
+    animation: swipe-card-flash 300ms ease-out both;
+  }
+
   // ---- drag stamps ---------------------------------------------------
 
   &__stamp {
@@ -291,6 +310,12 @@ body.page-go-meal-matches-index {
       background: rgba($red, 0.1);
     }
   }
+}
+
+@keyframes swipe-card-flash {
+  0%   { opacity: 0; }
+  40%  { opacity: 0.28; }
+  100% { opacity: 0; }
 }
 
 // --------------------------------------------------------------- actions ----
