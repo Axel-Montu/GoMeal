@@ -11,7 +11,8 @@ export default class extends Controller {
       container: this.element,
       style: "https://tiles.openfreemap.org/styles/liberty",
       center: this.centerValue,
-      zoom: this.zoomValue
+      zoom: this.zoomValue,
+      attributionControl: false
     })
     // 3. Draw the route once the map is ready — layers cannot be added before
     this.map.on("load", () => this.#drawRoute())
