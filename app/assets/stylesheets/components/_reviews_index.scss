@@ -1,12 +1,6 @@
-// The list of my lunches. Same framing as `.match-show`: this is the second
-// screen of the review flow, and the two must sit at the same width.
+// The list of my lunches: those waiting for a rating, then those already rated.
 .reviews-index {
-  min-height: 100vh;
-  padding: 30px 20px 80px;
-  max-width: 390px;
-  margin: 0 auto;
-  color: $text;
-  background: $background;
+  @extend %mobile-column;
 
   &__eyebrow {
     margin: 0 0 4px;

@@ -1,0 +1,61 @@
+// The rating form: five stars, an optional comment, one button.
+.review-form {
+  @extend %mobile-column;
+
+  &__title {
+    margin: 0 0 4px;
+    font-size: 28px;
+    color: $secondary;
+  }
+
+  &__subtitle {
+    margin: 0 0 24px;
+    color: $light-text;
+    font-size: 15px;
+  }
+
+  // The stars sit on a card of their own: they are the only required field
+  &__stars {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: $white;
+    border-radius: 20px;
+    box-shadow: $box-shadow;
+  }
+
+  &__label {
+    margin: 0 0 14px;
+    font-size: 15px;
+    font-weight: 700;
+    color: $secondary;
+  }
+}
+
+// Interactive stars, distinct from the ones that only display a rating in
+// `.review` and `.review-row`: these are buttons, with a touch target.
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  &__button {
+    // 48px around the star: below 44 a thumb misses it
+    width: 48px;
+    height: 48px;
+    padding: 0;
+
+    background: none;
+    border: none;
+    color: $yellow;
+    font-size: 34px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  &__caption {
+    margin: 12px 0 0;
+    text-align: center;
+    color: $light-text;
+    font-size: 14px;
+  }
+}
