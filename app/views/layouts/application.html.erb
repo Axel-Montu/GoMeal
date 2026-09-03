@@ -30,7 +30,8 @@
       })();
     </script>
 
-    <%# app/views/layouts/application.html.erb %>
+    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
