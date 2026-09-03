@@ -214,9 +214,9 @@ body.page-go-meal-matches-index {
     color: $secondary;
 
     &--accent {
-      background: rgba(var(--color-primary-rgb), 0.18);
-      border-color: rgba(var(--color-primary-rgb), 0.3);
-      color: #c25f06;
+      background: $primary;
+      border-color: transparent;
+      color: $white;
     }
   }
 
