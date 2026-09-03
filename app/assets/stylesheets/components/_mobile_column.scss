@@ -1,0 +1,14 @@
+// Every screen of the app is a phone-width column, centred on wider displays.
+// Extracted at its third occurrence, shared by the match screen, the review
+// list and the rating form.
+//
+// A placeholder rather than a class: it produces no CSS of its own, only what
+// the screens extending it need.
+%mobile-column {
+  min-height: 100vh;
+  padding: 30px 20px 80px;
+  max-width: 390px;
+  margin: 0 auto;
+  color: $text;
+  background: $background;
+}

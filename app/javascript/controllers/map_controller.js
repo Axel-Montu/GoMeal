@@ -17,7 +17,8 @@ export default class extends Controller {
       container: this.element,
       style: "https://tiles.openfreemap.org/styles/liberty",
       center: this.centerValue,
-      zoom: this.zoomValue
+      zoom: this.zoomValue,
+      attributionControl: false
     })
 
     // 2. Route, live wiring and geolocation watching all need the map ready:

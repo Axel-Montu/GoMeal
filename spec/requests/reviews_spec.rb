@@ -50,4 +50,43 @@ RSpec.describe "Reviews index", type: :request do
       expect(response.body).to include("Aucun déjeuner à noter")
     end
   end
+
+  describe "POST /go_meal_matches/:id/review" do
+    let(:match) do
+      GoMealMatch.create!(user: owner, restaurant: mine,
+                          expected_back_at: 1.hour.ago)
+    end
+
+    it "saves the review and lands back on the match" do
+      sign_in owner
+
+      post go_meal_match_review_path(match),
+           params: { review: { rating: 4, comment: "Servi en douze minutes." } }
+
+      expect(match.reload.review.rating).to eq(4)
+      expect(response).to redirect_to(go_meal_match_path(match))
+    end
+
+    it "writes nothing when the rating is missing" do
+      sign_in owner
+
+      # 1. This is the case the stars are meant to prevent. It must hold server
+      #    side too, since a form can always be submitted without JavaScript.
+      expect {
+        post go_meal_match_review_path(match), params: { review: { rating: "" } }
+      }.not_to change(Review, :count)
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it "answers 404 on a match belonging to someone else" do
+      theirs_match = GoMealMatch.create!(user: other, restaurant: theirs)
+      sign_in owner
+
+      post go_meal_match_review_path(theirs_match),
+           params: { review: { rating: 5 } }
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end
