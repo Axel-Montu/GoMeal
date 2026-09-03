@@ -21,9 +21,6 @@
   }
 
   &__header {
-    display: flex;
-    justify-content: space-between;
-
     h3 {
       margin: 0 0 5px;
       color: $secondary;
@@ -35,7 +32,18 @@
     }
   }
 
+  // L'adresse et la note tiennent sur une seule ligne : la note calée à
+  // droite, sur la même ligne de base que l'adresse. Une adresse longue passe
+  // à la ligne sans pousser la note hors de la carte.
+  &__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
   &__rating {
+    flex-shrink: 0;
     color: $yellow;
     font-weight: 700;
   }
