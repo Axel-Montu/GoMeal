@@ -33,7 +33,7 @@ module Scoring
       [PRICE_MAX_PTS - (gap * 1.5), 0].max
     end
 
-    private_class_method def self.haversine_meters(coord_a, coord_b)
+    def self.haversine_meters(coord_a, coord_b)
       # https://gist.github.com/timols/5268103 reference for the formula
       lat1, lon1 = coord_a
       lat2, lon2 = coord_b

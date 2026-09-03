@@ -40,7 +40,7 @@
          the lunch is over and unanswered, nothing the rest of the time %>
   <% if @review.present? %>
     <%= render "reviews/review", review: @review, match: @match %>
-  <% elsif @match.awaiting_review? %>
+  <% elsif @match.awaiting_review?(current_location: @current_location) %>
     <%= render "go_meal_matches/rate_prompt", match: @match %>
   <% end %>
 
