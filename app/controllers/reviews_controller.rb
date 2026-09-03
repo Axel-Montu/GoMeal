@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :set_match, only: [:new, :create]
+  before_action :set_match, only: [:new, :create, :edit, :update, :destroy]
 
   def index
     # 1. Start from the current user's own matches. policy_scope does the
@@ -37,6 +37,35 @@ class ReviewsController < ApplicationController
       #    Turbo only re-renders a failed form on an error status.
       render :new, status: :unprocessable_entity
     end
+  end
+
+
+  def edit
+    # 1. The review this lunch already carries
+    @review = @match.review
+    authorize @review
+  end
+
+  def update
+    @review = @match.review
+    authorize @review
+
+    if @review.update(review_params)
+      redirect_to go_meal_match_path(@match), notice: "Ton avis est à jour."
+    else
+      # 2. Same form, errors shown, nothing changed
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @review = @match.review
+    authorize @review
+
+    @review.destroy
+
+    # 3. Back to the match, which offers the rating form again
+    redirect_to go_meal_match_path(@match), notice: "Ton avis a été supprimé."
   end
 
   private

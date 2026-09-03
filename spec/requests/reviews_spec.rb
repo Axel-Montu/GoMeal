@@ -89,4 +89,66 @@ RSpec.describe "Reviews index", type: :request do
       expect(response).to have_http_status(:not_found)
     end
   end
+
+  describe "PATCH /go_meal_matches/:id/review" do
+    let(:match) do
+      GoMealMatch.create!(user: owner, restaurant: mine,
+                          expected_back_at: 1.hour.ago)
+    end
+
+    it "updates the review in place, without creating a second one" do
+      Review.create!(go_meal_match: match, rating: 2, comment: "Bof.")
+      sign_in owner
+
+      expect {
+        patch go_meal_match_review_path(match),
+              params: { review: { rating: 5, comment: "En fait très bien." } }
+      }.not_to change(Review, :count)
+
+      expect(match.reload.review.rating).to eq(5)
+      expect(response).to redirect_to(go_meal_match_path(match))
+    end
+
+    it "changes nothing when the rating is cleared" do
+      Review.create!(go_meal_match: match, rating: 3)
+      sign_in owner
+
+      patch go_meal_match_review_path(match), params: { review: { rating: "" } }
+
+      expect(match.reload.review.rating).to eq(3)
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
+
+  describe "DELETE /go_meal_matches/:id/review" do
+    let(:match) do
+      GoMealMatch.create!(user: owner, restaurant: mine,
+                          expected_back_at: 1.hour.ago)
+    end
+
+    it "removes the review and lands back on the match" do
+      Review.create!(go_meal_match: match, rating: 4)
+      sign_in owner
+
+      expect {
+        delete go_meal_match_review_path(match)
+      }.to change(Review, :count).by(-1)
+
+      expect(response).to redirect_to(go_meal_match_path(match))
+    end
+
+    it "answers 404 on a review that belongs to someone else" do
+      theirs_match = GoMealMatch.create!(user: other, restaurant: theirs)
+      Review.create!(go_meal_match: theirs_match, rating: 5)
+      sign_in owner
+
+      # 1. The match is loaded among the current user's own, so this one is
+      #    simply not found, and its review is never reached
+      expect {
+        delete go_meal_match_review_path(theirs_match)
+      }.not_to change(Review, :count)
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end
