@@ -3,37 +3,59 @@
 // did not go. The visual weight carries the hierarchy, so the third one is a
 // plain link and never a button.
 .rate-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
   margin-top: 18px;
-  padding: 20px;
+  padding: 22px 20px 18px;
   // Surface, not white: the block reads as an aside to the restaurant card
   // above it, which is the white one.
   background: $surface;
   border-radius: 20px;
+  text-align: center;
 
   &__title {
-    margin: 0 0 4px;
-    font-size: 19px;
+    margin: 0;
+    font-size: 20px;
     font-weight: 700;
+    letter-spacing: -0.01em;
     color: $secondary;
   }
 
   &__text {
-    margin: 0 0 16px;
+    margin: 0 0 6px;
+    max-width: 34ch;
     color: $light-text;
     font-size: 14px;
+    line-height: 1.45;
+  }
+
+  // The two CTAs already carry their own margin. Inside this stack the gap
+  // is authoritative, so we neutralize it and let the flex layout breathe.
+  .btn-go {
+    margin-bottom: 0;
   }
 
   // The way out for someone who never went. It stays a link so it never
   // competes with the two buttons above it.
   &__decline {
-    width: 100%;
-    margin-top: 4px;
-    padding: 8px;
+    margin-top: 2px;
+    padding: 6px 10px;
     background: none;
     border: none;
     color: $light-text;
-    font-size: 14px;
-    text-decoration: underline;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
     cursor: pointer;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: $secondary;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
   }
 }
