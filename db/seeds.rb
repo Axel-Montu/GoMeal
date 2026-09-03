@@ -75,6 +75,27 @@ end
 
 puts ""
 puts "#{GoMealMatch.count} GoMealMatches created"
+
+# Lunches that have just ended: visited is still unknown and the walking
+# window is behind us, so `awaiting_review?` is true and they show up on
+# /reviews under "À noter".
+puts "Adding lunches that just ended, ready for a rating..."
+
+User.all.each do |user|
+  Restaurant.all.sample(2).each do |restaurant|
+    GoMealMatch.create!(
+      user: user,
+      restaurant: restaurant,
+      status: :liked,
+      go_meal_score: rand(60..100),
+      visited: nil,
+      expected_back_at: rand(2..48).hours.ago
+    )
+    print "."
+  end
+end
+puts ""
+
 puts "Now go back to work boy..."
 puts "GO MEAL"
 
