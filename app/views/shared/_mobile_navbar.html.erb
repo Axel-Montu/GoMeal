@@ -112,6 +112,18 @@
           </li>
         </ul>
       </div>
+
+      <%# La déconnexion ferme la liste : c'est la seule action qui fait sortir
+          de l'app, elle est séparée du reste et ne s'affiche qu'une fois
+          connecté. %>
+      <% if user_signed_in? %>
+        <%= link_to destroy_user_session_path,
+                    data: { turbo_method: :delete },
+                    class: "mobile-navbar__panel-item mobile-navbar__panel-item--signout" do %>
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Se déconnecter
+        <% end %>
+      <% end %>
     </div>
   </div>
 </nav>
