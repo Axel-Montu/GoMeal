@@ -32,5 +32,6 @@ Rails.application.routes.draw do
   resource :preferences, only: [:show, :edit, :update] do
     get :cuisines
     patch :cuisines, action: :update_cuisines
+    post :retry_matches
   end
 end
