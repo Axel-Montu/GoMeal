@@ -22,7 +22,15 @@ export default class extends Controller {
         const status = await navigator.permissions.query({ name: "geolocation" })
 
         if (status.state === "denied") {
+          this.reveal()
           this.blocked()
+          return
+        }
+
+        // "granted": no prompt will show, no message to display — skip revealing
+        // the UI to avoid a visible flash before the redirect fires.
+        if (status.state === "granted") {
+          this.ask()
           return
         }
       } catch (e) {
@@ -30,7 +38,12 @@ export default class extends Controller {
       }
     }
 
+    this.reveal()
     this.ask()
+  }
+
+  reveal() {
+    this.element.hidden = false
   }
 
   ask() {
