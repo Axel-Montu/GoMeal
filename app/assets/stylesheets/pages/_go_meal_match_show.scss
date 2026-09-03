@@ -63,6 +63,64 @@
     text-wrap: balance;
   }
 
+  // Score d'affinité : cercle rempli à --score % via conic-gradient.
+  &__score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  &__score-ring {
+    --size: 110px;
+    --thickness: 9px;
+    --pct: calc(var(--score, 0) * 1%);
+
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+
+    background:
+      conic-gradient($primary var(--pct), rgba(var(--color-primary-rgb), 0.12) 0);
+
+    &::before {
+      content: "";
+      grid-area: 1 / 1;
+      width: calc(var(--size) - var(--thickness) * 2);
+      height: calc(var(--size) - var(--thickness) * 2);
+      border-radius: 50%;
+      background: $background;
+    }
+  }
+
+  &__score-value {
+    grid-area: 1 / 1;
+    color: $secondary;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+
+    small {
+      font-size: 13px;
+      font-weight: 700;
+      margin-left: 2px;
+      color: $primary;
+    }
+  }
+
+  &__score-label {
+    margin: 0;
+    color: $primary;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
   // btn-go already carries its own bottom margin, so the stack only has to
   // stop it from stretching the secondary button to full width.
   &__actions {

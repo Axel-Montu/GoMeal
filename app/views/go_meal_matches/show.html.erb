@@ -9,6 +9,20 @@
     </p>
 
     <h1 class="match-show__title">Ton déjeuner est trouvé</h1>
+
+    <% if @match.go_meal_score.present? %>
+      <% score = @match.go_meal_score.clamp(0, 100) %>
+      <div class="match-show__score" style="--score: <%= score %>" role="img"
+           aria-label="Affinité <%= score %> pour cent"
+           data-controller="score-ring"
+           data-score-ring-score-value="<%= score %>">
+        <div class="match-show__score-ring">
+          <span class="match-show__score-value"
+                data-score-ring-target="value"><%= score %><small>%</small></span>
+        </div>
+        <p class="match-show__score-label">Affinité</p>
+      </div>
+    <% end %>
   </header>
 
   <%# 2. The restaurant, with its cover photo %>

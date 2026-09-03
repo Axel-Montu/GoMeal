@@ -47,6 +47,17 @@
               <% end %>
             </div>
 
+            <% if match.go_meal_score.present? %>
+              <% score = match.go_meal_score.clamp(0, 100) %>
+              <div class="swipe-card__score" style="--score: <%= score %>"
+                   aria-label="GoMeal Score <%= score %> pour cent">
+                <span class="swipe-card__score-label">GoMeal Score</span>
+                <span class="swipe-card__score-ring">
+                  <span class="swipe-card__score-value"><%= score %></span>
+                </span>
+              </div>
+            <% end %>
+
             <p class="swipe-card__address">
               <span class="swipe-card__address-dot"></span>
               <%= restaurant.address %>
