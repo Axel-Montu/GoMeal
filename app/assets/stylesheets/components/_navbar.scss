@@ -176,4 +176,29 @@ $navbar-desktop-breakpoint: 768px;
       }
     }
   }
+
+  // Sortir de l'app n'est pas de la navigation : un filet la détache des
+  // autres entrées, et l'icône dit dans quel sens ça va.
+  &__panel-item--signout {
+    margin-top: 4px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(var(--color-secondary-rgb), 0.12);
+    border-radius: 0;
+    color: $light-text;
+
+    i {
+      font-size: 12px;
+    }
+
+    &:hover {
+      color: $secondary;
+    }
+
+    @media (min-width: $navbar-desktop-breakpoint) {
+      margin-top: 0;
+      padding: 8px 14px;
+      border-top: 0;
+      border-radius: 999px;
+    }
+  }
 }
