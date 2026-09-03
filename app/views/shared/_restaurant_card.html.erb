@@ -1,22 +1,24 @@
 <article class="restaurant-card">
-  <article class="restaurant-card">
   <% if local_assigns[:cover].present? %>
     <div class="restaurant-card__cover">
       <%= image_tag cover, alt: name %>
     </div>
   <% end %>
   <div class="restaurant-card__content">
-  <div class="restaurant-card__content">
     <div class="restaurant-card__header">
-      <div>
-        <h3><%= name %></h3>
+      <h3><%= name %></h3>
+
+      <%# La note se lit sur la ligne de l'adresse : même ligne de base,
+          calée à droite. %>
+      <div class="restaurant-card__meta">
         <p><%= address %></p>
-        <p><%= category %></p>
+
+        <span class="restaurant-card__rating">
+          ★ <%= rating %>
+        </span>
       </div>
 
-      <span class="restaurant-card__rating">
-        ★ <%= rating %>
-      </span>
+      <p><%= category %></p>
     </div>
 
     <div class="restaurant-card__stats">
