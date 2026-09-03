@@ -21,7 +21,8 @@
          "Cuisines du monde" => "Par cuisine du monde"
        } %>
 
-    <section class="cuisine-card" data-cuisine-steps-target="card" data-category="<%= regime_category %>">
+    <div class="cuisine-card-stack">
+    <section class="cuisine-card cuisine-card--active" data-cuisine-steps-target="card" data-category="<%= regime_category %>">
       <header class="cuisine-card__head">
         <p class="cuisine-card__step">Étape 1 sur <%= total_steps %></p>
         <h2 class="cuisine-card__title"><%= regime_category %></h2>
@@ -55,7 +56,7 @@
     </section>
 
     <% branch_categories.each do |category| %>
-      <section class="cuisine-card" data-cuisine-steps-target="card" data-category="<%= category %>" hidden>
+      <section class="cuisine-card" data-cuisine-steps-target="card" data-category="<%= category %>">
         <header class="cuisine-card__head">
           <p class="cuisine-card__step">Étape <%= total_steps %> sur <%= total_steps %></p>
           <h2 class="cuisine-card__title"><%= category %></h2>
@@ -125,6 +126,7 @@
         </footer>
       </section>
     <% end %>
+    </div>
 
   <% end %>
 </main>
