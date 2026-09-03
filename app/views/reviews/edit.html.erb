@@ -1,10 +1,10 @@
 <div class="review-form">
-  <h1 class="review-form__title">Comment c'était ?</h1>
+  <h1 class="review-form__title">Modifier ton avis</h1>
   <p class="review-form__subtitle"><%= @match.restaurant.name %></p>
 
   <%= render "form", review: @review, match: @match,
-                     submit_label: "Publier mon avis" %>
+                     submit_label: "Enregistrer les modifications" %>
 
-  <%= link_to "Plus tard", go_meal_match_path(@match),
+  <%= link_to "Annuler", go_meal_match_path(@match),
               class: "btn-go btn-go--secondary" %>
 </div>

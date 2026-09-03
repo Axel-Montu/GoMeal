@@ -9,6 +9,17 @@ class ReviewPolicy < ApplicationPolicy
     record.go_meal_match.user == user
   end
 
+  def edit?
+    update?
+  end
+
+  def update?
+    create?
+  end
+
+  def destroy?
+    create?
+  end
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope.joins(:go_meal_match).where(go_meal_matches: { user: user })
