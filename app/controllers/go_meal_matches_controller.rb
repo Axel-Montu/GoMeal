@@ -25,6 +25,9 @@ class GoMealMatchesController < ApplicationController
 
     @route = walking_route
     @meal = current_user.average_lunch_time_minutes
+    # 4. The last known user position, so the review prompt can trigger on
+    #    arrival at the restaurant even before the clock catches up
+    @current_location = session[:location]
   end
 
   def like
