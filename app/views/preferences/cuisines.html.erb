@@ -17,7 +17,7 @@
     <% regime_category, *branch_categories = PreferencesController::CUISINE_CATEGORIES %>
     <% total_steps = 2 %>
     <% branch_labels = {
-         "Spécialités" => "Par spécialité culinaire",
+         "Spécialité" => "Par spécialité culinaire",
          "Cuisines du monde" => "Par cuisine du monde"
        } %>
 
@@ -77,27 +77,48 @@
 
         <%# Each submenu (region, dish family, ...) folds behind its own
             native <details>, so no script is involved and the hidden
-            checkboxes still travel with the form. A submenu that already
-            holds a selected tag opens by default — otherwise a choice made
-            inside it would vanish from sight on the next visit. %>
-        <% branch_groups[:groups].each do |submenu, submenu_tags| %>
-          <% already_open = submenu_tags.any? { |tag| selected_tag_ids.include?(tag.id) } %>
-          <details class="tag-more"<%= " open".html_safe if already_open %>>
-            <summary class="tag-more__summary"><%= submenu %></summary>
+            checkboxes still travel with the form. Whatever is already
+            selected inside a submenu is pulled out and shown right below its
+            fold, outside the <details> — that block stays visible even once
+            the fold is closed, so a choice never vanishes from sight. The
+            tag-submenu controller keeps that true live too: checking a tag
+            moves its pill out of the fold immediately, unchecking sends it
+            back — a page reload isn't needed to see it survive a fold close.
+            The wrapper lets closed submenus sit side by side and wrap onto
+            the next line when there's room, instead of one per row. %>
+        <div class="cuisine-card__submenus">
+          <% branch_groups[:groups].each do |submenu, submenu_tags| %>
+            <% selected_tags, remaining_tags = submenu_tags.partition { |tag| selected_tag_ids.include?(tag.id) } %>
+            <div class="cuisine-card__submenu"
+                 data-controller="tag-submenu"
+                 data-action="change->tag-submenu#toggle">
+              <details class="tag-more">
+                <summary class="tag-more__summary"><%= submenu %></summary>
 
-            <%# The direct child of <details> must not declare a display of its
-                own: browsers hide a closed panel with display:none from their
-                own stylesheet, and any class more specific than that wins,
-                leaving the list permanently open. The grid goes inside. %>
-            <div class="tag-more__list">
-              <div class="cuisine-card__tags">
-                <%= render "preferences/tag_pills",
-                           tags: submenu_tags,
-                           selected_ids: selected_tag_ids %>
-              </div>
+                <%# The direct child of <details> must not declare a display of its
+                    own: browsers hide a closed panel with display:none from their
+                    own stylesheet, and any class more specific than that wins,
+                    leaving the list permanently open. The grid goes inside. %>
+                <div class="tag-more__list">
+                  <div class="cuisine-card__tags" data-tag-submenu-target="list">
+                    <%= render "preferences/tag_pills",
+                               tags: remaining_tags,
+                               selected_ids: selected_tag_ids %>
+                  </div>
+                </div>
+              </details>
+
+              <% if selected_tags.any? %>
+                <div class="cuisine-card__tags cuisine-card__submenu__selected"
+                     data-tag-submenu-target="selected">
+                  <%= render "preferences/tag_pills",
+                             tags: selected_tags,
+                             selected_ids: selected_tag_ids %>
+                </div>
+              <% end %>
             </div>
-          </details>
-        <% end %>
+          <% end %>
+        </div>
 
         <footer class="cuisine-card__actions">
           <%= f.submit "Valider", class: "btn-go btn-go--secondary" %>

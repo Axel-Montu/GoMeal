@@ -2,20 +2,12 @@ class PreferencesController < ApplicationController
   CUISINE_CATEGORIES = [
     "Régime particulier",
     "Cuisines du monde",
-    "Spécialités"
+    "Spécialité"
   ].freeze
 
   CUISINE_WORLD_CATEGORY = "Cuisines du monde"
-  CUISINE_SPECIALTY_CATEGORY = "Spécialités"
-
-  # Pinned by api_type (not frontend_type) because several tags share the
-  # same French display name (e.g. indian_restaurant, north_indian_restaurant
-  # and south_indian_restaurant all show as "Indien").
-  PINNED_WORLD_CUISINE_TYPES = %w[
-    french_restaurant italian_restaurant japanese_restaurant chinese_restaurant
-    indian_restaurant mexican_restaurant thai_restaurant american_restaurant
-    mediterranean_restaurant lebanese_restaurant
-  ].freeze
+  CUISINE_SPECIALTY_CATEGORY = "Spécialité"
+  PINNED_TAGS_COUNT = 7
 
   def show
     @user = current_user
@@ -98,16 +90,14 @@ class PreferencesController < ApplicationController
   # specialties) so each group can fold behind its own <details>.
   def submenu_groups_by_category(tags_by_category)
     {
-      CUISINE_WORLD_CATEGORY => submenu_groups(
-        tags_by_category[CUISINE_WORLD_CATEGORY], pinned_api_types: PINNED_WORLD_CUISINE_TYPES
-      ),
+      CUISINE_WORLD_CATEGORY => submenu_groups(tags_by_category[CUISINE_WORLD_CATEGORY]),
       CUISINE_SPECIALTY_CATEGORY => submenu_groups(tags_by_category[CUISINE_SPECIALTY_CATEGORY])
     }
   end
 
-  def submenu_groups(tags, pinned_api_types: [])
+  def submenu_groups(tags)
     tags = Array(tags)
-    pinned = pinned_api_types.filter_map { |api_type| tags.find { |tag| tag.api_type == api_type } }
+    pinned = tags.sample(PINNED_TAGS_COUNT)
     remaining = tags - pinned
 
     groups = remaining.group_by(&:submenu).sort.to_h
