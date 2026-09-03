@@ -2,48 +2,8 @@
   <h1 class="review-form__title">Comment c'était ?</h1>
   <p class="review-form__subtitle"><%= @match.restaurant.name %></p>
 
-  <%# The stars drive a hidden field: what the form submits is a plain integer,
-      so the server validates the same thing whatever the browser did. %>
-  <%= simple_form_for @review,
-                      url: go_meal_match_review_path(@match),
-                      html: { data: { controller: "stars" } } do |f| %>
-
-    <%= f.error_notification %>
-
-    <section class="review-form__stars">
-      <p class="review-form__label">Ta note *</p>
-
-      <%= f.input_field :rating, as: :hidden, data: { stars_target: "input" } %>
-
-      <div class="stars">
-        <% 1.upto(5) do |position| %>
-          <button type="button"
-                  class="stars__button"
-                  data-stars-target="star"
-                  data-index="<%= position %>"
-                  data-action="click->stars#pick"
-                  aria-label="<%= position %> étoiles">
-            <i class="fa-regular fa-star"></i>
-          </button>
-        <% end %>
-      </div>
-
-      <p class="stars__caption" data-stars-target="caption">
-        Touche une étoile pour noter
-      </p>
-    </section>
-
-    <%= f.input :comment,
-                label: "Ton commentaire",
-                placeholder: "Service rapide ? Bonne surprise ? Dis-le en une phrase.",
-                input_html: { rows: 4, maxlength: 500 },
-                hint: "Facultatif, 500 caractères maximum" %>
-
-    <%= f.submit "Publier mon avis",
-                 class: "btn-go btn-go--primary",
-                 disabled: @review.rating.blank?,
-                 data: { stars_target: "submit" } %>
-  <% end %>
+  <%= render "form", review: @review, match: @match,
+                     submit_label: "Publier mon avis" %>
 
   <%= link_to "Plus tard", go_meal_match_path(@match),
               class: "btn-go btn-go--secondary" %>

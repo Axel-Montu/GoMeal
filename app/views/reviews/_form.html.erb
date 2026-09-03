@@ -1,0 +1,42 @@
+<%# Shared by `new` and `edit`. The stars read their initial value from the
+    hidden field, so a filled form needs nothing more than a saved review. %>
+<%= simple_form_for review,
+                    url: go_meal_match_review_path(match),
+                    html: { data: { controller: "stars" } } do |f| %>
+
+  <%= f.error_notification %>
+
+  <section class="review-form__stars">
+    <p class="review-form__label">Ta note *</p>
+
+    <%= f.input_field :rating, as: :hidden, data: { stars_target: "input" } %>
+
+    <div class="stars">
+      <% 1.upto(5) do |position| %>
+        <button type="button"
+                class="stars__button"
+                data-stars-target="star"
+                data-index="<%= position %>"
+                data-action="click->stars#pick"
+                aria-label="<%= position %> étoiles">
+          <i class="fa-regular fa-star"></i>
+        </button>
+      <% end %>
+    </div>
+
+    <p class="stars__caption" data-stars-target="caption">
+      Touche une étoile pour noter
+    </p>
+  </section>
+
+  <%= f.input :comment,
+              label: "Ton commentaire",
+              placeholder: "Service rapide ? Bonne surprise ? Dis-le en une phrase.",
+              input_html: { rows: 4, maxlength: 500 },
+              hint: "Facultatif, 500 caractères maximum" %>
+
+  <%= f.submit submit_label,
+               class: "btn-go btn-go--primary",
+               disabled: review.rating.blank?,
+               data: { stars_target: "submit" } %>
+<% end %>
