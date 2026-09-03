@@ -60,9 +60,7 @@ export default class extends Controller {
       .then((data) => {
         window.location.href = data.redirect_to
       })
-      .catch((e) => {
-        console.error(e)
-      })
+      .catch(() => {})
   }
 
   error() {

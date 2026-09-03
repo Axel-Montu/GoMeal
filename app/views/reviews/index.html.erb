@@ -15,16 +15,12 @@
     <%# Each section shows up only when it holds something %>
     <% if @awaiting.any? %>
       <h2 class="reviews-index__section">À NOTER · <%= @awaiting.size %></h2>
-      <% @awaiting.each do |match| %>
-        <%= render "reviews/review_row", match: match, awaiting: true %>
-      <% end %>
+      <%= render partial: "reviews/review_row", collection: @awaiting, as: :match, locals: { awaiting: true } %>
     <% end %>
 
     <% if @reviewed.any? %>
       <h2 class="reviews-index__section">NOTÉS · <%= @reviewed.size %></h2>
-      <% @reviewed.each do |match| %>
-        <%= render "reviews/review_row", match: match, awaiting: false %>
-      <% end %>
+      <%= render partial: "reviews/review_row", collection: @reviewed, as: :match, locals: { awaiting: false } %>
     <% end %>
   <% end %>
 </div>
