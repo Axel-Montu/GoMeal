@@ -3,7 +3,8 @@
     data-controller="map"
     data-map-center-value="[<%= @match.restaurant.longitude %>, <%= @match.restaurant.latitude %>]"
     data-map-zoom-value="15"
-    data-map-route-value="<%= @route ? @route[:geometry].to_json : "null" %>">
+    data-map-route-value="<%= @route ? @route[:geometry].to_json : "null" %>"
+    data-map-match-id-value="<%= @match.id %>">
   </div>
 
   <div class="itinerary__panel">
