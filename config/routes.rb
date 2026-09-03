@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resource :locations, only: [:show, :create]
+  resource :locations, only: [:show, :create, :update]
   resource :preferences, only: [:show, :edit, :update] do
     get :cuisines
     patch :cuisines, action: :update_cuisines
