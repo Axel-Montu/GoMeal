@@ -26,22 +26,23 @@
   </header>
 
   <%# 2. The restaurant, with its cover photo %>
-  <%= render "shared/restaurant_card",
-            cover: restaurant_cover_photo(@match.restaurant),
-            name: @match.restaurant.name,
-            address: @match.restaurant.address,
-            category: (@match.restaurant.types.first || "Restaurant").tr("_", " ").capitalize,
-            rating: (@match.restaurant.google_rating || "—"),
-            travel_time: @route ? walking_time(@route[:duration]) : "—",
-            meal_time: @meal ? meal_time(@meal) : "—",
-            total_time: (@route && @meal) ? total_time(@route[:duration], @meal) : "—" %>
+  <div data-controller="match-reveal">
+    <%= render "shared/restaurant_card",
+              cover: restaurant_cover_photo(@match.restaurant),
+              name: @match.restaurant.name,
+              address: @match.restaurant.address,
+              category: (@match.restaurant.types.first || "Restaurant").tr("_", " ").capitalize,
+              rating: (@match.restaurant.google_rating || "—"),
+              travel_time: @route ? walking_time(@route[:duration]) : "—",
+              meal_time: @meal ? meal_time(@meal) : "—",
+              total_time: (@route && @meal) ? total_time(@route[:duration], @meal) : "—" %>
+  </div>
 
-  <%# 3. One block, or none. A review once it exists, the call to rate while
-         the lunch is over and unanswered, nothing the rest of the time %>
+  <%# 3. The written review, once it exists, sits inline. The call to rate
+         a lunch that is over lives in a bottom sheet under this main, so
+         the page keeps its focus on the restaurant and the itinerary %>
   <% if @review.present? %>
     <%= render "reviews/review", review: @review, match: @match %>
-  <% elsif @match.awaiting_review?(current_location: @current_location) %>
-    <%= render "go_meal_matches/rate_prompt", match: @match %>
   <% end %>
 
   <%# 4. Going there stays possible in every state: a rated lunch can be
@@ -55,3 +56,12 @@
                 class: "btn-go btn-go--secondary" %>
   </div>
 </main>
+
+<%# The rate prompt overlays the page as a bottom sheet, only when the lunch
+    is over (or the user is at the restaurant), no review has been written,
+    and the sheet has not already been dismissed this session %>
+<% if @review.nil? &&
+      @match.awaiting_review?(current_location: @current_location) &&
+      !session[:dismissed_rate_prompts]&.include?(@match.id) %>
+  <%= render "go_meal_matches/rate_prompt", match: @match %>
+<% end %>

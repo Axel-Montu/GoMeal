@@ -1,20 +1,43 @@
-<%# Asks for a rating on a lunch that is over.
+<%# Bottom sheet asking for a rating on a lunch that is over.
     Three ways out: rate it, start another GoMeal, or say you never went.
-    The third one writes `visited: false` and takes the lunch out of the
-    waiting list for good. %>
-<section class="rate-prompt">
-  <h2 class="rate-prompt__title">Tu y es allé ?</h2>
-  <p class="rate-prompt__text">
-    Une note suffit. Elle nous sert à mieux te proposer le déjeuner de demain.
-  </p>
+    A fourth escape (× / tap on backdrop) closes it for the session only,
+    without changing the record — the sheet will come back next visit. %>
+<div class="rate-prompt"
+     data-controller="rate-prompt"
+     data-rate-prompt-dismiss-url-value="<%= dismiss_rate_prompt_go_meal_match_path(match) %>">
+  <div class="rate-prompt__backdrop"
+       data-rate-prompt-target="backdrop"
+       data-action="click->rate-prompt#dismiss"></div>
 
-  <%= link_to "Noter mon expérience", new_go_meal_match_review_path(match),
-              class: "btn-go btn-go--primary" %>
+  <section class="rate-prompt__sheet"
+           data-rate-prompt-target="sheet"
+           role="dialog"
+           aria-modal="true"
+           aria-labelledby="rate-prompt-title">
+    <button type="button"
+            class="rate-prompt__close"
+            data-action="click->rate-prompt#dismiss"
+            aria-label="Fermer">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
 
-  <%= link_to "Lancer un nouveau GoMeal", go_meal_matches_path,
-              class: "btn-go btn-go--secondary" %>
+    <span class="rate-prompt__grabber" aria-hidden="true"></span>
 
-  <%# A PATCH, so a button_to and never a link: it changes a record %>
-  <%= button_to "Je n'y suis pas allé", not_visited_go_meal_match_path(match),
-                method: :patch, class: "rate-prompt__decline" %>
-</section>
+    <h2 id="rate-prompt-title" class="rate-prompt__title">Tu y es allé ?</h2>
+    <p class="rate-prompt__text">
+      Une note suffit. Elle nous sert à mieux te proposer le déjeuner de demain.
+    </p>
+
+    <%= link_to "Noter mon expérience", new_go_meal_match_review_path(match),
+                class: "btn-go btn-go--primary" %>
+
+    <%= link_to "Lancer un nouveau GoMeal", go_meal_matches_path,
+                class: "btn-go btn-go--secondary" %>
+
+    <%# A PATCH, so a button_to and never a link: it changes a record %>
+    <%= button_to "Je n'y suis pas allé", not_visited_go_meal_match_path(match),
+                  method: :patch, class: "rate-prompt__decline" %>
+  </section>
+</div>

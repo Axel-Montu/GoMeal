@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       patch :like
       patch :reject
       patch :not_visited
+      patch :dismiss_rate_prompt
     end
     resource :itinerary, only: [:show]
     resource :review, only: [:new, :create, :edit, :update, :destroy]

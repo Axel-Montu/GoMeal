@@ -64,6 +64,27 @@ class GoMealMatchesController < ApplicationController
   redirect_to go_meal_matches_path, notice: "C'est noté, tu n'y es pas allé."
   end
 
+  # Fermeture temporaire du prompt de notation, sans réponse. On stocke l'id
+  # du match en session pour que le bottom sheet ne réapparaisse pas tant que
+  # la session dure. Les vraies réponses (noter / pas allé) restent le seul
+  # moyen de faire sortir le match de la liste d'attente pour de bon.
+  def dismiss_rate_prompt
+    @match = current_user.go_meal_matches.find_by(id: params[:id])
+
+    if @match.nil?
+      skip_authorization
+      head :not_found
+      return
+    end
+
+    authorize @match
+
+    session[:dismissed_rate_prompts] ||= []
+    session[:dismissed_rate_prompts] |= [@match.id]
+
+    head :no_content
+  end
+
   private
 
   def walking_route

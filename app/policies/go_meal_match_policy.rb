@@ -16,6 +16,10 @@ class GoMealMatchPolicy < ApplicationPolicy
     record.user == user
   end
 
+  def dismiss_rate_prompt?
+    record.user == user
+  end
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope.where(user: user)
