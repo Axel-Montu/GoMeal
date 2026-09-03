@@ -2,8 +2,13 @@ class PreferencesController < ApplicationController
   CUISINE_CATEGORIES = [
     "Régime particulier",
     "Cuisines du monde",
-    "Spécialités"
+    "Spécialité"
   ].freeze
+
+  CUISINE_WORLD_CATEGORY = "Cuisines du monde"
+  CUISINE_SPECIALTY_CATEGORY = "Spécialité"
+  PINNED_TAGS_COUNT = 7
+
   def show
     @user = current_user
     authorize @user, :edit?
@@ -28,6 +33,7 @@ class PreferencesController < ApplicationController
     @user = current_user
     authorize @user, :edit?
     @tags_by_category = tags_by_category
+    @submenu_groups_by_category = submenu_groups_by_category(@tags_by_category)
   end
 
   def update_cuisines
@@ -36,6 +42,7 @@ class PreferencesController < ApplicationController
 
     unless @user.update(cuisines_params)
       @tags_by_category = tags_by_category
+      @submenu_groups_by_category = submenu_groups_by_category(@tags_by_category)
       return render(:cuisines, status: :unprocessable_entity)
     end
 
@@ -101,5 +108,26 @@ class PreferencesController < ApplicationController
 
   def tags_by_category
     Tag.where(frontend_tag: CUISINE_CATEGORIES).order(:frontend_type).group_by(&:frontend_tag)
+  end
+
+  # Splits each branch's tags into a short always-visible "pinned" set and
+  # the rest grouped by their submenu (region for cuisines, dish family for
+  # specialties) so each group can fold behind its own <details>.
+  def submenu_groups_by_category(tags_by_category)
+    {
+      CUISINE_WORLD_CATEGORY => submenu_groups(tags_by_category[CUISINE_WORLD_CATEGORY]),
+      CUISINE_SPECIALTY_CATEGORY => submenu_groups(tags_by_category[CUISINE_SPECIALTY_CATEGORY])
+    }
+  end
+
+  def submenu_groups(tags)
+    tags = Array(tags)
+    pinned = tags.sample(PINNED_TAGS_COUNT)
+    remaining = tags - pinned
+
+    groups = remaining.group_by(&:submenu).sort.to_h
+    groups.transform_values! { |group_tags| group_tags.sort_by(&:display_name) }
+
+    { pinned: pinned, groups: groups }
   end
 end

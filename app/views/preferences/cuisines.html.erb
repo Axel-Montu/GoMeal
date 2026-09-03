@@ -17,7 +17,7 @@
     <% regime_category, *branch_categories = PreferencesController::CUISINE_CATEGORIES %>
     <% total_steps = 2 %>
     <% branch_labels = {
-         "Spécialités" => "Par spécialité culinaire",
+         "Spécialité" => "Par spécialité culinaire",
          "Cuisines du monde" => "Par cuisine du monde"
        } %>
 
@@ -65,41 +65,60 @@
           </div>
         </header>
 
-        <%# Ten is what the eye takes in at once; 130 is a wall. The rest folds
-            away behind a native <details>, so no script is involved and the
-            hidden checkboxes still travel with the form. Exactly ten show, and
-            what is already ticked takes the first places — otherwise a choice
-            made far down the list would vanish from sight on the next visit. %>
-        <% all_tags = Array(@tags_by_category[category]) %>
-        <% picked, unpicked = all_tags.partition { |t| selected_tag_ids.include?(t.id) } %>
-        <% shown_tags = (picked + unpicked).first(10) %>
-        <% folded_tags = all_tags - shown_tags %>
+        <% branch_groups = @submenu_groups_by_category[category] %>
 
-        <div class="cuisine-card__tags">
-          <%= render "preferences/tag_pills",
-                     tags: shown_tags,
-                     selected_ids: selected_tag_ids %>
-        </div>
-
-        <% if folded_tags.any? %>
-          <details class="tag-more">
-            <summary class="tag-more__summary">
-              Voir les <%= folded_tags.size %> autres
-            </summary>
-
-            <%# The direct child of <details> must not declare a display of its
-                own: browsers hide a closed panel with display:none from their
-                own stylesheet, and any class more specific than that wins,
-                leaving the list permanently open. The grid goes inside. %>
-            <div class="tag-more__list">
-              <div class="cuisine-card__tags">
-                <%= render "preferences/tag_pills",
-                           tags: folded_tags,
-                           selected_ids: selected_tag_ids %>
-              </div>
-            </div>
-          </details>
+        <% if branch_groups[:pinned].any? %>
+          <div class="cuisine-card__tags">
+            <%= render "preferences/tag_pills",
+                       tags: branch_groups[:pinned],
+                       selected_ids: selected_tag_ids %>
+          </div>
         <% end %>
+
+        <%# Each submenu (region, dish family, ...) folds behind its own
+            native <details>, so no script is involved and the hidden
+            checkboxes still travel with the form. Whatever is already
+            selected inside a submenu is pulled out and shown right below its
+            fold, outside the <details> — that block stays visible even once
+            the fold is closed, so a choice never vanishes from sight. The
+            tag-submenu controller keeps that true live too: checking a tag
+            moves its pill out of the fold immediately, unchecking sends it
+            back — a page reload isn't needed to see it survive a fold close.
+            The wrapper lets closed submenus sit side by side and wrap onto
+            the next line when there's room, instead of one per row. %>
+        <div class="cuisine-card__submenus">
+          <% branch_groups[:groups].each do |submenu, submenu_tags| %>
+            <% selected_tags, remaining_tags = submenu_tags.partition { |tag| selected_tag_ids.include?(tag.id) } %>
+            <div class="cuisine-card__submenu"
+                 data-controller="tag-submenu"
+                 data-action="change->tag-submenu#toggle">
+              <details class="tag-more">
+                <summary class="tag-more__summary"><%= submenu %></summary>
+
+                <%# The direct child of <details> must not declare a display of its
+                    own: browsers hide a closed panel with display:none from their
+                    own stylesheet, and any class more specific than that wins,
+                    leaving the list permanently open. The grid goes inside. %>
+                <div class="tag-more__list">
+                  <div class="cuisine-card__tags" data-tag-submenu-target="list">
+                    <%= render "preferences/tag_pills",
+                               tags: remaining_tags,
+                               selected_ids: selected_tag_ids %>
+                  </div>
+                </div>
+              </details>
+
+              <% if selected_tags.any? %>
+                <div class="cuisine-card__tags cuisine-card__submenu__selected"
+                     data-tag-submenu-target="selected">
+                  <%= render "preferences/tag_pills",
+                             tags: selected_tags,
+                             selected_ids: selected_tag_ids %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
 
         <footer class="cuisine-card__actions">
           <%= f.submit "Valider", class: "btn-go btn-go--secondary" %>

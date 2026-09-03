@@ -1,167 +1,167 @@
-api_type,frontend_type,backend_tag,frontend_tag
-acai_shop,Acai Shop,sweet,Cuisines du monde
-bagel_shop,Bagel Shop,single_dish_specialist,Spécialités
-bakery,Bakery,place_type,Type d'établissement
-cake_shop,Cake Shop,sweet,Cuisines du monde
-candy_store,Candy Store,sweet,Cuisines du monde
-chocolate_factory,Chocolate Factory,sweet,Cuisines du monde
-chocolate_shop,Chocolate Shop,sweet,Cuisines du monde
-confectionery,Confectionery,sweet,Cuisines du monde
-dessert_restaurant,Dessert Restaurant,sweet,Cuisines du monde
-dessert_shop,Dessert Shop,sweet,Cuisines du monde
-donut_shop,Donut Shop,sweet,Cuisines du monde
-ice_cream_shop,Ice Cream Shop,sweet,Cuisines du monde
-juice_shop,Juice Shop,sweet,Cuisines du monde
-pastry_shop,Pastry Shop,sweet,Cuisines du monde
-halal_restaurant,Halal Restaurant,regime_particulier,Régime particulier
-vegan_restaurant,Vegan Restaurant,regime_particulier,Régime particulier
-vegetarian_restaurant,Vegetarian Restaurant,regime_particulier,Régime particulier
-bar,Bar,excluded,excluded
-bar_and_grill,Bar And Grill,excluded,excluded
-beer_garden,Beer Garden,excluded,excluded
-brewery,Brewery,excluded,excluded
-brewpub,Brewpub,excluded,excluded
-cocktail_bar,Cocktail Bar,excluded,excluded
-gastropub,Gastropub,excluded,excluded
-hookah_bar,Hookah Bar,excluded,excluded
-irish_pub,Irish Pub,excluded,excluded
-japanese_izakaya_restaurant,Japanese Izakaya Restaurant,excluded,excluded
-lounge_bar,Lounge Bar,excluded,excluded
-pub,Pub,excluded,excluded
-sports_bar,Sports Bar,excluded,excluded
-wine_bar,Wine Bar,excluded,excluded
-winery,Winery,excluded,excluded
-oyster_bar_restaurant,Oyster Bar Restaurant,regional_gastronomy,Cuisines du monde
-korean_barbecue_restaurant,Korean Barbecue Restaurant,regional_gastronomy,Cuisines du monde
-mongolian_barbecue_restaurant,Mongolian Barbecue Restaurant,regional_gastronomy,Cuisines du monde
-yakiniku_restaurant,Yakiniku Restaurant,regional_gastronomy,Cuisines du monde
-barbecue_restaurant,Barbecue Restaurant,single_dish_specialist,Spécialités
-fondue_restaurant,Fondue Restaurant,single_dish_specialist,Spécialités
-hot_pot_restaurant,Hot Pot Restaurant,single_dish_specialist,Spécialités
-yakitori_restaurant,Yakitori Restaurant,single_dish_specialist,Spécialités
-cat_cafe,Cat Cafe,excluded,excluded
-dog_cafe,Dog Cafe,excluded,excluded
-afghani_restaurant,Afghani Restaurant,regional_gastronomy,Cuisines du monde
-african_restaurant,African Restaurant,regional_gastronomy,Cuisines du monde
-american_restaurant,American Restaurant,regional_gastronomy,Cuisines du monde
-argentinian_restaurant,Argentinian Restaurant,regional_gastronomy,Cuisines du monde
-asian_fusion_restaurant,Asian Fusion Restaurant,regional_gastronomy,Cuisines du monde
-asian_restaurant,Asian Restaurant,regional_gastronomy,Cuisines du monde
-australian_restaurant,Australian Restaurant,regional_gastronomy,Cuisines du monde
-austrian_restaurant,Austrian Restaurant,regional_gastronomy,Cuisines du monde
-bangladeshi_restaurant,Bangladeshi Restaurant,regional_gastronomy,Cuisines du monde
-basque_restaurant,Basque Restaurant,regional_gastronomy,Cuisines du monde
-bavarian_restaurant,Bavarian Restaurant,regional_gastronomy,Cuisines du monde
-belgian_restaurant,Belgian Restaurant,regional_gastronomy,Cuisines du monde
-bistro,Bistro,place_type,Type d'établissement
-brazilian_restaurant,Brazilian Restaurant,regional_gastronomy,Cuisines du monde
-breakfast_restaurant,Breakfast Restaurant,regional_gastronomy,Cuisines du monde
-british_restaurant,British Restaurant,regional_gastronomy,Cuisines du monde
-brunch_restaurant,Brunch Restaurant,place_type,Type d'établissement
-buffet_restaurant,Buffet Restaurant,place_type,Type d'établissement
-burmese_restaurant,Burmese Restaurant,regional_gastronomy,Cuisines du monde
-cafe,Cafe,excluded,excluded
-cafeteria,Cafeteria,place_type,Type d'établissement
-cajun_restaurant,Cajun Restaurant,regional_gastronomy,Cuisines du monde
-californian_restaurant,Californian Restaurant,regional_gastronomy,Cuisines du monde
-cambodian_restaurant,Cambodian Restaurant,regional_gastronomy,Cuisines du monde
-cantonese_restaurant,Cantonese Restaurant,regional_gastronomy,Cuisines du monde
-caribbean_restaurant,Caribbean Restaurant,regional_gastronomy,Cuisines du monde
-chilean_restaurant,Chilean Restaurant,regional_gastronomy,Cuisines du monde
-chinese_restaurant,Chinese Restaurant,regional_gastronomy,Cuisines du monde
-coffee_roastery,Coffee Roastery,excluded,excluded
-coffee_shop,Coffee Shop,excluded,excluded
-coffee_stand,Coffee Stand,excluded,excluded
-colombian_restaurant,Colombian Restaurant,regional_gastronomy,Cuisines du monde
-croatian_restaurant,Croatian Restaurant,regional_gastronomy,Cuisines du monde
-cuban_restaurant,Cuban Restaurant,regional_gastronomy,Cuisines du monde
-czech_restaurant,Czech Restaurant,regional_gastronomy,Cuisines du monde
-danish_restaurant,Danish Restaurant,regional_gastronomy,Cuisines du monde
-diner,Diner,place_type,Type d'établissement
-dutch_restaurant,Dutch Restaurant,regional_gastronomy,Cuisines du monde
-eastern_european_restaurant,Eastern European Restaurant,regional_gastronomy,Cuisines du monde
-ethiopian_restaurant,Ethiopian Restaurant,regional_gastronomy,Cuisines du monde
-european_restaurant,European Restaurant,regional_gastronomy,Cuisines du monde
-family_restaurant,Family Restaurant,regional_gastronomy,Cuisines du monde
-fast_food_restaurant,Fast Food Restaurant,regional_gastronomy,Cuisines du monde
-filipino_restaurant,Filipino Restaurant,regional_gastronomy,Cuisines du monde
-fine_dining_restaurant,Fine Dining Restaurant,regional_gastronomy,Cuisines du monde
-food_court,Food Court,place_type,Type d'établissement
-french_restaurant,French Restaurant,regional_gastronomy,Cuisines du monde
-fusion_restaurant,Fusion Restaurant,regional_gastronomy,Cuisines du monde
-german_restaurant,German Restaurant,regional_gastronomy,Cuisines du monde
-greek_restaurant,Greek Restaurant,regional_gastronomy,Cuisines du monde
-hawaiian_restaurant,Hawaiian Restaurant,regional_gastronomy,Cuisines du monde
-hungarian_restaurant,Hungarian Restaurant,regional_gastronomy,Cuisines du monde
-indian_restaurant,Indian Restaurant,regional_gastronomy,Cuisines du monde
-indonesian_restaurant,Indonesian Restaurant,regional_gastronomy,Cuisines du monde
-irish_restaurant,Irish Restaurant,regional_gastronomy,Cuisines du monde
-israeli_restaurant,Israeli Restaurant,regional_gastronomy,Cuisines du monde
-italian_restaurant,Italian Restaurant,regional_gastronomy,Cuisines du monde
-japanese_restaurant,Japanese Restaurant,regional_gastronomy,Cuisines du monde
-korean_restaurant,Korean Restaurant,regional_gastronomy,Cuisines du monde
-latin_american_restaurant,Latin American Restaurant,regional_gastronomy,Cuisines du monde
-lebanese_restaurant,Lebanese Restaurant,regional_gastronomy,Cuisines du monde
-malaysian_restaurant,Malaysian Restaurant,regional_gastronomy,Cuisines du monde
-meal_delivery,Meal Delivery,place_type,Type d'établissement
-meal_takeaway,Meal Takeaway,place_type,Type d'établissement
-mediterranean_restaurant,Mediterranean Restaurant,regional_gastronomy,Cuisines du monde
-mexican_restaurant,Mexican Restaurant,regional_gastronomy,Cuisines du monde
-middle_eastern_restaurant,Middle Eastern Restaurant,regional_gastronomy,Cuisines du monde
-moroccan_restaurant,Moroccan Restaurant,regional_gastronomy,Cuisines du monde
-north_indian_restaurant,North Indian Restaurant,regional_gastronomy,Cuisines du monde
-pakistani_restaurant,Pakistani Restaurant,regional_gastronomy,Cuisines du monde
-persian_restaurant,Persian Restaurant,regional_gastronomy,Cuisines du monde
-peruvian_restaurant,Peruvian Restaurant,regional_gastronomy,Cuisines du monde
-polish_restaurant,Polish Restaurant,regional_gastronomy,Cuisines du monde
-portuguese_restaurant,Portuguese Restaurant,regional_gastronomy,Cuisines du monde
-restaurant,Restaurant,place_type,Type d'établissement
-romanian_restaurant,Romanian Restaurant,regional_gastronomy,Cuisines du monde
-russian_restaurant,Russian Restaurant,regional_gastronomy,Cuisines du monde
-scandinavian_restaurant,Scandinavian Restaurant,regional_gastronomy,Cuisines du monde
-seafood_restaurant,Seafood Restaurant,regional_gastronomy,Cuisines du monde
-snack_bar,Snack Bar,place_type,Type d'établissement
-soul_food_restaurant,Soul Food Restaurant,regional_gastronomy,Cuisines du monde
-south_american_restaurant,South American Restaurant,regional_gastronomy,Cuisines du monde
-south_indian_restaurant,South Indian Restaurant,regional_gastronomy,Cuisines du monde
-southwestern_us_restaurant,Southwestern Us Restaurant,regional_gastronomy,Cuisines du monde
-spanish_restaurant,Spanish Restaurant,regional_gastronomy,Cuisines du monde
-sri_lankan_restaurant,Sri Lankan Restaurant,regional_gastronomy,Cuisines du monde
-steak_house,Steak House,single_dish_specialist,Spécialités
-swiss_restaurant,Swiss Restaurant,regional_gastronomy,Cuisines du monde
-taiwanese_restaurant,Taiwanese Restaurant,regional_gastronomy,Cuisines du monde
-tea_house,Tea House,excluded,excluded
-tex_mex_restaurant,Tex Mex Restaurant,regional_gastronomy,Cuisines du monde
-thai_restaurant,Thai Restaurant,regional_gastronomy,Cuisines du monde
-tibetan_restaurant,Tibetan Restaurant,regional_gastronomy,Cuisines du monde
-turkish_restaurant,Turkish Restaurant,regional_gastronomy,Cuisines du monde
-ukrainian_restaurant,Ukrainian Restaurant,regional_gastronomy,Cuisines du monde
-vietnamese_restaurant,Vietnamese Restaurant,regional_gastronomy,Cuisines du monde
-western_restaurant,Western Restaurant,regional_gastronomy,Cuisines du monde
-burrito_restaurant,Burrito Restaurant,single_dish_specialist,Spécialités
-chicken_restaurant,Chicken Restaurant,single_dish_specialist,Spécialités
-chicken_wings_restaurant,Chicken Wings Restaurant,single_dish_specialist,Spécialités
-chinese_noodle_restaurant,Chinese Noodle Restaurant,single_dish_specialist,Spécialités
-deli,Deli,single_dish_specialist,Spécialités
-dim_sum_restaurant,Dim Sum Restaurant,single_dish_specialist,Spécialités
-dumpling_restaurant,Dumpling Restaurant,single_dish_specialist,Spécialités
-falafel_restaurant,Falafel Restaurant,single_dish_specialist,Spécialités
-fish_and_chips_restaurant,Fish And Chips Restaurant,single_dish_specialist,Spécialités
-gyro_restaurant,Gyro Restaurant,single_dish_specialist,Spécialités
-hamburger_restaurant,Hamburger Restaurant,single_dish_specialist,Spécialités
-hot_dog_restaurant,Hot Dog Restaurant,single_dish_specialist,Spécialités
-hot_dog_stand,Hot Dog Stand,single_dish_specialist,Spécialités
-japanese_curry_restaurant,Japanese Curry Restaurant,single_dish_specialist,Spécialités
-kebab_shop,Kebab Shop,single_dish_specialist,Spécialités
-noodle_shop,Noodle Shop,single_dish_specialist,Spécialités
-pizza_delivery,Pizza Delivery,single_dish_specialist,Spécialités
-pizza_restaurant,Pizza Restaurant,single_dish_specialist,Spécialités
-ramen_restaurant,Ramen Restaurant,single_dish_specialist,Spécialités
-salad_shop,Salad Shop,single_dish_specialist,Spécialités
-sandwich_shop,Sandwich Shop,single_dish_specialist,Spécialités
-shawarma_restaurant,Shawarma Restaurant,single_dish_specialist,Spécialités
-soup_restaurant,Soup Restaurant,single_dish_specialist,Spécialités
-sushi_restaurant,Sushi Restaurant,single_dish_specialist,Spécialités
-taco_restaurant,Taco Restaurant,single_dish_specialist,Spécialités
-tapas_restaurant,Tapas Restaurant,single_dish_specialist,Spécialités
-tonkatsu_restaurant,Tonkatsu Restaurant,single_dish_specialist,Spécialités
+api_type,frontend_type,backend_tag,frontend_tag,submenu
+african_restaurant,Africain,regional_gastronomy,Cuisines du monde,Afrique
+german_restaurant,Allemand,regional_gastronomy,Cuisines du monde,Europe
+american_restaurant,Américain,regional_gastronomy,Cuisines du monde,Amérique du Nord
+tex_mex_restaurant,Tex-Mex,regional_gastronomy,Cuisines du monde,Amérique du Nord
+argentinian_restaurant,Argentin,regional_gastronomy,Cuisines du monde,Amérique du Sud
+brazilian_restaurant,Brésilien,regional_gastronomy,Cuisines du monde,Amérique du Sud
+british_restaurant,Britannique,regional_gastronomy,Cuisines du monde,Europe
+cajun_restaurant,Cajun,regional_gastronomy,Cuisines du monde,Amérique du Nord
+californian_restaurant,Californien,regional_gastronomy,Cuisines du monde,Amérique du Nord
+caribbean_restaurant,Caribéen,regional_gastronomy,Cuisines du monde,Amérique du Sud
+chilean_restaurant,Chilien,regional_gastronomy,Cuisines du monde,Amérique du Sud
+colombian_restaurant,Colombien,regional_gastronomy,Cuisines du monde,Amérique du Sud
+cuban_restaurant,Cubain,regional_gastronomy,Cuisines du monde,Amérique du Sud
+danish_restaurant,Danois,regional_gastronomy,Cuisines du monde,Europe
+dutch_restaurant,Néerlandais,regional_gastronomy,Cuisines du monde,Europe
+eastern_european_restaurant,Est-Européen,regional_gastronomy,Cuisines du monde,Europe
+ethiopian_restaurant,Éthiopien,regional_gastronomy,Cuisines du monde,Afrique
+european_restaurant,Européen,regional_gastronomy,Cuisines du monde,Europe
+filipino_restaurant,Philippin,regional_gastronomy,Cuisines du monde,Asie
+french_restaurant,Français,regional_gastronomy,Cuisines du monde,Europe
+greek_restaurant,Grec,regional_gastronomy,Cuisines du monde,Europe
+hawaiian_restaurant,Hawaïen,regional_gastronomy,Cuisines du monde,Océanie
+japanese_restaurant,Japonais,regional_gastronomy,Cuisines du monde,Asie
+korean_restaurant,Coréen,regional_gastronomy,Cuisines du monde,Asie
+latin_american_restaurant,Latino-Américain,regional_gastronomy,Cuisines du monde,Amérique du Sud
+mediterranean_restaurant,Méditerranéen,regional_gastronomy,Cuisines du monde,Europe
+mexican_restaurant,Mexicain,regional_gastronomy,Cuisines du monde,Amérique du Sud
+middle_eastern_restaurant,Moyen-Oriental,regional_gastronomy,Cuisines du monde,Moyen-Orient
+moroccan_restaurant,Marocain,regional_gastronomy,Cuisines du monde,Afrique
+peruvian_restaurant,Péruvien,regional_gastronomy,Cuisines du monde,Amérique du Sud
+scandinavian_restaurant,Scandinave,regional_gastronomy,Cuisines du monde,Europe
+spanish_restaurant,Espagnol,regional_gastronomy,Cuisines du monde,Europe
+western_restaurant,Occidental,regional_gastronomy,Cuisines du monde,Autres
+afghani_restaurant,Afghan,regional_gastronomy,Cuisines du monde,Asie
+asian_fusion_restaurant,Fusion Asiatique,regional_gastronomy,Cuisines du monde,Asie
+asian_restaurant,Asiatique,regional_gastronomy,Cuisines du monde,Asie
+bangladeshi_restaurant,Bangladais,regional_gastronomy,Cuisines du monde,Asie
+cambodian_restaurant,Cambodgien,regional_gastronomy,Cuisines du monde,Asie
+cantonese_restaurant,Cantonais,regional_gastronomy,Cuisines du monde,Asie
+chinese_restaurant,Chinois,regional_gastronomy,Cuisines du monde,Asie
+czech_restaurant,Tchèque,regional_gastronomy,Cuisines du monde,Europe
+indian_restaurant,Indien,regional_gastronomy,Cuisines du monde,Asie
+indonesian_restaurant,Indonésien,regional_gastronomy,Cuisines du monde,Asie
+malaysian_restaurant,Malaisien,regional_gastronomy,Cuisines du monde,Asie
+north_indian_restaurant,Indien,regional_gastronomy,Cuisines du monde,Asie
+pakistani_restaurant,Pakistanais,regional_gastronomy,Cuisines du monde,Asie
+south_american_restaurant,Sud-Américain,regional_gastronomy,Cuisines du monde,Amérique du Sud
+south_indian_restaurant,Indien,regional_gastronomy,Cuisines du monde,Asie
+southwestern_us_restaurant,Sud-Ouest Américain,regional_gastronomy,Cuisines du monde,Amérique du Nord
+sri_lankan_restaurant,Sri-Lankais,regional_gastronomy,Cuisines du monde,Asie
+taiwanese_restaurant,Taïwanais,regional_gastronomy,Cuisines du monde,Asie
+thai_restaurant,Thaïlandais,regional_gastronomy,Cuisines du monde,Asie
+tibetan_restaurant,Tibétain,regional_gastronomy,Cuisines du monde,Asie
+vietnamese_restaurant,Vietnamien,regional_gastronomy,Cuisines du monde,Asie
+austrian_restaurant,Autrichien,regional_gastronomy,Cuisines du monde,Europe
+basque_restaurant,Basque,regional_gastronomy,Cuisines du monde,Europe
+bavarian_restaurant,Bavarois,regional_gastronomy,Cuisines du monde,Europe
+belgian_restaurant,Belge,regional_gastronomy,Cuisines du monde,Europe
+burmese_restaurant,Birman,regional_gastronomy,Cuisines du monde,Asie
+croatian_restaurant,Croate,regional_gastronomy,Cuisines du monde,Europe
+hungarian_restaurant,Hongrois,regional_gastronomy,Cuisines du monde,Europe
+irish_restaurant,Irlandais,regional_gastronomy,Cuisines du monde,Europe
+italian_restaurant,Italien,regional_gastronomy,Cuisines du monde,Europe
+polish_restaurant,Polonais,regional_gastronomy,Cuisines du monde,Europe
+portuguese_restaurant,Portugais,regional_gastronomy,Cuisines du monde,Europe
+romanian_restaurant,Roumain,regional_gastronomy,Cuisines du monde,Europe
+russian_restaurant,Russe,regional_gastronomy,Cuisines du monde,Europe
+swiss_restaurant,Suisse,regional_gastronomy,Cuisines du monde,Europe
+ukrainian_restaurant,Ukrainien,regional_gastronomy,Cuisines du monde,Europe
+bar,Bar,excluded,excluded,excluded
+bar_and_grill,Bar-Grill,excluded,excluded,excluded
+beer_garden,Brasserie,excluded,excluded,excluded
+brewery,Brasserie,excluded,excluded,excluded
+brewpub,Brasserie-Pub,excluded,excluded,excluded
+cocktail_bar,Bar à Cocktails,excluded,excluded,excluded
+gastropub,Gastropub,excluded,excluded,excluded
+hookah_bar,Bar à Chicha,excluded,excluded,excluded
+irish_pub,Pub Irlandais,excluded,excluded,excluded
+japanese_izakaya_restaurant,Izakaya Japonais,excluded,excluded,excluded
+lounge_bar,Bar Lounge,excluded,excluded,excluded
+pub,Pub,excluded,excluded,excluded
+sports_bar,Bar Sportif,excluded,excluded,excluded
+wine_bar,Bar à Vin,excluded,excluded,excluded
+winery,Domaine Viticole,excluded,excluded,excluded
+cat_cafe,Cat Café,excluded,excluded,excluded
+dog_cafe,Dog Café,excluded,excluded,excluded
+cafe,Café,excluded,excluded,excluded
+coffee_roastery,Café,excluded,excluded,excluded
+coffee_shop,Café,excluded,excluded,excluded
+coffee_stand,Café,excluded,excluded,excluded
+tea_house,Salon de Thé,excluded,excluded,excluded
+korean_barbecue_restaurant,Barbecue Coréen,single_dish_specialist,Spécialité,Grillades et viandes
+mongolian_barbecue_restaurant,Barbecue Mongol,single_dish_specialist,Spécialité,Grillades et viandes
+yakiniku_restaurant,Yakiniku,single_dish_specialist,Spécialité,Grillades et viandes
+barbecue_restaurant,Barbecue,single_dish_specialist,Spécialité,Grillades et viandes
+yakitori_restaurant,Yakitori,single_dish_specialist,Spécialité,Grillades et viandes
+soul_food_restaurant,Soul Food,single_dish_specialist,Spécialité,Grillades et viandes
+steak_house,Steaks House,single_dish_specialist,Spécialité,Grillades et viandes
+chicken_restaurant,Poulet,single_dish_specialist,Spécialité,Grillades et viandes
+chicken_wings_restaurant,Chicken Wings,single_dish_specialist,Spécialité,Grillades et viandes
+tonkatsu_restaurant,Tonkatsu,single_dish_specialist,Spécialité,Grillades et viandes
+israeli_restaurant,Israélien,regional_gastronomy,Cuisines du monde,Moyen-Orient
+lebanese_restaurant,Libanais,regional_gastronomy,Cuisines du monde,Moyen-Orient
+persian_restaurant,Persan,regional_gastronomy,Cuisines du monde,Moyen-Orient
+turkish_restaurant,Turc,regional_gastronomy,Cuisines du monde,Moyen-Orient
+chinese_noodle_restaurant,Nouilles Chinoises,single_dish_specialist,Spécialité,Nouilles et soupes
+japanese_curry_restaurant,Curry Japonais,single_dish_specialist,Spécialité,Nouilles et soupes
+noodle_shop,Nouilles,single_dish_specialist,Spécialité,Nouilles et soupes
+ramen_restaurant,Ramens,single_dish_specialist,Spécialité,Nouilles et soupes
+soup_restaurant,Soupes,single_dish_specialist,Spécialité,Nouilles et soupes
+australian_restaurant,Australien,regional_gastronomy,Cuisines du monde,Océanie
+bakery,Boulangerie,place_type,Type d'établissement,Pas de submenu
+halal_restaurant,Halal,regime_particulier,Régime particulier,Pas de submenu
+vegan_restaurant,Végan,regime_particulier,Régime particulier,Pas de submenu
+vegetarian_restaurant,Végétarien,regime_particulier,Régime particulier,Pas de submenu
+bistro,Bistrot,place_type,Type d'établissement,Pas de submenu
+brunch_restaurant,Brunch,place_type,Type d'établissement,Pas de submenu
+buffet_restaurant,Buffet,place_type,Type d'établissement,Pas de submenu
+cafeteria,Cafétéria,place_type,Type d'établissement,Pas de submenu
+diner,Diner,place_type,Type d'établissement,Pas de submenu
+family_restaurant,Familial,place_type,Type d'établissement,Pas de submenu
+fast_food_restaurant,Restauration Rapide,place_type,Type d'établissement,Pas de submenu
+fine_dining_restaurant,Gastronomique,place_type,Type d'établissement,Pas de submenu
+food_court,Buffet,place_type,Type d'établissement,Pas de submenu
+meal_delivery,Livraison de Repas,place_type,Type d'établissement,Pas de submenu
+meal_takeaway,Vente à Emporter,place_type,Type d'établissement,Pas de submenu
+restaurant,Restaurant,place_type,Type d'établissement,Pas de submenu
+snack_bar,Snack-Bar,place_type,Type d'établissement,Pas de submenu
+fondue_restaurant,Fondue,single_dish_specialist,Spécialité,Plats à partager
+hot_pot_restaurant,Fondue Chinoises,single_dish_specialist,Spécialité,Plats à partager
+breakfast_restaurant,Petit-Déjeuner,single_dish_specialist,Spécialité,Plats à partager
+fusion_restaurant,Fusion,single_dish_specialist,Spécialité,Plats à partager
+dim_sum_restaurant,Dim Sum,single_dish_specialist,Spécialité,Plats à partager
+dumpling_restaurant,Raviolis,single_dish_specialist,Spécialité,Plats à partager
+salad_shop,Salades,single_dish_specialist,Spécialité,Plats à partager
+tapas_restaurant,Tapas,single_dish_specialist,Spécialité,Plats à partager
+oyster_bar_restaurant,Bar à Huîtres,single_dish_specialist,Spécialité,Poissons et fruits de mer
+seafood_restaurant,Fruits de Mer,single_dish_specialist,Spécialité,Poissons et fruits de mer
+fish_and_chips_restaurant,Fish and Chips,single_dish_specialist,Spécialité,Poissons et fruits de mer
+sushi_restaurant,Sushis,single_dish_specialist,Spécialité,Poissons et fruits de mer
+bagel_shop,Bagels,single_dish_specialist,Spécialité,Sandwichs et street food
+burrito_restaurant,Burritos,single_dish_specialist,Spécialité,Sandwichs et street food
+deli,Épicerie Fine,single_dish_specialist,Spécialité,Sandwichs et street food
+falafel_restaurant,Falafels,single_dish_specialist,Spécialité,Sandwichs et street food
+gyro_restaurant,Gyros,single_dish_specialist,Spécialité,Sandwichs et street food
+hamburger_restaurant,Hamburgers,single_dish_specialist,Spécialité,Sandwichs et street food
+hot_dog_restaurant,Hot-Dogs,single_dish_specialist,Spécialité,Sandwichs et street food
+hot_dog_stand,Hot-Dogs,single_dish_specialist,Spécialité,Sandwichs et street food
+kebab_shop,Kebabs,single_dish_specialist,Spécialité,Sandwichs et street food
+pizza_delivery,Pizzas,single_dish_specialist,Spécialité,Sandwichs et street food
+pizza_restaurant,Pizzas,single_dish_specialist,Spécialité,Sandwichs et street food
+sandwich_shop,Sandwichs,single_dish_specialist,Spécialité,Sandwichs et street food
+shawarma_restaurant,Chawarmas,single_dish_specialist,Spécialité,Sandwichs et street food
+taco_restaurant,Tacos,single_dish_specialist,Spécialité,Sandwichs et street food
+acai_shop,Açaïs,sweet,Spécialité,Sucré
+cake_shop,Gâteaux,sweet,Spécialité,Sucré
+candy_store,Bonbons,sweet,Spécialité,Sucré
+chocolate_factory,Chocolats,sweet,Spécialité,Sucré
+chocolate_shop,Chocolats,sweet,Spécialité,Sucré
+confectionery,Confiserie,sweet,Spécialité,Sucré
+dessert_restaurant,Desserts,sweet,Spécialité,Sucré
+dessert_shop,Desserts,sweet,Spécialité,Sucré
+donut_shop,Donuts,sweet,Spécialité,Sucré
+ice_cream_shop,Glaces,sweet,Spécialité,Sucré
+juice_shop,Bar à Jus,sweet,Spécialité,Sucré
+pastry_shop,Pâtisseries,sweet,Spécialité,Sucré

@@ -25,7 +25,8 @@ CSV.foreach(Rails.root.join("db/data/restaurant_types.csv"), headers: true) do |
     api_type: row["api_type"],
     frontend_type: row["frontend_type"],
     backend_tag: row["backend_tag"],
-    frontend_tag: row["frontend_tag"]
+    frontend_tag: row["frontend_tag"],
+    submenu: row["submenu"]
   )
 end
 

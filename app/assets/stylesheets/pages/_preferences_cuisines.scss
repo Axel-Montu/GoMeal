@@ -166,15 +166,16 @@
   // Le groupe visible ne compte plus qu'une dizaine de pastilles : il prend sa
   // hauteur naturelle. Il défilait quand les 130 y tenaient toutes ; garder
   // flex: 1 l'écrasait à une lisière dès que le dépliant s'ouvrait.
-  // Une grille plutôt qu'un flex-wrap : en flex, chaque pastille prend la
-  // largeur de son texte, le bord droit part en dents de scie et rien ne
-  // s'aligne d'une rangée à l'autre. Ici les colonnes sont égales, et leur
-  // nombre s'adapte à la largeur disponible.
+  // Flex-wrap plutôt qu'une grille : les tags sont maintenant répartis en
+  // petits groupes (10 épinglés, puis un dépliant par sous-menu), donc chaque
+  // pastille reprend la largeur de son texte au lieu d'être étirée à la
+  // largeur d'une colonne fixe — « Grec » n'a plus la même boîte que
+  // « Sud-Ouest Américain ».
   &__tags {
     flex: 0 0 auto;
 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(146px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     align-content: start;
     gap: 8px;
 
@@ -220,6 +221,35 @@
 
 // ------------------------------------------------------- voir les autres ---
 
+// Les dépliants repliés se suivent sur une même ligne et passent à la
+// suivante dès que la largeur manque, plutôt qu'un par ligne.
+.cuisine-card__submenus {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+// Un dépliant et, juste en-dessous, les pastilles déjà cochées dans son
+// sous-menu — visibles même repliées, pour ne jamais perdre une sélection
+// de vue. Le tout forme un seul bloc dans la ligne de dépliants.
+.cuisine-card__submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 0 0 auto;
+
+  // Prend toute la largeur de la ligne dès que son dépliant est ouvert (sa
+  // grille de pastilles a besoin de place) ou qu'il affiche des pastilles
+  // déjà cochées — ça pousse le reste à la ligne suivante plutôt que de les
+  // coincer dans une colonne étroite.
+  &:has(.tag-more[open]),
+  &:has(.cuisine-card__submenu__selected) {
+    flex-basis: 100%;
+  }
+}
+
 // Dépliant natif : pas de contrôleur, et les cases repliées restent dans le
 // formulaire, donc une sélection cachée part quand même à l'enregistrement.
 .tag-more {
@@ -230,7 +260,6 @@
   // et son contenu débordait par-dessus le bouton Valider. Il garde sa taille,
   // c'est la carte qui défile.
   flex: 0 0 auto;
-  margin-top: 4px;
 
   &__summary {
     display: inline-flex;
@@ -292,19 +321,18 @@
   }
 }
 
-// Les pastilles ne s'étirent que dans cette grille-ci. Le composant partagé
-// reste intact : /preferences l'emploie sans grille, et l'y étirer y mettait
-// une pastille par ligne sur toute la largeur.
+// Taille compacte propre à cet écran. Le composant partagé reste intact :
+// /preferences l'emploie sans ces ajustements.
 .cuisine-card__tags .tag-item {
-  display: flex;
+  display: inline-flex;
 }
 
 .cuisine-card__tags .tag-selector + label {
-  display: flex;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  width: 100%;
   min-height: 40px;
-  padding: 8px 12px;
+  padding: 8px 14px;
 
   font-size: 13px;
   line-height: 1.25;
