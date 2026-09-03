@@ -165,8 +165,7 @@ export default class extends Controller {
       if (animate) this.swiper.slideNext(280)
       this.locked = false
     })
-    .catch((e) => {
-      console.error(e)
+    .catch(() => {
       card.classList.remove("is-liking", "is-rejecting")
       this.locked = false
     })

@@ -12,6 +12,11 @@
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <meta name="turbo-prefetch" content="true">
+    <meta name="turbo-refresh-method" content="morph">
+    <meta name="turbo-refresh-scroll" content="preserve">
+
     <%= yield :head %>
 
     <script>
@@ -27,15 +32,15 @@
 
     <%# app/views/layouts/application.html.erb %>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <%= favicon_link_tag 'logo-gomeal.png' %>
     <%= favicon_link_tag 'logo-gomeal.svg', type: 'image/svg+xml' %>
     <%= favicon_link_tag 'logo-gomeal.png', rel: 'apple-touch-icon' %>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@6.4.0/dist/maplibre-gl.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15/dist/nouislider.min.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
