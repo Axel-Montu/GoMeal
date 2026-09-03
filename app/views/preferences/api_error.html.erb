@@ -1,0 +1,27 @@
+<main class="api-error">
+  <div class="api-error__glow" aria-hidden="true"></div>
+
+  <section class="api-error__content">
+    <%= inline_svg_tag "logo-gomeal.svg",
+                       class: "api-error__logo",
+                       aria: true,
+                       title: "GoMeal" %>
+
+    <h1 class="api-error__title">Impossible de charger les restaurants</h1>
+
+    <p class="api-error__message">
+      Notre service de recherche ne répond pas.
+      Vérifiez votre connexion, puis réessayez.
+    </p>
+
+    <%= button_to "Réessayer",
+                  retry_matches_preferences_path,
+                  method: :post,
+                  form_class: "api-error__cta-form",
+                  class: "btn-go btn-go--primary api-error__cta" %>
+
+    <%= link_to "Modifier mes cuisines",
+                cuisines_preferences_path,
+                class: "api-error__link" %>
+  </section>
+</main>

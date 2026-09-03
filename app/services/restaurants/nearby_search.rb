@@ -34,14 +34,18 @@ module Restaurants
       @longitude = longitude.to_f
     end
 
+    # Returns an array of Restaurant records on success (possibly empty).
+    # Returns nil when the Google Places API is unreachable or answers with
+    # something we cannot parse — callers use that to render a retry UI
+    # instead of silently wiping the user's existing matches.
     def call
       response = post_to_google(ENV.fetch("GOOGLE_PLACES_API_KEY"))
-      return [] unless response.is_a?(Net::HTTPSuccess)
+      return nil unless response.is_a?(Net::HTTPSuccess)
 
       places = JSON.parse(response.body).fetch("places", [])
       places.filter_map { |place| upsert_restaurant(place) }
     rescue JSON::ParserError
-      []
+      nil
     end
 
     private

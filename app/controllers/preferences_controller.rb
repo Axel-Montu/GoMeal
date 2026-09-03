@@ -44,11 +44,38 @@ class PreferencesController < ApplicationController
       redirect_to locations_path, alert: "Nous avons besoin de votre position." and return
     end
 
+    generate_matches_or_render_error(location)
+  end
+
+  # Same responsibility as the tail of #update_cuisines, but for the retry CTA
+  # after an API failure: cuisines are already saved in DB, we only need to
+  # rerun the nearby search + scoring.
+  def retry_matches
+    @user = current_user
+    authorize @user, :edit?
+
+    location = session[:location]
+    if location.blank?
+      redirect_to locations_path, alert: "Nous avons besoin de votre position." and return
+    end
+
+    generate_matches_or_render_error(location)
+  end
+
+  private
+
+  def generate_matches_or_render_error(location)
     restaurants = Restaurants::NearbySearch.call(
       user: @user,
       latitude: location["latitude"],
       longitude: location["longitude"]
     )
+
+    # nil means the Places API failed — keep existing matches intact and
+    # show the full-screen retry view instead of wiping the user's data.
+    if restaurants.nil?
+      return render "preferences/api_error", status: :bad_gateway
+    end
 
     @user.go_meal_matches.destroy_all
     restaurants.each do |restaurant|
@@ -58,8 +85,6 @@ class PreferencesController < ApplicationController
 
     redirect_to go_meal_matches_path, notice: "Préférences culinaires mises à jour."
   end
-
-  private
 
   def preferences_params
     params.require(:user).permit(
