@@ -2,10 +2,10 @@
     card, and each branch split between what is shown and what is folded away —
     cannot drift apart. %>
 <%# La valeur en base garde son suffixe "Restaurant" (elle sert d'identifiant
-    côté API Google) ; on l'efface uniquement à l'affichage pour désencombrer
-    la grille — « Italian Restaurant » devient « Italian ». %>
+    côté API Google) ; Tag#display_name l'efface uniquement à l'affichage pour
+    désencombrer la grille — « Italian Restaurant » devient « Italian ». %>
 <% tags.each do |tag| %>
-  <% label = tag.frontend_type.sub(/\s+restaurant\z/i, "") %>
+  <% label = tag.display_name %>
   <div class="tag-item">
     <%= check_box_tag "user[tag_ids][]",
                       tag.id,

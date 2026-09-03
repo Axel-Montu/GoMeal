@@ -4,6 +4,19 @@ class PreferencesController < ApplicationController
     "Cuisines du monde",
     "Spécialités"
   ].freeze
+
+  CUISINE_WORLD_CATEGORY = "Cuisines du monde"
+  CUISINE_SPECIALTY_CATEGORY = "Spécialités"
+
+  # Pinned by api_type (not frontend_type) because several tags share the
+  # same French display name (e.g. indian_restaurant, north_indian_restaurant
+  # and south_indian_restaurant all show as "Indien").
+  PINNED_WORLD_CUISINE_TYPES = %w[
+    french_restaurant italian_restaurant japanese_restaurant chinese_restaurant
+    indian_restaurant mexican_restaurant thai_restaurant american_restaurant
+    mediterranean_restaurant lebanese_restaurant
+  ].freeze
+
   def show
     @user = current_user
     authorize @user, :edit?
@@ -28,6 +41,7 @@ class PreferencesController < ApplicationController
     @user = current_user
     authorize @user, :edit?
     @tags_by_category = tags_by_category
+    @submenu_groups_by_category = submenu_groups_by_category(@tags_by_category)
   end
 
   def update_cuisines
@@ -36,6 +50,7 @@ class PreferencesController < ApplicationController
 
     unless @user.update(cuisines_params)
       @tags_by_category = tags_by_category
+      @submenu_groups_by_category = submenu_groups_by_category(@tags_by_category)
       return render(:cuisines, status: :unprocessable_entity)
     end
 
@@ -76,5 +91,28 @@ class PreferencesController < ApplicationController
 
   def tags_by_category
     Tag.where(frontend_tag: CUISINE_CATEGORIES).order(:frontend_type).group_by(&:frontend_tag)
+  end
+
+  # Splits each branch's tags into a short always-visible "pinned" set and
+  # the rest grouped by their submenu (region for cuisines, dish family for
+  # specialties) so each group can fold behind its own <details>.
+  def submenu_groups_by_category(tags_by_category)
+    {
+      CUISINE_WORLD_CATEGORY => submenu_groups(
+        tags_by_category[CUISINE_WORLD_CATEGORY], pinned_api_types: PINNED_WORLD_CUISINE_TYPES
+      ),
+      CUISINE_SPECIALTY_CATEGORY => submenu_groups(tags_by_category[CUISINE_SPECIALTY_CATEGORY])
+    }
+  end
+
+  def submenu_groups(tags, pinned_api_types: [])
+    tags = Array(tags)
+    pinned = pinned_api_types.filter_map { |api_type| tags.find { |tag| tag.api_type == api_type } }
+    remaining = tags - pinned
+
+    groups = remaining.group_by(&:submenu).sort.to_h
+    groups.transform_values! { |group_tags| group_tags.sort_by(&:display_name) }
+
+    { pinned: pinned, groups: groups }
   end
 end

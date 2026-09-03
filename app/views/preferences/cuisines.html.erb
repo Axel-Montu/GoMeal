@@ -65,27 +65,25 @@
           </div>
         </header>
 
-        <%# Ten is what the eye takes in at once; 130 is a wall. The rest folds
-            away behind a native <details>, so no script is involved and the
-            hidden checkboxes still travel with the form. Exactly ten show, and
-            what is already ticked takes the first places — otherwise a choice
-            made far down the list would vanish from sight on the next visit. %>
-        <% all_tags = Array(@tags_by_category[category]) %>
-        <% picked, unpicked = all_tags.partition { |t| selected_tag_ids.include?(t.id) } %>
-        <% shown_tags = (picked + unpicked).first(10) %>
-        <% folded_tags = all_tags - shown_tags %>
+        <% branch_groups = @submenu_groups_by_category[category] %>
 
-        <div class="cuisine-card__tags">
-          <%= render "preferences/tag_pills",
-                     tags: shown_tags,
-                     selected_ids: selected_tag_ids %>
-        </div>
+        <% if branch_groups[:pinned].any? %>
+          <div class="cuisine-card__tags">
+            <%= render "preferences/tag_pills",
+                       tags: branch_groups[:pinned],
+                       selected_ids: selected_tag_ids %>
+          </div>
+        <% end %>
 
-        <% if folded_tags.any? %>
-          <details class="tag-more">
-            <summary class="tag-more__summary">
-              Voir les <%= folded_tags.size %> autres
-            </summary>
+        <%# Each submenu (region, dish family, ...) folds behind its own
+            native <details>, so no script is involved and the hidden
+            checkboxes still travel with the form. A submenu that already
+            holds a selected tag opens by default — otherwise a choice made
+            inside it would vanish from sight on the next visit. %>
+        <% branch_groups[:groups].each do |submenu, submenu_tags| %>
+          <% already_open = submenu_tags.any? { |tag| selected_tag_ids.include?(tag.id) } %>
+          <details class="tag-more"<%= " open".html_safe if already_open %>>
+            <summary class="tag-more__summary"><%= submenu %></summary>
 
             <%# The direct child of <details> must not declare a display of its
                 own: browsers hide a closed panel with display:none from their
@@ -94,7 +92,7 @@
             <div class="tag-more__list">
               <div class="cuisine-card__tags">
                 <%= render "preferences/tag_pills",
-                           tags: folded_tags,
+                           tags: submenu_tags,
                            selected_ids: selected_tag_ids %>
               </div>
             </div>
