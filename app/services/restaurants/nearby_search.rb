@@ -43,6 +43,16 @@ module Restaurants
 
     MAX_RESULTS = 20
 
+    # Google refuses more than 50 entries per type restriction category with a
+    # 400 INVALID_ARGUMENT ("Too many types in included_types"). Our catalogue
+    # holds 166 cuisines, so a user is perfectly free to select more than that:
+    # we slice the selection and merge the answers instead of failing.
+    MAX_TYPES_PER_REQUEST = 50
+
+    # An empty includedTypes lifts the restriction entirely and Google starts
+    # returning petrol stations and hotels, so fall back to plain restaurants.
+    DEFAULT_INCLUDED_TYPES = %w[restaurant].freeze
+
     # Google's error payloads are small, but a truncated body keeps the logs
     # readable if that ever stops being true.
     MAX_LOGGED_BODY = 1000
@@ -70,16 +80,13 @@ module Restaurants
       end
       return nil unless valid_request?
 
-      response = perform_request(api_key)
-      return nil if response.nil? # perform_request a déjà loggé la cause
+      places = fetch_places(api_key)
+      return nil if places.nil? # chaque lot en échec a déjà loggé sa cause
 
-      places = JSON.parse(response.body).fetch("places", [])
       restaurants = places.filter_map { |place| upsert_restaurant(place) }
       log_outcome(restaurants, places, started_at)
 
       restaurants
-    rescue JSON::ParserError => e
-      log_failure(:invalid_json, "réponse Google illisible: #{e.message} — body=#{truncate_body(response&.body)}")
     rescue ActiveRecord::ActiveRecordError => e
       log_failure(:record_invalid, "échec d'écriture en base: #{e.class} #{e.message}", exception: e)
     rescue StandardError => e
@@ -88,13 +95,53 @@ module Restaurants
 
     private
 
+    # One call per slice of MAX_TYPES_PER_REQUEST cuisines, merged and
+    # deduplicated on Google's place id (a restaurant tagged both "italian" and
+    # "pizza" can come back in two slices).
+    #
+    # A slice that fails is logged and skipped: losing part of the cuisines is
+    # better than showing the retry screen. nil — the retry screen — is only
+    # returned when every single slice failed.
+    def fetch_places(api_key)
+      batches = included_types.each_slice(MAX_TYPES_PER_REQUEST).to_a
+      succeeded = 0
+
+      places = batches.flat_map do |batch|
+        response = perform_request(api_key, batch)
+        next [] if response.nil?
+
+        succeeded += 1
+        parse_places(response)
+      end
+
+      if succeeded.zero?
+        Rails.logger.error("#{LOG_TAG} les #{batches.size} lot(s) de types ont échoué #{context.inspect}")
+        return nil
+      end
+
+      if succeeded < batches.size
+        Rails.logger.warn(
+          "#{LOG_TAG} résultats partiels: #{succeeded}/#{batches.size} lot(s) de types ont abouti #{context.inspect}"
+        )
+      end
+
+      places.uniq { |place| place["id"] }
+    end
+
+    def parse_places(response)
+      JSON.parse(response.body).fetch("places", [])
+    rescue JSON::ParserError => e
+      log_failure(:invalid_json, "réponse Google illisible: #{e.message} — body=#{truncate_body(response.body)}")
+      []
+    end
+
     # Logs the outgoing call, then returns the Net::HTTP response only if it is
     # a success — otherwise it logs Google's own error body (that is where
     # REQUEST_DENIED, API_KEY_INVALID or INVALID_ARGUMENT show up) and nil.
-    def perform_request(api_key)
-      Rails.logger.info("#{LOG_TAG} requête envoyée #{context.merge(included_types: included_types).inspect}")
+    def perform_request(api_key, types)
+      Rails.logger.info("#{LOG_TAG} requête envoyée #{context.merge(included_types: types).inspect}")
 
-      response = post_to_google(api_key)
+      response = post_to_google(api_key, types)
       return nil if response.nil?
       return response if response.is_a?(Net::HTTPSuccess)
 
@@ -147,14 +194,14 @@ module Restaurants
       true
     end
 
-    def post_to_google(api_key)
+    def post_to_google(api_key, types)
       uri = URI(ENDPOINT)
 
       request = Net::HTTP::Post.new(uri)
       request["X-Goog-Api-Key"] = api_key
       request["X-Goog-FieldMask"] = FIELD_MASK
       request["Content-Type"] = "application/json"
-      request.body = request_body.to_json
+      request.body = request_body(types).to_json
 
       Net::HTTP.start(uri.hostname, uri.port, use_ssl: true, open_timeout: 5, read_timeout: 5) do |http|
         http.request(request)
@@ -163,9 +210,9 @@ module Restaurants
       log_failure(:network_error, "appel HTTP impossible: #{e.class} #{e.message}", exception: e)
     end
 
-    def request_body
+    def request_body(types)
       {
-        includedTypes: included_types,
+        includedTypes: types,
         maxResultCount: MAX_RESULTS,
         locationRestriction: {
           circle: {
@@ -177,7 +224,10 @@ module Restaurants
     end
 
     def included_types
-      @included_types ||= @user.tags.pluck(:api_type).compact_blank
+      @included_types ||= begin
+        types = @user.tags.pluck(:api_type).compact_blank.uniq
+        types.presence || DEFAULT_INCLUDED_TYPES
+      end
     end
 
     def radius_meters

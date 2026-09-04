@@ -60,6 +60,7 @@ class PreferencesController < ApplicationController
   def retry_matches
     @user = current_user
     authorize @user, :edit?
+    log_retry_origin
 
     location = session[:location]
     if location.blank?
@@ -70,6 +71,21 @@ class PreferencesController < ApplicationController
   end
 
   private
+
+  # Nothing in the app posts to this route on its own — only the "Réessayer"
+  # button of preferences/api_error does. When it fires without anyone clicking
+  # it, these headers say who did: Referer gives the page the form came from,
+  # User-Agent tells a real browser from a crawler, and Turbo-Frame shows
+  # whether a frame drove the submission.
+  def log_retry_origin
+    Rails.logger.info(
+      "[PreferencesController#retry_matches] déclenché — user_id=#{@user.id} " \
+      "referer=#{request.referer.inspect} " \
+      "ua=#{request.user_agent.inspect} " \
+      "turbo_frame=#{request.headers['Turbo-Frame'].inspect} " \
+      "format=#{request.format} ip=#{request.remote_ip}"
+    )
+  end
 
   def generate_matches_or_render_error(location)
     restaurants = Restaurants::NearbySearch.call(
