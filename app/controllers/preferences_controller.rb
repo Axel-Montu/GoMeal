@@ -34,7 +34,7 @@ class PreferencesController < ApplicationController
       redirect_to locations_path, alert: "Nous avons besoin de votre position." and return
     end
 
-    generate_matches_or_render_error(location)
+    redirect_to cuisines_preferences_path
   end
 
   def cuisines
