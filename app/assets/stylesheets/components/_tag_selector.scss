@@ -12,17 +12,23 @@
   pointer-events: none;
 }
 
+// Palette d'origine des pastilles selectionnables : bleu-violet en dur,
+// independant du theme, ramene sur demande produit (les couleurs du theme
+// ne renvoyaient pas assez d'affordance de "clicable").
+$tag-pill-color: #7E73FF;
+$tag-pill-bg: #ECEAFF;
+
 .tag-selector + label {
   display: inline-flex;
   align-items: center;
   min-height: 36px;
   padding: 7px 14px;
 
-  border: 1.5px solid rgba(var(--color-secondary-rgb), 0.18);
+  border: 1.5px solid $tag-pill-color;
   border-radius: 50rem;
-  background: rgba(255, 255, 255, 0.72);
+  background: $tag-pill-bg;
 
-  color: $secondary;
+  color: $tag-pill-color;
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
@@ -36,15 +42,12 @@
 }
 
 .tag-selector + label:hover {
-  border-color: rgba(var(--color-primary-rgb), 0.5);
-  color: $primary;
+  background: darken($tag-pill-bg, 4%);
 }
 
-// Sélectionné : plein, dans la couleur du thème. Les anciennes pastilles
-// étaient violettes en dur (#7E73FF), hors de toute charte.
 .tag-selector:checked + label {
-  border-color: $primary;
-  background: $primary;
+  border-color: $tag-pill-color;
+  background: $tag-pill-color;
   color: $white;
   font-weight: 700;
 }
@@ -52,6 +55,6 @@
 // Le focus doit rester visible : la case étant masquée, c'est le label qui
 // le porte, sinon la navigation au clavier devient invisible.
 .tag-selector:focus-visible + label {
-  outline: 3px solid rgba(var(--color-primary-rgb), 0.35);
+  outline: 3px solid rgba($tag-pill-color, 0.35);
   outline-offset: 2px;
 }

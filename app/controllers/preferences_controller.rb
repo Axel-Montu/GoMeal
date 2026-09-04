@@ -5,13 +5,13 @@ class PreferencesController < ApplicationController
     "Spécialité"
   ].freeze
 
-  CUISINE_WORLD_CATEGORY = "Cuisines du monde"
-  CUISINE_SPECIALTY_CATEGORY = "Spécialité"
   PINNED_TAGS_COUNT = 7
 
   def show
     @user = current_user
     authorize @user, :edit?
+    @tags_by_category = tags_by_category
+    @submenu_groups_by_category = submenu_groups_by_category(@tags_by_category)
   end
 
   def edit
@@ -22,11 +22,19 @@ class PreferencesController < ApplicationController
   def update
     @user = current_user
     authorize @user
-    if @user.update(preferences_params)
-      redirect_to cuisines_preferences_path, notice: "Preferences updated."
-    else
-      render :edit, status: :unprocessable_entity
+
+    unless @user.update(preferences_params)
+      @tags_by_category = tags_by_category
+      @submenu_groups_by_category = submenu_groups_by_category(@tags_by_category)
+      return render(:show, status: :unprocessable_entity)
     end
+
+    location = session[:location]
+    if location.blank?
+      redirect_to locations_path, alert: "Nous avons besoin de votre position." and return
+    end
+
+    generate_matches_or_render_error(location)
   end
 
   def cuisines
@@ -114,7 +122,8 @@ class PreferencesController < ApplicationController
       :average_lunch_time_minutes,
       :preferred_start_address,
       :max_walking_minutes,
-      :budget
+      :budget,
+      tag_ids: []
     )
   end
 
@@ -126,14 +135,13 @@ class PreferencesController < ApplicationController
     Tag.where(frontend_tag: CUISINE_CATEGORIES).order(:frontend_type).group_by(&:frontend_tag)
   end
 
-  # Splits each branch's tags into a short always-visible "pinned" set and
+  # Splits each category's tags into a short always-visible "pinned" set and
   # the rest grouped by their submenu (region for cuisines, dish family for
-  # specialties) so each group can fold behind its own <details>.
+  # specialties) so each group can fold behind its own <details>. Une categorie
+  # sans submenus (Regime particulier, 3 tags) est renvoyee integralement dans
+  # :pinned, :groups reste vide.
   def submenu_groups_by_category(tags_by_category)
-    {
-      CUISINE_WORLD_CATEGORY => submenu_groups(tags_by_category[CUISINE_WORLD_CATEGORY]),
-      CUISINE_SPECIALTY_CATEGORY => submenu_groups(tags_by_category[CUISINE_SPECIALTY_CATEGORY])
-    }
+    CUISINE_CATEGORIES.index_with { |category| submenu_groups(tags_by_category[category]) }
   end
 
   def submenu_groups(tags)

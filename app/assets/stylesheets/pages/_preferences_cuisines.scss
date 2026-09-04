@@ -124,45 +124,50 @@
     backdrop-filter: blur(22px) saturate(165%);
   }
 
-  // Par défaut la carte est en attente sous la ligne, invisible et hors du
-  // parcours des clics. Elle monte à sa place quand elle devient active.
-  opacity: 0;
-  transform: translateY(12px);
-  pointer-events: none;
-  visibility: hidden;
-
-  transition:
-    opacity 200ms ease,
-    transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1),
-    visibility 0s linear 220ms;
-
-  &--active {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-    visibility: visible;
-    transition:
-      opacity 200ms ease,
-      transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-
-  // Sortie vers le haut : direction opposée à l'entrée, pour lire l'avancée
-  // du parcours plutôt qu'un simple fondu neutre.
-  &--leaving {
+  // L'invisibilite par defaut n'a de sens que dans le stack du wizard cuisines,
+  // ou une seule carte est active a la fois. Ailleurs (ex: preferences#show
+  // qui reutilise .cuisine-card comme conteneur de pastilles hors wizard) la
+  // carte doit s'afficher normalement.
+  .cuisine-card-stack & {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(12px);
     pointer-events: none;
-    visibility: visible;
+    visibility: hidden;
+
     transition:
       opacity 200ms ease,
-      transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
+      transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      visibility 0s linear 220ms;
 
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-    &--active, &--leaving { transition: none; }
-    transform: none;
-    &--leaving { transform: none; }
+    &.cuisine-card--active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      visibility: visible;
+      transition:
+        opacity 200ms ease,
+        transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    // Sortie vers le haut : direction opposée à l'entrée, pour lire l'avancée
+    // du parcours plutôt qu'un simple fondu neutre.
+    &.cuisine-card--leaving {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      visibility: visible;
+      transition:
+        opacity 200ms ease,
+        transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+      &.cuisine-card--active,
+      &.cuisine-card--leaving { transition: none; }
+      transform: none;
+      &.cuisine-card--leaving { transform: none; }
+    }
   }
 
   &__head {
