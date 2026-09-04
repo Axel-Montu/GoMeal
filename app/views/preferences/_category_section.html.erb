@@ -1,0 +1,48 @@
+<%# Rend une categorie sous forme "pastilles epinglees + submenus deplies".
+    Locals :
+      branch_groups : { pinned: [Tag, ...], groups: { submenu => [Tag, ...] } }
+      selected_ids  : Array<Integer> des tag_ids deja choisis par le user
+
+    Categories sans sous-menu (ex: Regime particulier) : :groups est vide,
+    :pinned contient tous les tags. Le comportement dropdown est fourni par
+    tag_submenu_controller.js — voir cuisines.html.erb pour l'origine du
+    pattern. %>
+<% if branch_groups[:pinned].any? %>
+  <div class="cuisine-card__tags">
+    <%= render "preferences/tag_pills",
+               tags: branch_groups[:pinned],
+               selected_ids: selected_ids %>
+  </div>
+<% end %>
+
+<% if branch_groups[:groups].any? %>
+  <div class="cuisine-card__submenus">
+    <% branch_groups[:groups].each do |submenu, submenu_tags| %>
+      <% selected_tags, remaining_tags = submenu_tags.partition { |tag| selected_ids.include?(tag.id) } %>
+      <div class="cuisine-card__submenu"
+           data-controller="tag-submenu"
+           data-action="change->tag-submenu#toggle">
+        <details class="tag-more">
+          <summary class="tag-more__summary"><%= submenu %></summary>
+
+          <div class="tag-more__list">
+            <div class="cuisine-card__tags" data-tag-submenu-target="list">
+              <%= render "preferences/tag_pills",
+                         tags: remaining_tags,
+                         selected_ids: selected_ids %>
+            </div>
+          </div>
+        </details>
+
+        <% if selected_tags.any? %>
+          <div class="cuisine-card__tags cuisine-card__submenu__selected"
+               data-tag-submenu-target="selected">
+            <%= render "preferences/tag_pills",
+                       tags: selected_tags,
+                       selected_ids: selected_ids %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

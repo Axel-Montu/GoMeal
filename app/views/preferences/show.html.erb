@@ -17,7 +17,8 @@
            data-time-slider-min-value="30"
            data-time-slider-max-value="90"
            data-time-slider-captions-value="<%= [[45, 'Express'], [75, 'Normal'], [90, "J'ai le temps"]].to_json %>"
-           data-time-slider-pips-value="<%= [30, 60, 90].to_json %>">
+           data-time-slider-pips-value="<%= [30, 60, 90].to_json %>"
+           data-time-slider-max-plus-value="true">
 
         <label>Combien de temps au total as tu pour ta pause déjeuner?</label>
         <div data-time-slider-target="slider" class="lunch-slider"></div>
@@ -45,46 +46,21 @@
       </div>
     </details>
 
-    <details class="pref-section">
-      <summary>Régime particulier</summary>
-      <div class="cuisine-card">
-        <% [["halal_restaurant", "Halal"],
-            ["vegan_restaurant", "Vegan"],
-            ["vegetarian_restaurant", "Végétarien"]].each do |value, label| %>
-          <div class="tag-item">
-            <%= check_box_tag "user[dietary_restrictions][]", value, false,
-                              id: "diet_#{value}", class: "tag-selector" %>
-            <%= label_tag "diet_#{value}", label %>
-          </div>
-        <% end %>
-      </div>
-    </details>
+    <%# Sans ce hidden, un submit avec zero pastille cochee ne contient plus
+        du tout tag_ids ; strong_params n'a rien a merger et les tags precedents
+        restent en base. %>
+    <%= hidden_field_tag "user[tag_ids][]", "" %>
 
-    <details class="pref-section">
-      <summary>Type d'établissement</summary>
-      <div class="cuisine-card">
-        <% [["bakery", "Boulangerie"], ["restaurant", "Restaurant"]].each do |value, label| %>
-          <div class="tag-item">
-            <%= check_box_tag "user[establishment_types][]", value, false,
-                              id: "type_#{value}", class: "tag-selector" %>
-            <%= label_tag "type_#{value}", label %>
-          </div>
-        <% end %>
-      </div>
-    </details>
-
-    <details class="pref-section">
-      <summary>Cuisines du monde</summary>
-      <div class="cuisine-card">
-        <% [["acai_shop", "Açai"], ["pastry_shop", "Pâtisserie"], ["ice_cream_shop", "Glacier"]].each do |value, label| %>
-          <div class="tag-item">
-            <%= check_box_tag "user[world_cuisines][]", value, false,
-                              id: "world_#{value}", class: "tag-selector" %>
-            <%= label_tag "world_#{value}", label %>
-          </div>
-        <% end %>
-      </div>
-    </details>
+    <% PreferencesController::CUISINE_CATEGORIES.each do |category| %>
+      <details class="pref-section">
+        <summary><%= category %></summary>
+        <div class="cuisine-card">
+          <%= render "preferences/category_section",
+                     branch_groups: @submenu_groups_by_category[category],
+                     selected_ids: @user.tag_ids %>
+        </div>
+      </details>
+    <% end %>
 
     <%= f.submit "Enregistrer mes préférences",
                  class: "btn-go btn-go--primary" %>

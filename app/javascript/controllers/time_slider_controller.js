@@ -51,23 +51,32 @@ export default class extends Controller {
     max:     Number,
     step:    { type: Number, default: 5 },
     captions: Array,   // [[seuilMax, texte], ...]
-    pips:     Array    // [30, 60, 90]
+    pips:     Array,   // [30, 60, 90]
+    maxPlus:  Boolean  // if true, the max value is displayed as "…+" (means "≥ max")
   }
 
   connect() {
     this.caption = new AnimatedCaption(this.labelTarget)
+
+    const format = (v) => {
+      const val = Math.round(v)
+      if (this.maxPlusValue && val >= this.maxValue) {
+        return `${formatTime(val).replace(/\s+/g, "")}+`
+      }
+      return formatTime(val)
+    }
 
     const slider = noUiSlider.create(this.sliderTarget, {
       start: this.initialValue,
       step: this.stepValue,
       range: { min: this.minValue, max: this.maxValue },
       connect: [true, false],
-      tooltips: { to: (v) => formatTime(Math.round(v)) },
+      tooltips: { to: format },
       pips: {
         mode: "values",
         values: this.pipsValue,
         density: 50,
-        format: { to: (v) => formatTime(Math.round(v)) }
+        format: { to: format }
       }
     })
 

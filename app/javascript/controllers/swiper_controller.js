@@ -18,6 +18,12 @@ export default class extends Controller {
     // a deja bascule sur la carte suivante et on flasherait la mauvaise.
     this.dragCard = null
     this.dragStartIndex = null
+    // On suit dx nous-memes : swiper emet touchMove AVANT de mettre a jour
+    // swiper.touches.currentX (cf. swiper-core, emit ligne 2368 puis
+    // affectation 2372), donc lire swiper.touches renvoie une valeur d'un
+    // frame en retard, ou 0 si le drag n'a produit qu'un move.
+    this.dragStartX = 0
+    this.dragCurrentX = 0
 
     // Swiper doit s'initialiser sur .swiper.swipe-deck (le vrai container),
     // pas sur .swipe-deck-wrapper qui porte maintenant le controller pour que
@@ -27,14 +33,26 @@ export default class extends Controller {
       effect: "cards",
       grabCursor: true,
       on: {
-        touchStart: (swiper) => {
+        touchStart: (swiper, event) => {
           this.dragCard = swiper.slides[swiper.activeIndex]
           this.dragStartIndex = swiper.activeIndex
+          this.dragStartX = this.pageXFromEvent(event)
+          this.dragCurrentX = this.dragStartX
         },
-        touchMove: (swiper) => this.updateFlash(swiper),
+        touchMove: (swiper, event) => {
+          this.dragCurrentX = this.pageXFromEvent(event)
+          this.updateFlash()
+        },
         touchEnd: (swiper) => this.handleSwipe(swiper)
       }
     })
+  }
+
+  pageXFromEvent(event) {
+    if (!event) return this.dragCurrentX
+    if (typeof event.pageX === "number") return event.pageX
+    const touch = event.changedTouches?.[0] || event.touches?.[0]
+    return touch ? touch.pageX : this.dragCurrentX
   }
 
   disconnect() {
@@ -57,28 +75,41 @@ export default class extends Controller {
     // regarde donc si activeIndex a vraiment bouge. Notre callback est emit
     // AVANT le slideTo interne de Swiper, d'ou le rAF pour lire l'index final.
     requestAnimationFrame(() => {
-      if (swiper.activeIndex === startIndex) {
-        this.resetFlash(card)
+      const dx = this.dragCurrentX - this.dragStartX
+
+      if (swiper.activeIndex !== startIndex) {
+        const action = swiper.activeIndex > startIndex ? "reject" : "like"
+        // Sur un reject au drag, l'overlay rouge est deja a son maximum
+        // (le user a franchi le seuil) et va s'en aller avec la carte ; pas
+        // besoin de rejouer la keyframe flashReject.
+        this.decide(card, action, { animate: false })
         return
       }
 
-      const action = swiper.activeIndex > startIndex ? "reject" : "like"
-      // Sur un reject au drag, l'overlay rouge est deja a son maximum
-      // (le user a franchi le seuil) et va s'en aller avec la carte ; pas
-      // besoin de rejouer la keyframe flashReject.
-      this.decide(card, action, { animate: false })
+      // Bord du deck : Swiper refuse de reculer sous l'index 0, donc un
+      // swipe "like" (vers la droite) sur la premiere carte laisse
+      // activeIndex inchange. On rattrape en lisant la distance de drag
+      // reelle pour distinguer un vrai like d'un snap-back sous le seuil.
+      if (startIndex === 0) {
+        if (dx > card.offsetWidth * 0.25) {
+          this.decide(card, "like")
+          return
+        }
+      }
+
+      this.resetFlash(card)
     })
   }
 
   // Fait monter le rouge sur la carte manipulee pendant le drag gauche.
   // Cap 0.35 atteint des ~20% de la largeur de carte pour que le signal
   // arrive tres tot ("des qu'on commence a tourner la page").
-  updateFlash(swiper) {
+  updateFlash() {
     if (!this.dragCard) return
     const flash = this.dragCard.querySelector(".swipe-card__flash")
     if (!flash) return
 
-    const dx = swiper.touches.currentX - swiper.touches.startX
+    const dx = this.dragCurrentX - this.dragStartX
     if (dx >= 0) {
       flash.style.opacity = 0
       return
